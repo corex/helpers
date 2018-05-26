@@ -1,0 +1,28 @@
+{
+    "name": "corex/helpers",
+    "type": "library",
+    "description": "Helpers (string, array, ...)",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CoRex",
+            "email": "dev@corex.dk"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "CoRex\\Helpers\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\CoRex\\Helpers\\": "tests"
+        }
+    }
+}
