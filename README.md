@@ -1,5 +1,4 @@
-# helpers
-Helpers (string, array, ...)
+# Helpers (string, array, ...)
 
 **_Versioning for this package follows http://semver.org/. Backwards compatibility might break on upgrade to major versions._**
 
