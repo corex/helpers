@@ -19,6 +19,20 @@ $firstnames = Arr::pluck($actors, 'firstname');
 ```
 
 
+### Bag
+A simple bag structure.
+
+A few examples.
+```php
+// Get json.
+$bag = new Bag();
+$bag->set('actor.firstname', 'Roger');
+
+// Get firstname of actor using dot notation.
+$firstname = $bag->get('actor.firstname');
+```
+
+
 ### Obj (private/protected supported)
 Various methods to help getting/setting private/protected properties and more. Class overrides supported.
 
