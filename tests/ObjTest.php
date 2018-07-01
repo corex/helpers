@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+use Tests\CoRex\Helpers\Helpers\Constants;
 use Tests\CoRex\Helpers\Helpers\ObjHelperInterface;
 use Tests\CoRex\Helpers\Helpers\ObjHelperObject;
 use Tests\CoRex\Helpers\Helpers\ObjHelperObjectExtended;
@@ -22,6 +23,25 @@ class ObjTest extends TestCase
         'property3' => 'property 3',
         'property4' => 'property 4'
     ];
+
+    /**
+     * Test getConstants.
+     */
+    public function testGetConstants()
+    {
+        $this->assertEquals([
+            Constants::ACTOR_FIRSTNAME,
+            Constants::ACTOR_LASTNAME
+        ], Obj::getConstants(Constants::class));
+    }
+
+    /**
+     * Test getConstants failure.
+     */
+    public function testGetConstantsFailure()
+    {
+        $this->assertEquals([], Obj::getConstants('unknown'));
+    }
 
     /**
      * Test get private properties from object.
