@@ -409,7 +409,10 @@ class Arr
         }
         $pathSegments = explode('.', $key);
         foreach ($pathSegments as $pathSegment) {
-            if ($data === null || (!array_key_exists($pathSegment, $data) && !$create)) {
+            if (!is_array($data)) {
+                $data = [];
+            }
+            if (!array_key_exists($pathSegment, $data) && !$create) {
                 return $defaultValue;
             }
             $data = &$data[$pathSegment];

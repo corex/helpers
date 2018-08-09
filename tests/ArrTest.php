@@ -47,7 +47,7 @@ class ArrTest extends TestCase
         $data = [];
         $this->assertNull(Arr::get($data, 'actor.test1.test2'));
         Arr::set($data, 'actor.test1.test2', 'testing', true);
-//        $this->assertEquals('testing', Arr::get($data, 'actor.test1.test2'));
+        $this->assertEquals('testing', Arr::get($data, 'actor.test1.test2'));
     }
 
     /**
