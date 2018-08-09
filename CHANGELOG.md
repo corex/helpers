@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 1.2.1
+
+### Fixed
+- Fixed has().
+
 ## 1.2.0
 
 ### Added
