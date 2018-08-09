@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 1.3.0
+
+### Added
+- Added Traits/DataTrait for generic data handling in class.
+
 ## 1.2.1
 
 ### Fixed
