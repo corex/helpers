@@ -55,7 +55,7 @@ class Arr
     public static function has(array $array, $key)
     {
         $check = self::dataByPath($array, $key, false, 'not.found');
-        return $check != 'not.found';
+        return $check !== 'not.found';
     }
 
     /**

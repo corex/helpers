@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 1.3.2
+
+### Fixed
+- Fixed Arr::has().
+
 ## 1.3.1
 
 ### Fixed
