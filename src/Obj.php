@@ -23,7 +23,7 @@ class Obj
     {
         try {
             $reflectionClass = self::getReflectionClass($objectOrClass);
-            return array_values($reflectionClass->getConstants());
+            return $reflectionClass->getConstants();
         } catch (\Exception $e) {
             return [];
         }

@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 1.3.3
+
+### Fixed
+- Fixed missing constant names in Obj::getConstants().
+
 ## 1.3.2
 
 ### Fixed
