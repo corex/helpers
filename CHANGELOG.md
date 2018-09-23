@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 1.4.0
+
+## Added
+- Added class Is to check for various things i.e. date/time/datetime etc.
+
 ## 1.3.3
 
 ### Fixed

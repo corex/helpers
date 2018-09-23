@@ -76,6 +76,7 @@ class BagTest extends TestCase
 
     /**
      * Test has no data.
+     *
      * @throws Exception
      */
     public function testHasNoData()
@@ -86,6 +87,7 @@ class BagTest extends TestCase
 
     /**
      * Test has with data.
+     *
      * @throws Exception
      */
     public function testHasWithData()
@@ -97,6 +99,7 @@ class BagTest extends TestCase
 
     /**
      * Test set.
+     *
      * @throws Exception
      */
     public function testSet()
@@ -118,6 +121,7 @@ class BagTest extends TestCase
 
     /**
      * Test set array.
+     *
      * @throws Exception
      */
     public function testSetArray()
@@ -132,6 +136,7 @@ class BagTest extends TestCase
 
     /**
      * Test get.
+     *
      * @throws Exception
      */
     public function testGet()
@@ -145,6 +150,7 @@ class BagTest extends TestCase
 
     /**
      * Test remove.
+     *
      * @throws Exception
      */
     public function testRemove()
