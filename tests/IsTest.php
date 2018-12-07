@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\CoRex\Helpers;
 
 use CoRex\Helpers\Is;
@@ -7,15 +9,22 @@ use PHPUnit\Framework\TestCase;
 
 class IsTest extends TestCase
 {
+    /** @var string */
     private $pascalCase = 'TestClass';
+
+    /** @var string */
     private $camelCase = 'testClass';
+
+    /** @var string */
     private $snakeCase = 'test_class';
+
+    /** @var string */
     private $kebabCase = 'test-class';
 
     /**
      * Test is camel case.
      */
-    public function testCamelCase()
+    public function testCamelCase(): void
     {
         $this->assertFalse(Is::camelCase($this->pascalCase), 'CASE: pascal');
         $this->assertTrue(Is::camelCase($this->camelCase), 'CASE: camel');
@@ -26,7 +35,7 @@ class IsTest extends TestCase
     /**
      * Test is kebab case.
      */
-    public function testIsKebabCase()
+    public function testIsKebabCase(): void
     {
         $this->assertFalse(Is::kebabCase($this->pascalCase), 'CASE: pascal');
         $this->assertFalse(Is::kebabCase($this->camelCase), 'CASE: camel');
@@ -37,7 +46,7 @@ class IsTest extends TestCase
     /**
      * Test is pascal case.
      */
-    public function testPascalCase()
+    public function testPascalCase(): void
     {
         $this->assertTrue(Is::pascalCase($this->pascalCase), 'CASE: pascal');
         $this->assertFalse(Is::pascalCase($this->camelCase), 'CASE: camel');
@@ -48,7 +57,7 @@ class IsTest extends TestCase
     /**
      * Test is snake case.
      */
-    public function testSnakeCase()
+    public function testSnakeCase(): void
     {
         $this->assertFalse(Is::snakeCase($this->pascalCase), 'CASE: pascal');
         $this->assertFalse(Is::snakeCase($this->camelCase), 'CASE: camel');
@@ -59,7 +68,7 @@ class IsTest extends TestCase
     /**
      * Test date.
      */
-    public function testDate()
+    public function testDate(): void
     {
         $this->assertTrue(Is::date(date('Y-m-d')));
         $this->assertFalse(Is::date(date('H:i:s')));
@@ -68,7 +77,7 @@ class IsTest extends TestCase
     /**
      * Test time.
      */
-    public function testTime()
+    public function testTime(): void
     {
         $this->assertTrue(Is::time(date('H:i:s')));
         $this->assertFalse(Is::time(date('Y-m-d')));
@@ -77,7 +86,7 @@ class IsTest extends TestCase
     /**
      * Test datetime.
      */
-    public function testDatetime()
+    public function testDatetime(): void
     {
         $this->assertTrue(Is::datetime(date('Y-m-d H:i:s')));
         $this->assertFalse(Is::datetime(date('H:i:s Y-m-d')));
@@ -86,7 +95,7 @@ class IsTest extends TestCase
     /**
      * Test email.
      */
-    public function testEmail()
+    public function testEmail(): void
     {
         $this->assertTrue(Is::email('nobody@host.com'));
         $this->assertFalse(Is::email('nobody@host'));
@@ -95,7 +104,7 @@ class IsTest extends TestCase
     /**
      * Test url.
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         $this->assertTrue(Is::url('http://host.com'));
         $this->assertFalse(Is::url('host.com'));
@@ -104,7 +113,7 @@ class IsTest extends TestCase
     /**
      * Test ip.
      */
-    public function testIp()
+    public function testIp(): void
     {
         $this->assertTrue(Is::ip('8.8.8.8'));
         $this->assertTrue(Is::ip('fe80::725b:115f:11c8:5e90'));
@@ -114,7 +123,7 @@ class IsTest extends TestCase
     /**
      * Test mac-address.
      */
-    public function testMacAddress()
+    public function testMacAddress(): void
     {
         $this->assertTrue(Is::macAddress('02:42:3b:4f:44:34'));
         $this->assertFalse(Is::macAddress('Not a mac-address'));
@@ -123,7 +132,7 @@ class IsTest extends TestCase
     /**
      * Test timezone.
      */
-    public function testTimezone()
+    public function testTimezone(): void
     {
         $this->assertTrue(Is::timezone('America/Phoenix'));
         $this->assertTrue(Is::timezone('Asia/Qatar'));

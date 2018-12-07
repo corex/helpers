@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CoRex\Helpers;
 
 class Str
 {
-    const LIMIT_SUFFIX = '...';
-    const PASCALCASE = "pascalCase";
-    const CAMELCASE = "camelCase";
-    const SNAKECASE = "snakeCase";
-    const KEBABCASE = "kebabCase";
+    public const LIMIT_SUFFIX = '...';
+    public const PASCALCASE = 'pascalCase';
+    public const CAMELCASE = 'camelCase';
+    public const SNAKECASE = 'snakeCase';
+    public const KEBABCASE = 'kebabCase';
 
     /**
      * Get length of string.
      *
      * @param string $value
-     * @return integer
+     * @return int
      */
-    public static function length($value)
+    public static function length(string $value): int
     {
         return mb_strlen($value);
     }
@@ -27,7 +29,7 @@ class Str
      * @param string $value
      * @return string
      */
-    public static function lower($value)
+    public static function lower(string $value): string
     {
         return mb_strtolower($value, 'UTF-8');
     }
@@ -38,7 +40,7 @@ class Str
      * @param string $value
      * @return string
      */
-    public static function upper($value)
+    public static function upper(string $value): string
     {
         return mb_strtoupper($value, 'UTF-8');
     }
@@ -47,11 +49,11 @@ class Str
      * Returns the portion of string specified by the start and length parameters.
      *
      * @param string $string
-     * @param integer $start
-     * @param integer|null $length Default null.
+     * @param int $start
+     * @param int|null $length Default null.
      * @return string
      */
-    public static function substr($string, $start, $length = null)
+    public static function substr(string $string, int $start, ?int $length = null): string
     {
         return mb_substr($string, $start, $length, 'UTF-8');
     }
@@ -60,10 +62,10 @@ class Str
      * Left.
      *
      * @param string $string
-     * @param integer $count
+     * @param int $count
      * @return string
      */
-    public static function left($string, $count)
+    public static function left(string $string, int $count): string
     {
         return self::substr($string, 0, $count);
     }
@@ -72,10 +74,10 @@ class Str
      * Right.
      *
      * @param string $string
-     * @param integer $count
+     * @param int $count
      * @return string
      */
-    public static function right($string, $count)
+    public static function right(string $string, int $count): string
     {
         return self::substr($string, -$count);
     }
@@ -85,9 +87,9 @@ class Str
      *
      * @param  string $haystack
      * @param  string $needle
-     * @return boolean
+     * @return bool
      */
-    public static function startsWith($haystack, $needle)
+    public static function startsWith(string $haystack, string $needle): bool
     {
         return static::isPrefixed($haystack, $needle);
     }
@@ -97,9 +99,9 @@ class Str
      *
      * @param  string $haystack
      * @param  string $needle
-     * @return boolean
+     * @return bool
      */
-    public static function endsWith($haystack, $needle)
+    public static function endsWith(string $haystack, string $needle): bool
     {
         return static::isSuffixed($haystack, $needle);
     }
@@ -110,7 +112,7 @@ class Str
      * @param  string $string
      * @return string
      */
-    public static function ucfirst($string)
+    public static function ucfirst(string $string): string
     {
         return static::upper(static::substr($string, 0, 1)) . static::substr($string, 1);
     }
@@ -121,7 +123,7 @@ class Str
      * @param string $string
      * @return string
      */
-    public static function lcfirst($string)
+    public static function lcfirst(string $string): string
     {
         return static::lower(static::substr($string, 0, 1)) . static::substr($string, 1);
     }
@@ -130,11 +132,11 @@ class Str
      * Limit the number of characters in a string.
      *
      * @param string $value
-     * @param integer $limit Default 50.
+     * @param int $limit Default 50.
      * @param string $end Default '...'.
      * @return string
      */
-    public static function limit($value, $limit = 50, $end = self::LIMIT_SUFFIX)
+    public static function limit(string $value, int $limit = 50, string $end = self::LIMIT_SUFFIX): string
     {
         if (mb_strwidth($value, 'UTF-8') <= $limit) {
             return $value;
@@ -148,14 +150,14 @@ class Str
      * @param string $data
      * @param string $prefix
      * @param string $separator Default ''.
-     * @return boolean
+     * @return bool
      */
-    public static function isPrefixed($data, $prefix, $separator = '')
+    public static function isPrefixed(string $data, string $prefix, string $separator = ''): bool
     {
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = trim($data, $separator);
         }
-        return static::substr($data, 0, static::length($prefix)) == $prefix;
+        return static::substr($data, 0, static::length($prefix)) === $prefix;
     }
 
     /**
@@ -166,18 +168,18 @@ class Str
      * @param string $separator Default ''.
      * @return string
      */
-    public static function stripPrefix($data, $prefix, $separator = '')
+    public static function stripPrefix(string $data, string $prefix, string $separator = ''): string
     {
-        if ($data == '') {
+        if ($data === '') {
             return $data;
         }
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = ltrim($data, $separator);
         }
-        if (static::substr($data, 0, static::length($prefix)) == $prefix) {
+        if (static::substr($data, 0, static::length($prefix)) === $prefix) {
             $data = static::substr($data, static::length($prefix));
         }
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = ltrim($data, $separator);
         }
         return $data;
@@ -191,16 +193,16 @@ class Str
      * @param string $separator Default ''.
      * @return string
      */
-    public static function forcePrefix($data, $prefix, $separator = '')
+    public static function forcePrefix(string $data, string $prefix, string $separator = ''): string
     {
-        if ($data == '') {
+        if ($data === '') {
             return $data;
         }
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = trim($data, $separator);
         }
-        if (static::substr($data, 0, static::length($prefix)) != $prefix) {
-            if ($separator != '') {
+        if (static::substr($data, 0, static::length($prefix)) !== $prefix) {
+            if ($separator !== '') {
                 $prefix .= $separator;
             }
             $data = $prefix . $data;
@@ -214,14 +216,14 @@ class Str
      * @param string $data
      * @param string $suffix
      * @param string $separator Default ''.
-     * @return boolean
+     * @return bool
      */
-    public static function isSuffixed($data, $suffix, $separator = '')
+    public static function isSuffixed(string $data, string $suffix, string $separator = ''): bool
     {
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = trim($data, $separator);
         }
-        return static::substr($data, -static::length($suffix)) == $suffix;
+        return static::substr($data, -static::length($suffix)) === $suffix;
     }
 
     /**
@@ -232,18 +234,18 @@ class Str
      * @param string $separator Default ''.
      * @return string
      */
-    public static function stripSuffix($data, $prefix, $separator = '')
+    public static function stripSuffix(string $data, string $prefix, string $separator = ''): string
     {
-        if ($data == '') {
+        if ($data === '') {
             return $data;
         }
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = rtrim($data, $separator);
         }
-        if (static::substr($data, -static::length($prefix)) == $prefix) {
+        if (static::substr($data, -static::length($prefix)) === $prefix) {
             $data = static::substr($data, 0, -static::length($prefix));
         }
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = rtrim($data, $separator);
         }
         return $data;
@@ -257,16 +259,16 @@ class Str
      * @param string $separator Default ''.
      * @return string
      */
-    public static function forceSuffix($data, $prefix, $separator = '')
+    public static function forceSuffix(string $data, string $prefix, string $separator = ''): string
     {
-        if ($data == '') {
+        if ($data === '') {
             return $data;
         }
-        if ($separator != '') {
+        if ($separator !== '') {
             $data = trim($data, $separator);
         }
-        if (static::substr($data, -static::length($prefix)) != $prefix) {
-            if ($separator != '') {
+        if (static::substr($data, -static::length($prefix)) !== $prefix) {
+            if ($separator !== '') {
                 $data .= $separator;
             }
             $data .= $prefix;
@@ -279,10 +281,10 @@ class Str
      * Token: '{something}'.
      *
      * @param string $string
-     * @param array $data Must be specified as [$key => $value].
+     * @param string[] $data Must be specified as [$key => $value].
      * @return string
      */
-    public static function replaceToken($string, array $data)
+    public static function replaceToken(string $string, array $data): string
     {
         if (count($data) > 0) {
             foreach ($data as $key => $value) {
@@ -299,7 +301,7 @@ class Str
      * @param string $separator
      * @return string
      */
-    public static function removeFirst($string, $separator)
+    public static function removeFirst(string $string, string $separator): string
     {
         $string = explode($separator, $string);
         $string = Arr::removeFirst($string);
@@ -313,7 +315,7 @@ class Str
      * @param string $separator
      * @return string
      */
-    public static function removeLast($string, $separator)
+    public static function removeLast(string $string, string $separator): string
     {
         $string = explode($separator, $string);
         $string = Arr::removeLast($string);
@@ -327,7 +329,7 @@ class Str
      * @param string $separator
      * @return string
      */
-    public static function first($string, $separator)
+    public static function first(string $string, string $separator): string
     {
         $string = explode($separator, $string);
         return Arr::first($string);
@@ -340,7 +342,7 @@ class Str
      * @param string $separator
      * @return string
      */
-    public static function last($string, $separator)
+    public static function last(string $string, string $separator): string
     {
         $string = explode($separator, $string);
         return Arr::last($string);
@@ -351,13 +353,13 @@ class Str
      *
      * @param string $string
      * @param string $separator
-     * @param integer $index
+     * @param int $index
      * @param string $defaultValue Default ''.
      * @return string
      */
-    public static function part($string, $separator, $index, $defaultValue = '')
+    public static function part(string $string, string $separator, int $index, string $defaultValue = ''): string
     {
-        if ($string != '') {
+        if ($string !== '') {
             $string = explode($separator, $string);
             if (isset($string[$index])) {
                 return $string[$index];
@@ -371,11 +373,11 @@ class Str
      *
      * @param string $line
      * @param string $delimiter Default ','.
-     * @return array
+     * @return string[]
      */
-    public static function csvFields($line, $delimiter = ',')
+    public static function csvFields(string $line, string $delimiter = ','): array
     {
-        if (trim($line) == '') {
+        if (trim($line) === '') {
             return [];
         }
         $fields = [];
@@ -383,13 +385,13 @@ class Str
         if ($parts !== null && count($parts) > 0) {
             foreach ($parts as $part) {
                 $part = trim($part);
-                if (substr($part, 0, 1) == '"' || substr($part, 0, 1) == '\'') {
+                if (substr($part, 0, 1) === '"' || substr($part, 0, 1) === '\'') {
                     $part = substr($part, 1);
                 }
-                if (substr($part, -1) == '"' || substr($part, -1) == '\'') {
+                if (substr($part, -1) === '"' || substr($part, -1) === '\'') {
                     $part = substr($part, 0, -1);
                 }
-                if ($part != '') {
+                if ($part !== '') {
                     $fields[] = $part;
                 }
             }
@@ -405,7 +407,7 @@ class Str
      * @param string $separator Default '.'.
      * @return string
      */
-    public static function slug($string, $separator = '.')
+    public static function slug(string $string, string $separator = '.'): string
     {
         // Make sure standard characters has been replaced to separator.
         $slug = str_replace(['-', '_', ' ', '.'], $separator, mb_strtolower($string));
@@ -422,10 +424,10 @@ class Str
      *
      * @param string $string
      * @param string $separator
-     * @param array $keys
-     * @return array
+     * @param string[] $keys
+     * @return string[]
      */
-    public static function splitIntoKeyValue($string, $separator, array $keys)
+    public static function splitIntoKeyValue(string $string, string $separator, array $keys): array
     {
         $parts = explode($separator, $string);
         $result = [];
@@ -451,13 +453,13 @@ class Str
      * @param string $suffix Default ''.
      * @return string
      */
-    public static function unique($prefix = '', $suffix = '')
+    public static function unique(string $prefix = '', string $suffix = ''): string
     {
-        $unique = md5(mt_rand());
-        if ($prefix != '') {
+        $unique = md5((string)mt_rand());
+        if ($prefix !== '') {
             $unique = $prefix . $unique;
         }
-        if ($suffix != '') {
+        if ($suffix !== '') {
             $unique .= $suffix;
         }
         return $unique;
@@ -469,11 +471,11 @@ class Str
      * @param string $separator If "\n", "\r", will be removed before explode.
      * @param string $content
      * @param callable $itemFunction
-     * @return array
+     * @return string[]
      */
-    public static function explode($separator, $content, callable $itemFunction = null)
+    public static function explode(string $separator, string $content, ?callable $itemFunction = null): array
     {
-        if ($separator == "\n") {
+        if ($separator === "\n") {
             $content = str_replace("\r", '', $content);
         }
         $items = explode($separator, $content);
@@ -489,11 +491,11 @@ class Str
      * Implode items into string.
      *
      * @param string $separator
-     * @param array $items
+     * @param string[] $items
      * @param callable $itemFunction
      * @return string
      */
-    public static function implode($separator, array $items, callable $itemFunction = null)
+    public static function implode(string $separator, array $items, ?callable $itemFunction = null): string
     {
         if (is_callable($itemFunction)) {
             foreach ($items as $index => $item) {
@@ -507,11 +509,11 @@ class Str
      * Pad left.
      *
      * @param string $string
-     * @param integer $length
+     * @param int $length
      * @param string $filler Default ' '.
      * @return string
      */
-    public static function padLeft($string, $length, $filler = ' ')
+    public static function padLeft(string $string, int $length, string $filler = ' '): string
     {
         while (self::length($string) <= ($length - self::length($filler))) {
             $string = $filler . $string;
@@ -523,11 +525,11 @@ class Str
      * Pad right.
      *
      * @param string $string
-     * @param integer $length
+     * @param int $length
      * @param string $filler Default ' '.
      * @return string
      */
-    public static function padRight($string, $length, $filler = ' ')
+    public static function padRight(string $string, int $length, string $filler = ' '): string
     {
         while (self::length($string) <= ($length - self::length($filler))) {
             $string = $string . $filler;
@@ -539,37 +541,37 @@ class Str
      * Wrap.
      *
      * @param string $text
-     * @param integer $length
+     * @param int $length
      * @param string $separator Default "\n".
      * @return string
      */
-    public static function wrap($text, $length, $separator = "\n")
+    public static function wrap(string $text, int $length, string $separator = "\n"): string
     {
-        if ($text == '' || Str::length($text) == $length) {
+        if ($text === '' || self::length($text) === $length) {
             return $text;
         }
-        $endedWithLinebreak = substr($text, -1) == "\n";
-        $text = str_replace("\r", "", $text);
-        $text = str_replace("\n", "", $text);
-        $text = explode(" ", $text);
+        $endedWithLinebreak = substr($text, -1) === "\n";
+        $text = str_replace("\r", '', $text);
+        $text = str_replace("\n", '', $text);
+        $text = explode(' ', $text);
 
         $result = [];
         $lineNo = 0;
         foreach ($text as $word) {
             if (!isset($result[$lineNo])) {
-                $result[$lineNo] = "";
+                $result[$lineNo] = '';
             }
             $lastLineNo = count($result) - 1;
 
-            if ((Str::length($result[$lastLineNo]) + Str::length($word)) >= $length) {
+            if ((self::length($result[$lastLineNo]) + self::length($word)) >= $length) {
                 $lineNo++;
                 if (!isset($result[$lineNo])) {
-                    $result[$lineNo] = "";
+                    $result[$lineNo] = '';
                 }
                 $lastLineNo = count($result) - 1;
             }
 
-            $result[$lastLineNo] .= $result[$lastLineNo] != "" ? " " : "";
+            $result[$lastLineNo] .= $result[$lastLineNo] !== '' ? ' ' : '';
             $result[$lastLineNo] .= $word;
         }
 
@@ -586,7 +588,7 @@ class Str
      * @param string $value
      * @return string
      */
-    public static function pascalCase($value)
+    public static function pascalCase(string $value): string
     {
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
         return str_replace(' ', '', $value);
@@ -598,7 +600,7 @@ class Str
      * @param string $value
      * @return string
      */
-    public static function camelCase($value)
+    public static function camelCase(string $value): string
     {
         return lcfirst(static::pascalCase($value));
     }
@@ -607,28 +609,28 @@ class Str
      * Snake case.
      *
      * @param string $value
-     * @param boolean $toLowerCase Default false.
+     * @param bool $toLowerCase Default false.
      * @param string $separator Default '_'.
      * @return string
      */
-    public static function snakeCase($value, $toLowerCase = false, $separator = '_')
+    public static function snakeCase(string $value, bool $toLowerCase = false, string $separator = '_'): string
     {
         $replace = strtolower(preg_replace(
             ['/\s+/', '/\s/', '/(?|([a-z\d])([A-Z])|([^\^])([A-Z][a-z]))/', '/[-_]+/'],
             [' ', $separator, '$1' . $separator . '$2', $separator],
             trim($value)
         ));
-        return ($toLowerCase) ? strtolower($replace) : $replace;
+        return $toLowerCase ? strtolower($replace) : $replace;
     }
 
     /**
      * Kebab case.
      *
      * @param string $value
-     * @param boolean $toLowerCase Default true.
+     * @param bool $toLowerCase Default true.
      * @return string
      */
-    public static function kebabCase($value, $toLowerCase = true)
+    public static function kebabCase(string $value, bool $toLowerCase = true): string
     {
         return static::snakeCase($value, $toLowerCase, '-');
     }
@@ -636,13 +638,16 @@ class Str
     /**
      * Convert key case Recursively, using the method defined.
      *
-     * @param array $array
+     * @param string[] $array
      * @param string $method The Convention method to execute. Default pascal().
      * @param string $separator Default '_'.
-     * @return array
+     * @return mixed[]
      */
-    public static function caseConvertArrayKeysRecursively(array $array, $method = self::PASCALCASE, $separator = '_')
-    {
+    public static function caseConvertArrayKeysRecursively(
+        array $array,
+        string $method = self::PASCALCASE,
+        string $separator = '_'
+    ): array {
         $return = [];
         foreach ($array as $key => $value) {
             if (!preg_match('/^\d+$/', $key)) {
@@ -661,10 +666,10 @@ class Str
      *
      * @param string $haystack
      * @param string $needle
-     * @param integer $offset
-     * @return boolean|false|integer
+     * @param int $offset
+     * @return bool|false|int
      */
-    public static function strpos($haystack, $needle, $offset = 0)
+    public static function strpos(string $haystack, string $needle, int $offset = 0)
     {
         return mb_strpos($haystack, $needle, $offset, 'UTF-8');
     }
@@ -674,10 +679,10 @@ class Str
      *
      * @param string $haystack
      * @param string $needle
-     * @param integer $offset
-     * @return integer
+     * @param int $offset
+     * @return int
      */
-    public static function indexOf($haystack, $needle, $offset = 0)
+    public static function indexOf(string $haystack, string $needle, int $offset = 0): int
     {
         $pos = self::strpos($haystack, $needle, $offset);
         return is_int($pos) ? $pos : -1;
@@ -688,10 +693,10 @@ class Str
      *
      * @param string $haystack
      * @param string $needle
-     * @param integer $offset
-     * @return boolean
+     * @param int $offset
+     * @return bool
      */
-    public static function contains($haystack, $needle, $offset = 0)
+    public static function contains(string $haystack, string $needle, int $offset = 0): bool
     {
         return self::strpos($haystack, $needle, $offset) !== false;
     }

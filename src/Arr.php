@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CoRex\Helpers;
 
 class Arr
@@ -7,12 +9,12 @@ class Arr
     /**
      * Get value from data.
      *
-     * @param array $data
+     * @param mixed[] $data
      * @param string $key Uses dot notation.
      * @param mixed $defaultValue Default null.
      * @return mixed|null
      */
-    public static function get(array $data, $key, $defaultValue = null)
+    public static function get(array $data, string $key, $defaultValue = null)
     {
         $data = self::dataByPath($data, $key);
         if ($data === null) {
@@ -24,12 +26,12 @@ class Arr
     /**
      * Set value in data.
      *
-     * @param array $array
+     * @param mixed[] $array
      * @param string $key Uses dot notation.
      * @param mixed $value
-     * @param boolean $create Default false.
+     * @param bool $create Default false.
      */
-    public static function set(array &$array, $key, $value, $create = false)
+    public static function set(array &$array, string $key, $value, bool $create = false): void
     {
         // Extract key/path.
         $keyLast = Str::last($key, '.');
@@ -37,7 +39,7 @@ class Arr
 
         // Extract data.
         $pathArray = null;
-        if ($key != '' && $key !== null) {
+        if ($key !== '' && $key !== null) {
             $array = &self::dataByPath($array, $key, $create);
         }
         if ($array !== null || $create) {
@@ -48,11 +50,11 @@ class Arr
     /**
      * Has.
      *
-     * @param array $array
+     * @param mixed[] $array
      * @param string $key Uses dot notation.
-     * @return boolean
+     * @return bool
      */
-    public static function has(array $array, $key)
+    public static function has(array $array, string $key): bool
     {
         $check = self::dataByPath($array, $key, false, 'not.found');
         return $check !== 'not.found';
@@ -61,13 +63,13 @@ class Arr
     /**
      * Get first element of array.
      *
-     * @param array $data
+     * @param mixed[] $data
      * @param string $key Get key from element if array. Default null.
      * @return mixed
      */
-    public static function first(array $data, $key = null)
+    public static function first(array $data, ?string $key = null)
     {
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             return null;
         }
         reset($data);
@@ -81,13 +83,13 @@ class Arr
     /**
      * Get last element of array.
      *
-     * @param array $data
+     * @param mixed[] $data
      * @param string $key Get key from element if array. Default null.
      * @return mixed
      */
-    public static function last(array $data, $key = null)
+    public static function last(array $data, ?string $key = null)
     {
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             return null;
         }
         $element = end($data);
@@ -100,11 +102,11 @@ class Arr
     /**
      * Remove.
      *
-     * @param array $array
+     * @param mixed[] array $array
      * @param string $key Uses dot notation.
-     * @return array
+     * @return mixed[]
      */
-    public static function remove(array $array, $key)
+    public static function remove(array $array, string $key): array
     {
         // Extract key/path.
         $keyLast = Str::last($key, '.');
@@ -112,7 +114,7 @@ class Arr
 
         // If found, remove element.
         $arrayElement = &self::dataByPath($array, $key, false, 'not.found');
-        if ($arrayElement != 'not.found') {
+        if ($arrayElement !== 'not.found') {
             if (array_key_exists($keyLast, $arrayElement)) {
                 unset($arrayElement[$keyLast]);
             }
@@ -124,10 +126,10 @@ class Arr
     /**
      * Remote first element of array.
      *
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
-    public static function removeFirst(array $data)
+    public static function removeFirst(array $data): array
     {
         if (count($data) > 0) {
             array_shift($data);
@@ -138,10 +140,10 @@ class Arr
     /**
      * Remove last element of array.
      *
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
-    public static function removeLast(array $data)
+    public static function removeLast(array $data): array
     {
         if (count($data) > 0) {
             unset($data[count($data) - 1]);
@@ -152,10 +154,10 @@ class Arr
     /**
      * Is list (0..n).
      *
-     * @param array $data
-     * @return boolean
+     * @param mixed[] $data
+     * @return bool
      */
-    public static function isList(array $data)
+    public static function isList(array $data): bool
     {
         $isList = true;
         if (count($data) > 0) {
@@ -171,14 +173,14 @@ class Arr
     /**
      * Is string in list.
      *
-     * @param array $list
+     * @param string[] $list
      * @param string $key Default null.
-     * @return boolean
+     * @return bool
      */
-    public static function isStringInList(array $list, $key = null)
+    public static function isStringInList(array $list, ?string $key = null): bool
     {
         $stringInList = false;
-        if (count($list) == 0) {
+        if (count($list) === 0) {
             return $stringInList;
         }
         foreach ($list as $item) {
@@ -198,16 +200,13 @@ class Arr
      * Index of.
      * Note: Supports array with objects.
      *
-     * @param mixed $array
+     * @param string[] $array
      * @param string $value
      * @param string $key Default null which means the item itself (not associative array).
-     * @return integer -1 if not found.
+     * @return int|string -1 if not found.
      */
-    public static function indexOf($array, $value, $key = null)
+    public static function indexOf(array $array, string $value, ?string $key = null)
     {
-        if (!is_array($array)) {
-            return -1;
-        }
         foreach ($array as $index => $item) {
             if ($key !== null) {
                 if (is_object($item)) {
@@ -228,11 +227,11 @@ class Arr
     /**
      * Check if all keys exist in array.
      *
-     * @param array $data
-     * @param array $keys
-     * @return boolean
+     * @param mixed[] $data
+     * @param string[] $keys
+     * @return bool
      */
-    public static function keysExist(array $data, array $keys)
+    public static function keysExist(array $data, array $keys): bool
     {
         if (count($keys) > 0) {
             foreach ($keys as $key) {
@@ -247,10 +246,10 @@ class Arr
     /**
      * Keys.
      *
-     * @param array $array
-     * @return array
+     * @param mixed[] $array
+     * @return string[]
      */
-    public static function keys(array $array)
+    public static function keys(array $array): array
     {
         return array_keys($array);
     }
@@ -258,10 +257,10 @@ class Arr
     /**
      * Values (0..n).
      *
-     * @param array $array
-     * @return array
+     * @param mixed[] array $array
+     * @return mixed[]
      */
-    public static function values(array $array)
+    public static function values(array $array): array
     {
         return array_values($array);
     }
@@ -269,10 +268,10 @@ class Arr
     /**
      * Is associative.
      *
-     * @param array $array
-     * @return boolean
+     * @param mixed[] $array
+     * @return bool
      */
-    public static function isAssociative(array $array)
+    public static function isAssociative(array $array): bool
     {
         $keys = array_keys($array);
         return array_keys($keys) !== $keys;
@@ -284,9 +283,9 @@ class Arr
      * @param mixed $array
      * @param string $key Uses dot notation.
      * @param mixed $defaultValue Default null.
-     * @return array
+     * @return mixed[]
      */
-    public static function pluck($array, $key, $defaultValue = null)
+    public static function pluck($array, string $key, $defaultValue = null): array
     {
         $result = [];
         if (!is_array($array)) {
@@ -298,7 +297,7 @@ class Arr
         $key = Str::removeLast($key, '.');
 
         // Extract data.
-        if ($key != '' && $key !== null) {
+        if ($key !== '' && $key !== null) {
             $array = self::dataByPath($array, $key, false, []);
         }
         foreach ($array as $item) {
@@ -317,26 +316,31 @@ class Arr
     /**
      * Get line match.
      *
-     * @param array $lines
+     * @param string[] $lines
      * @param string $prefix
      * @param string $suffix
-     * @param boolean $doTrim
-     * @param boolean $removePrefixSuffix Default false.
-     * @return array
+     * @param bool $doTrim
+     * @param bool $removePrefixSuffix Default false.
+     * @return string[]
      */
-    public static function lineMatch(array $lines, $prefix, $suffix, $doTrim, $removePrefixSuffix = false)
-    {
+    public static function lineMatch(
+        array $lines,
+        string $prefix,
+        string $suffix,
+        bool $doTrim,
+        bool $removePrefixSuffix = false
+    ): array {
         $result = [];
         foreach ($lines as $line) {
             $isHit = true;
-            if ($prefix != '' && $prefix !== null && Str::startsWith(trim($line), $prefix)) {
+            if ($prefix !== '' && $prefix !== null && Str::startsWith(trim($line), $prefix)) {
                 if ($removePrefixSuffix) {
                     $line = substr(trim($line), strlen($prefix));
                 }
             } else {
                 $isHit = false;
             }
-            if ($suffix != '' && $suffix !== null && Str::endsWith(trim($line), $suffix)) {
+            if ($suffix !== '' && $suffix !== null && Str::endsWith(trim($line), $suffix)) {
                 if ($removePrefixSuffix) {
                     $line = substr(trim($line), 0, -strlen($suffix));
                 }
@@ -356,14 +360,14 @@ class Arr
     /**
      * To array.
      *
-     * @param string|array $stringOrArray
+     * @param mixed $stringOrArray
      * @param string $separator Default '.'.
-     * @return array
+     * @return mixed[]
      */
-    public static function toArray($stringOrArray, $separator = '.')
+    public static function toArray($stringOrArray, string $separator = '.'): array
     {
         if (is_string($stringOrArray)) {
-            if (trim($stringOrArray) != '') {
+            if (trim($stringOrArray) !== '') {
                 $stringOrArray = explode($separator, $stringOrArray);
             }
         }
@@ -376,12 +380,12 @@ class Arr
     /**
      * To json.
      *
-     * @param array $array
-     * @param boolean $prettyPrint
-     * @param boolean $unescapedSlashes
+     * @param mixed[] $array
+     * @param bool $prettyPrint
+     * @param bool $unescapedSlashes
      * @return string
      */
-    public static function toJson(array $array, $prettyPrint = true, $unescapedSlashes = true)
+    public static function toJson(array $array, bool $prettyPrint = true, bool $unescapedSlashes = true): string
     {
         $options = 0;
         if ($unescapedSlashes) {
@@ -396,15 +400,15 @@ class Arr
     /**
      * Get data by path.
      *
-     * @param array $data
+     * @param mixed[] $data
      * @param string $key Uses dot notation.
-     * @param boolean $create Default false.
+     * @param bool $create Default false.
      * @param mixed $defaultValue Default null.
      * @return mixed
      */
-    private static function &dataByPath(array &$data, $key, $create = false, $defaultValue = null)
+    private static function &dataByPath(array &$data, string $key, bool $create = false, $defaultValue = null)
     {
-        if ((string)$key == '') {
+        if ($key === '') {
             return $data;
         }
         $pathSegments = explode('.', $key);

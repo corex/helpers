@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\CoRex\Helpers;
 
 use CoRex\Helpers\Str;
@@ -7,24 +9,49 @@ use PHPUnit\Framework\TestCase;
 
 class StrTest extends TestCase
 {
+    /** @var string */
     private $stringLeft = 'æøå';
+
+    /** @var string */
     private $stringRight = 'ÆØÅ';
+
+    /** @var string */
     private $template = '{left}{right}';
+
+    /** @var string */
     private $part1 = 'part1';
+
+    /** @var string */
     private $part2 = 'part2';
+
+    /** @var string */
     private $slugTest = 'ThIs%is\a#certanly.test|with"funny-ChaRaCtErS/and^more$fun more+to_come';
+
+    /** @var string */
     private $slugTestValid = 'thisisacertanly.testwithfunny.charactersandmorefun.moreto.come';
+
+    /** @var string */
     private $pascalCase = 'TestClass';
+
+    /** @var string */
     private $camelCase = 'testClass';
+
+    /** @var string */
     private $snakeCase = 'test_class';
+
+    /** @var string */
     private $kebabCase = 'test-class';
+
+    /** @var string */
     private $idCamelCase = 'id';
+
+    /** @var string */
     private $idPascalCase = 'Id';
 
     /**
      * Test length.
      */
-    public function testLength()
+    public function testLength(): void
     {
         $this->assertEquals(
             mb_strlen($this->stringLeft . $this->stringRight),
@@ -35,7 +62,7 @@ class StrTest extends TestCase
     /**
      * Test lower.
      */
-    public function testLower()
+    public function testLower(): void
     {
         $this->assertEquals(
             $this->stringLeft . $this->stringLeft,
@@ -46,7 +73,7 @@ class StrTest extends TestCase
     /**
      * Test upper.
      */
-    public function testUpper()
+    public function testUpper(): void
     {
         $this->assertEquals(
             $this->stringRight . $this->stringRight,
@@ -57,7 +84,7 @@ class StrTest extends TestCase
     /**
      * Test subtr.
      */
-    public function testSubstr()
+    public function testSubstr(): void
     {
         $this->assertEquals(
             $this->stringLeft,
@@ -72,7 +99,7 @@ class StrTest extends TestCase
     /**
      * Test left.
      */
-    public function testLeft()
+    public function testLeft(): void
     {
         $this->assertEquals($this->stringLeft, Str::left($this->stringLeft . $this->stringRight, 3));
     }
@@ -80,7 +107,7 @@ class StrTest extends TestCase
     /**
      * Test right.
      */
-    public function testRight()
+    public function testRight(): void
     {
         $this->assertEquals($this->stringRight, Str::right($this->stringLeft . $this->stringRight, 3));
     }
@@ -88,7 +115,7 @@ class StrTest extends TestCase
     /**
      * Test starts with.
      */
-    public function testStartsWith()
+    public function testStartsWith(): void
     {
         $this->assertTrue(Str::startsWith($this->stringLeft . $this->stringRight, $this->stringLeft));
     }
@@ -96,7 +123,7 @@ class StrTest extends TestCase
     /**
      * Test ends with.
      */
-    public function testEndsWith()
+    public function testEndsWith(): void
     {
         $this->assertTrue(Str::endsWith($this->stringLeft . $this->stringRight, $this->stringRight));
     }
@@ -104,7 +131,7 @@ class StrTest extends TestCase
     /**
      * Test ucfirst.
      */
-    public function testUcfirst()
+    public function testUcfirst(): void
     {
         $this->assertEquals(
             Str::substr($this->stringRight, 0, 1) . Str::substr($this->stringLeft, 1, 2),
@@ -115,7 +142,7 @@ class StrTest extends TestCase
     /**
      * Test lcfirst.
      */
-    public function testLcfirst()
+    public function testLcfirst(): void
     {
         $this->assertEquals(
             Str::substr($this->stringLeft, 0, 1) . Str::substr($this->stringRight, 1, 2),
@@ -126,7 +153,7 @@ class StrTest extends TestCase
     /**
      * Test limit.
      */
-    public function testLimit()
+    public function testLimit(): void
     {
         $this->assertEquals(
             $this->stringLeft . Str::LIMIT_SUFFIX,
@@ -146,7 +173,7 @@ class StrTest extends TestCase
     /**
      * Test is prefixed.
      */
-    public function testIsPrefixed()
+    public function testIsPrefixed(): void
     {
         $this->assertFalse(Str::isPrefixed($this->stringLeft . $this->stringRight, $this->stringRight));
         $this->assertTrue(Str::isPrefixed($this->stringLeft . $this->stringRight, $this->stringLeft));
@@ -156,7 +183,7 @@ class StrTest extends TestCase
     /**
      * Test strip prefix.
      */
-    public function testStripPrefix()
+    public function testStripPrefix(): void
     {
         $this->assertEquals(
             $this->stringRight,
@@ -169,7 +196,7 @@ class StrTest extends TestCase
     /**
      * Test force prefix.
      */
-    public function testForcePrefix()
+    public function testForcePrefix(): void
     {
         $this->assertEquals(
             $this->stringLeft . $this->stringRight,
@@ -182,7 +209,7 @@ class StrTest extends TestCase
     /**
      * Test is suffixed.
      */
-    public function testIsSuffixed()
+    public function testIsSuffixed(): void
     {
         $this->assertFalse(Str::isSuffixed($this->stringLeft . $this->stringRight, $this->stringLeft));
         $this->assertTrue(Str::isSuffixed($this->stringLeft . $this->stringRight, $this->stringRight));
@@ -192,7 +219,7 @@ class StrTest extends TestCase
     /**
      * Test strip suffix.
      */
-    public function testStripSuffix()
+    public function testStripSuffix(): void
     {
         $this->assertEquals(
             $this->stringLeft,
@@ -205,7 +232,7 @@ class StrTest extends TestCase
     /**
      * Test force suffix.
      */
-    public function testForceSuffix()
+    public function testForceSuffix(): void
     {
         $this->assertEquals(
             $this->stringLeft . $this->stringRight,
@@ -218,7 +245,7 @@ class StrTest extends TestCase
     /**
      * Test replace token.
      */
-    public function testReplaceToken()
+    public function testReplaceToken(): void
     {
         $this->assertEquals($this->stringLeft . $this->stringRight, Str::replaceToken($this->template, [
             'left' => $this->stringLeft,
@@ -229,7 +256,7 @@ class StrTest extends TestCase
     /**
      * Test remove first.
      */
-    public function testRemoveFirst()
+    public function testRemoveFirst(): void
     {
         $this->assertEquals($this->part2, Str::removeFirst($this->part1 . '/' . $this->part2, '/'));
     }
@@ -237,7 +264,7 @@ class StrTest extends TestCase
     /**
      * Test remove last.
      */
-    public function testRemoveLast()
+    public function testRemoveLast(): void
     {
         $this->assertEquals($this->part1, Str::removeLast($this->part1 . '/' . $this->part2, '/'));
     }
@@ -245,7 +272,7 @@ class StrTest extends TestCase
     /**
      * Test get first.
      */
-    public function testGetFirst()
+    public function testGetFirst(): void
     {
         $this->assertEquals($this->part1, Str::first($this->part1 . '/' . $this->part2, '/'));
     }
@@ -253,7 +280,7 @@ class StrTest extends TestCase
     /**
      * Test get last.
      */
-    public function testGetLast()
+    public function testGetLast(): void
     {
         $this->assertEquals($this->part2, Str::last($this->part1 . '/' . $this->part2, '/'));
     }
@@ -261,7 +288,7 @@ class StrTest extends TestCase
     /**
      * Test get part.
      */
-    public function testGetPart()
+    public function testGetPart(): void
     {
         $this->assertEquals($this->part1, Str::part($this->part1 . '/' . $this->part2, '/', 0));
         $this->assertEquals($this->part2, Str::part($this->part1 . '/' . $this->part2, '/', 1));
@@ -271,7 +298,7 @@ class StrTest extends TestCase
     /**
      * Test get csv fields.
      */
-    public function testGetCsvFields()
+    public function testGetCsvFields(): void
     {
         $csv = '"' . $this->part1 . '","' . $this->part2 . '"';
         $this->assertEquals([$this->part1, $this->part2], Str::csvFields($csv));
@@ -283,7 +310,7 @@ class StrTest extends TestCase
     /**
      * Test slug.
      */
-    public function testSlug()
+    public function testSlug(): void
     {
         // Test standard separator.
         $this->assertEquals($this->slugTestValid, Str::slug($this->slugTest));
@@ -298,7 +325,7 @@ class StrTest extends TestCase
     /**
      * Test split into key value.
      */
-    public function testSplitIntoKeyValue()
+    public function testSplitIntoKeyValue(): void
     {
         $uri = 'component/security/user/enable';
         $keys = ['type', 'component', 'controller', 'action'];
@@ -313,7 +340,7 @@ class StrTest extends TestCase
     /**
      * Test split into key value.
      */
-    public function testSplitIntoKeyValueLargerUri()
+    public function testSplitIntoKeyValueLargerUri(): void
     {
         $uri = 'component/security/user/enable';
         $keys = ['type', 'component', 'controller'];
@@ -327,7 +354,7 @@ class StrTest extends TestCase
     /**
      * Test split into key value.
      */
-    public function testSplitIntoKeyValueLargerKeys()
+    public function testSplitIntoKeyValueLargerKeys(): void
     {
         $uri = 'component/security/user';
         $keys = ['type', 'component', 'controller', 'action'];
@@ -341,7 +368,7 @@ class StrTest extends TestCase
     /**
      * Test unique standard.
      */
-    public function testUniqueStandard()
+    public function testUniqueStandard(): void
     {
         $unique1 = Str::unique();
         $unique2 = Str::unique();
@@ -351,7 +378,7 @@ class StrTest extends TestCase
     /**
      * Test unique prefix.
      */
-    public function testUniquePrefix()
+    public function testUniquePrefix(): void
     {
         $uniquePrefix1 = Str::unique('test');
         $uniquePrefix2 = Str::unique('test');
@@ -365,7 +392,7 @@ class StrTest extends TestCase
     /**
      * Test unique suffix.
      */
-    public function testUniqueSuffix()
+    public function testUniqueSuffix(): void
     {
         $uniqueSuffix1 = Str::unique('', 'test');
         $uniqueSuffix2 = Str::unique('', 'test');
@@ -379,9 +406,9 @@ class StrTest extends TestCase
     /**
      * Test explode standard.
      */
-    public function testExplodeStandard()
+    public function testExplodeStandard(): void
     {
-        $string = "item1|item2|item3|item4";
+        $string = 'item1|item2|item3|item4';
         $stringResult = ['item1', 'item2', 'item3', 'item4'];
         $this->assertEquals($stringResult, Str::explode('|', $string));
     }
@@ -389,7 +416,7 @@ class StrTest extends TestCase
     /**
      * Test explode file string with cr.
      */
-    public function testExplodeFileStringWithCR()
+    public function testExplodeFileStringWithCR(): void
     {
         $string = "item1\r\nitem2\r\nitem3\r\nitem4";
         $stringResult = ['item1', 'item2', 'item3', 'item4'];
@@ -399,9 +426,9 @@ class StrTest extends TestCase
     /**
      * Test explode with callable.
      */
-    public function testExplodeWithCallable()
+    public function testExplodeWithCallable(): void
     {
-        $string = "item1|item2|item3|item4";
+        $string = 'item1|item2|item3|item4';
         $stringResult = ['{item1}', '{item2}', '{item3}', '{item4}'];
         $this->assertEquals($stringResult, Str::explode('|', $string, function ($line) {
             return '{' . $line . '}';
@@ -411,20 +438,20 @@ class StrTest extends TestCase
     /**
      * Test implode standard.
      */
-    public function testImplodeStandard()
+    public function testImplodeStandard(): void
     {
         $items = ['item1', 'item2', 'item3', 'item4'];
-        $itemsResult = "item1|item2|item3|item4";
+        $itemsResult = 'item1|item2|item3|item4';
         $this->assertEquals($itemsResult, Str::implode('|', $items));
     }
 
     /**
      * Test implode with callable.
      */
-    public function testImplodeWithCallable()
+    public function testImplodeWithCallable(): void
     {
         $items = ['item1', 'item2', 'item3', 'item4'];
-        $itemsResult = "{item1}|{item2}|{item3}|{item4}";
+        $itemsResult = '{item1}|{item2}|{item3}|{item4}';
         $this->assertEquals($itemsResult, Str::implode('|', $items, function ($line) {
             return '{' . $line . '}';
         }));
@@ -433,7 +460,7 @@ class StrTest extends TestCase
     /**
      * Test pad left default filler.
      */
-    public function testPadLeftDefaultFiller()
+    public function testPadLeftDefaultFiller(): void
     {
         $paddedString = Str::padLeft($this->stringLeft, 4);
         $this->assertEquals(' ' . $this->stringLeft, $paddedString);
@@ -442,7 +469,7 @@ class StrTest extends TestCase
     /**
      * Test pad left specified filler.
      */
-    public function testPadLeftSpecifiedFiller()
+    public function testPadLeftSpecifiedFiller(): void
     {
         $paddedString = Str::padLeft($this->stringLeft, 4, '0');
         $this->assertEquals('0' . $this->stringLeft, $paddedString);
@@ -451,7 +478,7 @@ class StrTest extends TestCase
     /**
      * Test pad right default filler.
      */
-    public function testPadRightDefaultFiller()
+    public function testPadRightDefaultFiller(): void
     {
         $paddedString = Str::padRight($this->stringLeft, 4);
         $this->assertEquals($this->stringLeft . ' ', $paddedString);
@@ -460,7 +487,7 @@ class StrTest extends TestCase
     /**
      * Test pad right specified filler.
      */
-    public function testPadRightSpecifiedFIller()
+    public function testPadRightSpecifiedFIller(): void
     {
         $paddedString = Str::padRight($this->stringLeft, 4);
         $this->assertEquals($this->stringLeft . ' ', $paddedString);
@@ -469,7 +496,7 @@ class StrTest extends TestCase
     /**
      * Test wrap not wrapped.
      */
-    public function testWrapNotWrapped()
+    public function testWrapNotWrapped(): void
     {
         $string = 'test1 test2 test3';
         $wrapped = Str::wrap($string, 20);
@@ -479,7 +506,7 @@ class StrTest extends TestCase
     /**
      * Test wrap wrapped.
      */
-    public function testWrapWrapped()
+    public function testWrapWrapped(): void
     {
         $string = 'test1 test2 test3';
         $wrapped = Str::wrap($string, 8);
@@ -489,7 +516,7 @@ class StrTest extends TestCase
     /**
      * Test wrap empty.
      */
-    public function testWrapEmpty()
+    public function testWrapEmpty(): void
     {
         $this->assertEquals('', Str::wrap('', 8));
     }
@@ -497,7 +524,7 @@ class StrTest extends TestCase
     /**
      * Test wrap empty with linebreak.
      */
-    public function testWrapEmptyLinebreak()
+    public function testWrapEmptyLinebreak(): void
     {
         $this->assertEquals("test\n", Str::wrap("test\n", 8));
     }
@@ -505,7 +532,7 @@ class StrTest extends TestCase
     /**
      * Test pascal case.
      */
-    public function testPascalCase()
+    public function testPascalCase(): void
     {
         // Standard.
         $this->assertEquals($this->pascalCase, Str::pascalCase($this->pascalCase), 'CASE: pascal > pascal');
@@ -529,7 +556,7 @@ class StrTest extends TestCase
     /**
      * Test camel case.
      */
-    public function testCamelCase()
+    public function testCamelCase(): void
     {
         // Standard.
         $this->assertEquals($this->camelCase, Str::camelCase($this->pascalCase), 'CASE: pascal > camel');
@@ -553,7 +580,7 @@ class StrTest extends TestCase
     /**
      * Test snake case.
      */
-    public function testSnakeCase()
+    public function testSnakeCase(): void
     {
         // Standard.
         $this->assertEquals($this->snakeCase, Str::snakeCase($this->pascalCase), 'CASE: pascal > snake');
@@ -577,7 +604,7 @@ class StrTest extends TestCase
     /**
      * Test kebab case.
      */
-    public function testKebabCase()
+    public function testKebabCase(): void
     {
         // Standard.
         $this->assertEquals($this->kebabCase, Str::kebabCase($this->pascalCase), 'CASE: pascal > kebab');
@@ -601,7 +628,7 @@ class StrTest extends TestCase
     /**
      * Test case convert array keys recursively.
      */
-    public function testCaseConvertArrayKeysRecursively()
+    public function testCaseConvertArrayKeysRecursively(): void
     {
         $convertedTest = Str::caseConvertArrayKeysRecursively([
             'id' => [
@@ -620,7 +647,7 @@ class StrTest extends TestCase
     /**
      * Test strpos.
      */
-    public function testStrpos()
+    public function testStrpos(): void
     {
         // Check random character starting from 0+.
         $check = substr($this->slugTestValid, mt_rand(1, strlen($this->slugTestValid) - 1), 1);
@@ -645,7 +672,7 @@ class StrTest extends TestCase
     /**
      * Test indexOf.
      */
-    public function testIndexOf()
+    public function testIndexOf(): void
     {
         // Check random character starting from 0+.
         $check = substr($this->slugTestValid, mt_rand(1, strlen($this->slugTestValid) - 1), 1);
@@ -670,7 +697,7 @@ class StrTest extends TestCase
     /**
      * Test contains.
      */
-    public function testContains()
+    public function testContains(): void
     {
         // Check random character starting from 0+.
         $check = substr($this->slugTestValid, mt_rand(1, strlen($this->slugTestValid) - 1), 1);

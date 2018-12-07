@@ -1,20 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\CoRex\Helpers\Traits;
 
+use CoRex\Helpers\Traits\DataTrait;
 use PHPUnit\Framework\TestCase;
 use Tests\CoRex\Helpers\Helpers\Data;
 
 class DataTraitTest extends TestCase
 {
-    private $randomString;
-    private $randomInt;
-    private $randomBoolean;
-
     /**
      * Test clear.
      */
-    public function testClear()
+    public function testClear(): void
     {
         $data = $this->data()
             ->set('mixed', 'something')
@@ -28,9 +27,9 @@ class DataTraitTest extends TestCase
     /**
      * Test setArray no merge.
      */
-    public function testSetArrayNoMerge()
+    public function testSetArrayNoMerge(): void
     {
-        $md5 = md5(mt_rand(1, 100000));
+        $md5 = md5((string)mt_rand(1, 100000));
         $check1 = $md5 . '1';
         $check2 = $md5 . '2';
         $check3 = $md5 . '3';
@@ -51,9 +50,9 @@ class DataTraitTest extends TestCase
     /**
      * Test setArray merge.
      */
-    public function testSetArrayMerge()
+    public function testSetArrayMerge(): void
     {
-        $md5 = md5(mt_rand(1, 100000));
+        $md5 = md5((string)mt_rand(1, 100000));
         $check1 = $md5 . '1';
         $check2 = $md5 . '2';
         $check3 = $md5 . '3';
@@ -81,7 +80,7 @@ class DataTraitTest extends TestCase
     /**
      * Test has.
      */
-    public function testHas()
+    public function testHas(): void
     {
         $data = $this->data();
         $this->assertFalse($data->has('check'));
@@ -92,9 +91,9 @@ class DataTraitTest extends TestCase
     /**
      * Test get/set.
      */
-    public function testGetSet()
+    public function testGetSet(): void
     {
-        $check = md5(mt_rand(1, 100000));
+        $check = md5((string)mt_rand(1, 100000));
         $data = $this->data()->set('mixed', $check);
         $this->assertEquals($check, $data->get('mixed'));
     }
@@ -102,7 +101,7 @@ class DataTraitTest extends TestCase
     /**
      * Test getInt.
      */
-    public function testGetInt()
+    public function testGetInt(): void
     {
         $value = mt_rand(1, 100000);
         $data = $this->data()->set('int', $value);
@@ -112,7 +111,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setInt.
      */
-    public function testSetInt()
+    public function testSetInt(): void
     {
         $value = mt_rand(1, 100000);
         $data = $this->data()->setInt('int', $value);
@@ -122,7 +121,7 @@ class DataTraitTest extends TestCase
     /**
      * Test getBool from numeric.
      */
-    public function testGetBoolFromNumeric()
+    public function testGetBoolFromNumeric(): void
     {
         $data = $this->data()->set('bool', 1);
         $this->assertTrue($data->getBool('bool'));
@@ -134,7 +133,7 @@ class DataTraitTest extends TestCase
     /**
      * Test getBool from boolean.
      */
-    public function testGetBoolFromBoolean()
+    public function testGetBoolFromBoolean(): void
     {
         $data = $this->data()->set('bool', true);
         $this->assertTrue($data->getBool('bool'));
@@ -146,7 +145,7 @@ class DataTraitTest extends TestCase
     /**
      * Test getBool from string numeric.
      */
-    public function testGetBoolFromStringNumeric()
+    public function testGetBoolFromStringNumeric(): void
     {
         $data = $this->data()->set('bool', '1');
         $this->assertTrue($data->getBool('bool'));
@@ -158,7 +157,7 @@ class DataTraitTest extends TestCase
     /**
      * Test getBool from string boolean.
      */
-    public function testGetBoolFromStringBoolean()
+    public function testGetBoolFromStringBoolean(): void
     {
         $data = $this->data()->set('bool', 'true');
         $this->assertTrue($data->getBool('bool'));
@@ -170,7 +169,7 @@ class DataTraitTest extends TestCase
     /**
      * Test getBool from string yes/no.
      */
-    public function testGetBoolFromStringYesNo()
+    public function testGetBoolFromStringYesNo(): void
     {
         $data = $this->data()->set('bool', 'yes');
         $this->assertTrue($data->getBool('bool'));
@@ -182,7 +181,7 @@ class DataTraitTest extends TestCase
     /**
      * Test getBool from string on/off.
      */
-    public function testGetBoolFromStringOnOff()
+    public function testGetBoolFromStringOnOff(): void
     {
         $data = $this->data()->set('bool', 'on');
         $this->assertTrue($data->getBool('bool'));
@@ -194,7 +193,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setBool as numeric.
      */
-    public function testSetBoolAsNumeric()
+    public function testSetBoolAsNumeric(): void
     {
         $data = $this->data()->setBool('bool', 1);
         $this->assertEquals(['bool' => true], $data->all());
@@ -206,7 +205,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setBool as bool.
      */
-    public function testSetBoolAsBool()
+    public function testSetBoolAsBool(): void
     {
         $data = $this->data()->setBool('bool', true);
         $this->assertEquals(['bool' => true], $data->all());
@@ -218,7 +217,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setBool as string numeric.
      */
-    public function testSetBoolAsStringNumeric()
+    public function testSetBoolAsStringNumeric(): void
     {
         $data = $this->data()->setBool('bool', '1');
         $this->assertEquals(['bool' => true], $data->all());
@@ -230,7 +229,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setBool as string bool.
      */
-    public function testSetBoolAsStringBool()
+    public function testSetBoolAsStringBool(): void
     {
         $data = $this->data()->setBool('bool', 'true');
         $this->assertEquals(['bool' => true], $data->all());
@@ -242,7 +241,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setBool as string yes/no.
      */
-    public function testSetBoolAsStringYesNo()
+    public function testSetBoolAsStringYesNo(): void
     {
         $data = $this->data()->setBool('bool', 'yes');
         $this->assertEquals(['bool' => true], $data->all());
@@ -254,7 +253,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setBool as string on/off.
      */
-    public function testSetBoolAsStringOnOff()
+    public function testSetBoolAsStringOnOff(): void
     {
         $data = $this->data()->setBool('bool', 'on');
         $this->assertEquals(['bool' => true], $data->all());
@@ -266,7 +265,7 @@ class DataTraitTest extends TestCase
     /**
      * Test setNull.
      */
-    public function testSetNull()
+    public function testSetNull(): void
     {
         $data = $this->data();
         $data->set('test', 'something');
@@ -278,7 +277,7 @@ class DataTraitTest extends TestCase
     /**
      * Test remove.
      */
-    public function testRemove()
+    public function testRemove(): void
     {
         $data = $this->data();
         $data->set('test', 'something');
@@ -290,7 +289,7 @@ class DataTraitTest extends TestCase
     /**
      * Test all.
      */
-    public function testAll()
+    public function testAll(): void
     {
         $data = $this->data();
         $this->assertEquals([], $data->all());
@@ -303,23 +302,10 @@ class DataTraitTest extends TestCase
     /**
      * Data.
      *
-     * @return Data
+     * @return Data|DataTrait
      */
-    public function data()
+    public function data(): Data
     {
         return new Data();
-    }
-
-    /**
-     * Setup.
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        // Set random values.
-        $this->randomString = md5(mt_rand(1, 100000));
-        $this->randomInt = mt_rand(1, 100000);
-        $this->randomBoolean = mt_rand(0, 1) == 1;
     }
 }

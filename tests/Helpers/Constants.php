@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\CoRex\Helpers\Helpers;
 
 class Constants
 {
-    const ACTOR_FIRSTNAME = 'Roger';
-    const ACTOR_LASTNAME = 'Moore';
+    public const ACTOR_FIRSTNAME = 'Roger';
+    public const ACTOR_LASTNAME = 'Moore';
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\CoRex\Helpers;
 
 use CoRex\Helpers\Obj;
@@ -17,6 +19,7 @@ use Tests\CoRex\Helpers\Helpers\ObjHelperWithoutInterface;
 
 class ObjTest extends TestCase
 {
+    /** @var string[] */
     private $checkProperties = [
         'property1' => 'property 1',
         'property2' => 'property 2',
@@ -27,7 +30,7 @@ class ObjTest extends TestCase
     /**
      * Test getConstants.
      */
-    public function testGetConstants()
+    public function testGetConstants(): void
     {
         $this->assertEquals([
             'ACTOR_FIRSTNAME' => Constants::ACTOR_FIRSTNAME,
@@ -38,7 +41,7 @@ class ObjTest extends TestCase
     /**
      * Test getConstants failure.
      */
-    public function testGetConstantsFailure()
+    public function testGetConstantsFailure(): void
     {
         $this->assertEquals([], Obj::getConstants('unknown'));
     }
@@ -48,7 +51,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetPrivatePropertiesFromObject()
+    public function testGetPrivatePropertiesFromObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $properties = Obj::getProperties($objHelperObject, null, Obj::PROPERTY_PRIVATE);
@@ -60,7 +63,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetPrivatePropertiesFromStatic()
+    public function testGetPrivatePropertiesFromStatic(): void
     {
         $properties = Obj::getProperties(null, ObjHelperStatic::class, Obj::PROPERTY_PRIVATE);
         $this->assertEquals($this->checkProperties, $properties);
@@ -69,7 +72,7 @@ class ObjTest extends TestCase
     /**
      * Test get interfaces with from object.
      */
-    public function testGetInterfacesWithFromObject()
+    public function testGetInterfacesWithFromObject(): void
     {
         $objHelperWithInterface = new ObjHelperWithInterface();
         $interfaces = Obj::getInterfaces($objHelperWithInterface);
@@ -79,7 +82,7 @@ class ObjTest extends TestCase
     /**
      * Test get interfaces with from class.
      */
-    public function testGetInterfacesWithFromClass()
+    public function testGetInterfacesWithFromClass(): void
     {
         $interfaces = Obj::getInterfaces(ObjHelperWithInterface::class);
         $this->assertArrayHasKey(ObjHelperInterface::class, $interfaces);
@@ -88,7 +91,7 @@ class ObjTest extends TestCase
     /**
      * Test get interfaces without from object.
      */
-    public function testGetInterfacesWithoutFromObject()
+    public function testGetInterfacesWithoutFromObject(): void
     {
         $objHelperWithoutInterface = new ObjHelperWithoutInterface();
         $interfaces = Obj::getInterfaces($objHelperWithoutInterface);
@@ -98,7 +101,7 @@ class ObjTest extends TestCase
     /**
      * Test get interfaces without from class.
      */
-    public function testGetInterfacesWithoutFromClass()
+    public function testGetInterfacesWithoutFromClass(): void
     {
         $interfaces = Obj::getInterfaces(ObjHelperWithoutInterface::class);
         $this->assertArrayNotHasKey(ObjHelperInterface::class, $interfaces);
@@ -107,7 +110,7 @@ class ObjTest extends TestCase
     /**
      * Test has interface with from object.
      */
-    public function testHasInterfaceWithFromObject()
+    public function testHasInterfaceWithFromObject(): void
     {
         $objHelperWithInterface = new ObjHelperWithInterface();
         $this->assertTrue(Obj::hasInterface($objHelperWithInterface, ObjHelperInterface::class));
@@ -116,7 +119,7 @@ class ObjTest extends TestCase
     /**
      * Test has interface with from class.
      */
-    public function testHasInterfaceWithFromClass()
+    public function testHasInterfaceWithFromClass(): void
     {
         $this->assertTrue(Obj::hasInterface(ObjHelperWithInterface::class, ObjHelperInterface::class));
     }
@@ -124,7 +127,7 @@ class ObjTest extends TestCase
     /**
      * Test has interface without from object.
      */
-    public function testHasInterfaceWithoutFromObject()
+    public function testHasInterfaceWithoutFromObject(): void
     {
         $objHelperWithoutInterface = new ObjHelperWithoutInterface();
         $this->assertFalse(Obj::hasInterface($objHelperWithoutInterface, ObjHelperInterface::class));
@@ -133,7 +136,7 @@ class ObjTest extends TestCase
     /**
      * Test has interface without from class.
      */
-    public function testHasInterfaceWithoutFromClass()
+    public function testHasInterfaceWithoutFromClass(): void
     {
         $this->assertFalse(Obj::hasInterface(ObjHelperWithoutInterface::class, ObjHelperInterface::class));
     }
@@ -141,7 +144,7 @@ class ObjTest extends TestCase
     /**
      * Test getExtends with from object.
      */
-    public function testGetExtendsWithFromObject()
+    public function testGetExtendsWithFromObject(): void
     {
         $objHelperObjectExtended = new ObjHelperObjectExtended();
         $extends = Obj::getExtends($objHelperObjectExtended);
@@ -151,7 +154,7 @@ class ObjTest extends TestCase
     /**
      * Test getExtends with from class.
      */
-    public function testGetExtendsWithFromClass()
+    public function testGetExtendsWithFromClass(): void
     {
         $extends = Obj::getExtends(ObjHelperObjectExtended::class);
         $this->assertTrue(in_array(ObjHelperObject::class, $extends));
@@ -160,7 +163,7 @@ class ObjTest extends TestCase
     /**
      * Test getExtends without from object.
      */
-    public function testGetExtendsWithoutFromObject()
+    public function testGetExtendsWithoutFromObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $extends = Obj::getExtends($objHelperObject);
@@ -170,7 +173,7 @@ class ObjTest extends TestCase
     /**
      * Test getExtends without from class.
      */
-    public function testGetExtendsWithoutFromClass()
+    public function testGetExtendsWithoutFromClass(): void
     {
         $extends = Obj::getExtends(ObjHelperObject::class);
         $this->assertEquals([], $extends);
@@ -179,7 +182,7 @@ class ObjTest extends TestCase
     /**
      * Test hasExtends with from object.
      */
-    public function testHasExtendsWithFromObject()
+    public function testHasExtendsWithFromObject(): void
     {
         $objHelperObjectExtended = new ObjHelperObjectExtended();
         $this->assertTrue(Obj::hasExtends($objHelperObjectExtended, ObjHelperObject::class));
@@ -188,7 +191,7 @@ class ObjTest extends TestCase
     /**
      * Test hasExtends with from class.
      */
-    public function testHasExtendsWithFromClass()
+    public function testHasExtendsWithFromClass(): void
     {
         $this->assertTrue(Obj::hasExtends(ObjHelperObjectExtended::class, ObjHelperObject::class));
     }
@@ -196,7 +199,7 @@ class ObjTest extends TestCase
     /**
      * Test hasExtends without from object.
      */
-    public function testHasExtendsWithoutFromObject()
+    public function testHasExtendsWithoutFromObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $this->assertFalse(Obj::hasExtends($objHelperObject, ObjHelperObject::class));
@@ -205,7 +208,7 @@ class ObjTest extends TestCase
     /**
      * Test hasExtends without from class.
      */
-    public function testHasExtendsWithoutFromClass()
+    public function testHasExtendsWithoutFromClass(): void
     {
         $this->assertFalse(Obj::hasExtends(ObjHelperObject::class, ObjHelperObject::class));
     }
@@ -213,7 +216,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod private from object.
      */
-    public function testHasMethodPrivateFromObject()
+    public function testHasMethodPrivateFromObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $this->assertTrue(Obj::hasMethod('privateMethod', $objHelperObject));
@@ -222,7 +225,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod protected from object.
      */
-    public function testHasMethodProtectedFromObject()
+    public function testHasMethodProtectedFromObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $this->assertTrue(Obj::hasMethod('protectedMethod', $objHelperObject));
@@ -231,7 +234,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod public from object.
      */
-    public function testHasMethodPublicFromObject()
+    public function testHasMethodPublicFromObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $this->assertTrue(Obj::hasMethod('publicMethod', $objHelperObject));
@@ -240,7 +243,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod private from class.
      */
-    public function testHasMethodPrivateFromClass()
+    public function testHasMethodPrivateFromClass(): void
     {
         $this->assertTrue(Obj::hasMethod('privateMethod', ObjHelperObject::class));
     }
@@ -248,7 +251,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod protected from class.
      */
-    public function testHasMethodProtectedFromClass()
+    public function testHasMethodProtectedFromClass(): void
     {
         $this->assertTrue(Obj::hasMethod('protectedMethod', ObjHelperObject::class));
     }
@@ -256,7 +259,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod public from class.
      */
-    public function testHasMethodPublicFromClass()
+    public function testHasMethodPublicFromClass(): void
     {
         $this->assertTrue(Obj::hasMethod('publicMethod', ObjHelperObject::class));
     }
@@ -264,7 +267,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod private from extended class.
      */
-    public function testHasMethodPrivateFromExtendedClass()
+    public function testHasMethodPrivateFromExtendedClass(): void
     {
         $this->assertTrue(Obj::hasMethod('privateMethod', ObjHelperObjectExtended::class));
     }
@@ -272,7 +275,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod protected from extended class.
      */
-    public function testHasMethodProtectedFromExtendedClass()
+    public function testHasMethodProtectedFromExtendedClass(): void
     {
         $this->assertTrue(Obj::hasMethod('protectedMethod', ObjHelperObjectExtended::class));
     }
@@ -280,7 +283,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod public from extended class.
      */
-    public function testHasMethodPublicFromExtendedClass()
+    public function testHasMethodPublicFromExtendedClass(): void
     {
         $this->assertTrue(Obj::hasMethod('publicMethod', ObjHelperObjectExtended::class));
     }
@@ -288,7 +291,7 @@ class ObjTest extends TestCase
     /**
      * Test hasMethod no class.
      */
-    public function testHasMethodNoClass()
+    public function testHasMethodNoClass(): void
     {
         $this->assertFalse(Obj::hasMethod('unknown', 'unknown'));
     }
@@ -298,12 +301,12 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testSetPropertyFound()
+    public function testSetPropertyFound(): void
     {
-        $check1 = md5(microtime(true)) . '1';
-        $check2 = md5(microtime(true)) . '2';
-        $check3 = md5(microtime(true)) . '3';
-        $check4 = md5(microtime(true)) . '4';
+        $check1 = md5((string)microtime(true)) . '1';
+        $check2 = md5((string)microtime(true)) . '2';
+        $check3 = md5((string)microtime(true)) . '3';
+        $check4 = md5((string)microtime(true)) . '4';
 
         $objHelperObject = new ObjHelperObject();
         $this->assertTrue(Obj::setProperty('property1', $objHelperObject, $check1));
@@ -323,9 +326,9 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testSetPropertyNotFound()
+    public function testSetPropertyNotFound(): void
     {
-        $check = md5(microtime(true));
+        $check = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
         $property = Obj::setProperty('unknown', $objHelperObject, $check);
         $this->assertFalse($property);
@@ -336,9 +339,9 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetPropertyNotFound()
+    public function testGetPropertyNotFound(): void
     {
-        $check = md5(microtime(true));
+        $check = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
         $property = Obj::getProperty('unknown', $objHelperObject, $check);
         $this->assertEquals($check, $property);
@@ -349,10 +352,10 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetPropertyFound()
+    public function testGetPropertyFound(): void
     {
-        $check1 = md5(microtime(true));
-        $check2 = md5(microtime(true));
+        $check1 = md5((string)microtime(true));
+        $check2 = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
         Obj::setProperty('property1', $objHelperObject, $check1);
         Obj::setProperty('property2', $objHelperObject, $check2);
@@ -365,12 +368,12 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetPropertyFoundStatic()
+    public function testGetPropertyFoundStatic(): void
     {
-        $check1 = md5(mt_rand(1, 100000));
-        $check2 = md5(mt_rand(1, 100000));
-        $check3 = md5(mt_rand(1, 100000));
-        $check4 = md5(mt_rand(1, 100000));
+        $check1 = md5((string)mt_rand(1, 100000));
+        $check2 = md5((string)mt_rand(1, 100000));
+        $check3 = md5((string)mt_rand(1, 100000));
+        $check4 = md5((string)mt_rand(1, 100000));
         Obj::setProperty('property1', null, $check1, ObjHelperStatic::class);
         Obj::setProperty('property2', null, $check2, ObjHelperStatic::class);
         Obj::setProperty('property3', null, $check3, ObjHelperStatic::class);
@@ -390,7 +393,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetPropertyFoundStaticNull()
+    public function testGetPropertyFoundStaticNull(): void
     {
         $objHelperObject = new ObjHelperObject();
         Obj::setProperty('property1', $objHelperObject, null);
@@ -403,13 +406,13 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testSetPropertiesFound()
+    public function testSetPropertiesFound(): void
     {
         $propertiesValues = [
-            'property1' => md5(microtime(true)) . '1',
-            'property2' => md5(microtime(true)) . '2',
-            'property3' => md5(microtime(true)) . '3',
-            'property4' => md5(microtime(true)) . '4'
+            'property1' => md5((string)microtime(true)) . '1',
+            'property2' => md5((string)microtime(true)) . '2',
+            'property3' => md5((string)microtime(true)) . '3',
+            'property4' => md5((string)microtime(true)) . '4'
         ];
         $objHelperObject = new ObjHelperObject();
         Obj::setProperties($objHelperObject, $propertiesValues);
@@ -422,13 +425,13 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testSetPropertiesOneNotFound()
+    public function testSetPropertiesOneNotFound(): void
     {
         $propertiesValues = [
-            'property1' => md5(microtime(true)) . '1',
-            'unknown' => md5(microtime(true)),
-            'property3' => md5(microtime(true)) . '3',
-            'property4' => md5(microtime(true)) . '4'
+            'property1' => md5((string)microtime(true)) . '1',
+            'unknown' => md5((string)microtime(true)),
+            'property3' => md5((string)microtime(true)) . '3',
+            'property4' => md5((string)microtime(true)) . '4'
         ];
         $objHelperObject = new ObjHelperObject();
         $this->assertFalse(Obj::setProperties($objHelperObject, $propertiesValues));
@@ -439,7 +442,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testSetPropertiesEmpty()
+    public function testSetPropertiesEmpty(): void
     {
         $objHelperObject = new ObjHelperObject();
         $this->assertFalse(Obj::setProperties($objHelperObject, []));
@@ -450,7 +453,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testCallMethodPrivateStatic()
+    public function testCallMethodPrivateStatic(): void
     {
         $method = 'privateMethod';
         $check = Obj::callMethod($method, null, [], ObjHelperStatic::class);
@@ -462,7 +465,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testCallMethodPrivateStaticWithArguments()
+    public function testCallMethodPrivateStaticWithArguments(): void
     {
         $method = 'privateMethod';
         $check = Obj::callMethod($method, null, [
@@ -476,7 +479,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionClassByObject()
+    public function testGetReflectionClassByObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $reflectionClass = $this->getReflectionClassFromObj($objHelperObject);
@@ -488,7 +491,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionClassByClass()
+    public function testGetReflectionClassByClass(): void
     {
         $reflectionClass = $this->getReflectionClassFromObj(ObjHelperObject::class);
         $this->assertEquals(ObjHelperObject::class, $reflectionClass->getName());
@@ -499,7 +502,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionClassByByObjectOverride()
+    public function testGetReflectionClassByByObjectOverride(): void
     {
         $objHelperObjectExtended = new ObjHelperObjectExtended();
         $reflectionClass = $this->getReflectionClassFromObj($objHelperObjectExtended, ObjHelperObject::class);
@@ -511,7 +514,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionClassByByClassOverride()
+    public function testGetReflectionClassByByClassOverride(): void
     {
         $reflectionClass = $this->getReflectionClassFromObj(ObjHelperObjectExtended::class, ObjHelperObject::class);
         $this->assertEquals(ObjHelperObject::class, $reflectionClass->getName());
@@ -522,7 +525,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionMethodByObject()
+    public function testGetReflectionMethodByObject(): void
     {
         $objHelperObject = new ObjHelperObject();
         $reflectionMethod = $this->getReflectionMethodFromObj('privateMethod', $objHelperObject);
@@ -535,7 +538,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionMethodByClass()
+    public function testGetReflectionMethodByClass(): void
     {
         $reflectionMethod = $this->getReflectionMethodFromObj('privateMethod', null, ObjHelperObject::class);
         $this->assertEquals('privateMethod', $reflectionMethod->name);
@@ -547,7 +550,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionMethodByByObjectOverride()
+    public function testGetReflectionMethodByByObjectOverride(): void
     {
         $objHelperObjectExtended = new ObjHelperObjectExtended();
         $reflectionMethod = $this->getReflectionMethodFromObj(
@@ -564,7 +567,7 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testGetReflectionMethodByByClassOverride()
+    public function testGetReflectionMethodByByClassOverride(): void
     {
         $reflectionMethod = $this->getReflectionMethodFromObj('privateMethod', ObjHelperObjectExtended::class);
         $this->assertEquals('privateMethod', $reflectionMethod->name);
@@ -579,7 +582,7 @@ class ObjTest extends TestCase
      * @return ReflectionClass
      * @throws ReflectionException
      */
-    private function getReflectionClassFromObj($objectOrClass, $classOverride = null)
+    private function getReflectionClassFromObj($objectOrClass, $classOverride = null): ReflectionClass
     {
         $reflectionMethod = new ReflectionMethod(Obj::class, 'getReflectionClass');
         $reflectionMethod->setAccessible(true);
@@ -592,11 +595,14 @@ class ObjTest extends TestCase
      * @param string $method
      * @param object|string $objectOrClass
      * @param string $classOverride Default null which means class from $object.
-     * @return ReflectionClass
+     * @return ReflectionMethod
      * @throws ReflectionException
      */
-    private function getReflectionMethodFromObj($method, $objectOrClass, $classOverride = null)
-    {
+    private function getReflectionMethodFromObj(
+        string $method,
+        $objectOrClass,
+        ?string $classOverride = null
+    ): ReflectionMethod {
         $reflectionMethod = new ReflectionMethod(Obj::class, 'getReflectionMethod');
         $reflectionMethod->setAccessible(true);
         return $reflectionMethod->invokeArgs(null, [$method, $objectOrClass, $classOverride]);

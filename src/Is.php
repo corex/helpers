@@ -1,19 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CoRex\Helpers;
 
 class Is
 {
-    const MAX_INT_32BIT = 2147483647;
-    const MIN_INT_32BIT = -2147483648;
-
     /**
      * Tests weather a string is camel case or not.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function camelCase(string $value)
+    public static function camelCase(string $value): bool
     {
         return $value === Str::camelCase($value);
     }
@@ -22,9 +21,9 @@ class Is
      * Tests weather a string is snake case or not.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function kebabCase(string $value)
+    public static function kebabCase(string $value): bool
     {
         return $value === Str::kebabCase($value);
     }
@@ -33,9 +32,9 @@ class Is
      * Tests weather a string is pascal case or not.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function pascalCase(string $value)
+    public static function pascalCase(string $value): bool
     {
         return $value === Str::pascalCase($value);
     }
@@ -44,9 +43,9 @@ class Is
      * Tests weather a string is snake case or not.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function snakeCase(string $value)
+    public static function snakeCase(string $value): bool
     {
         return $value === Str::snakeCase($value, true);
     }
@@ -55,11 +54,11 @@ class Is
      * Is date (YYYY-MM-DD / Y-m-d).
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function date(string $value)
+    public static function date(string $value): bool
     {
-        $matches = preg_match("/^(\d{4})-(\d{2})-(\d{2})$/", $value);
+        $matches = preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value);
         return is_int($matches) && $matches > 0;
     }
 
@@ -67,11 +66,11 @@ class Is
      * Is time (HH:MM:SS / H:i:s).
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function time(string $value)
+    public static function time(string $value): bool
     {
-        $matches = preg_match("/^(\d{2}):(\d{2}):(\d{2})$/", $value);
+        $matches = preg_match('/^(\d{2}):(\d{2}):(\d{2})$/', $value);
         return is_int($matches) && $matches > 0;
     }
 
@@ -79,11 +78,11 @@ class Is
      * Is datetime (YYYY-MM-DD HH:MM:SS / Y-m-d H:i:s).
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function datetime(string $value)
+    public static function datetime(string $value): bool
     {
-        $matches = preg_match("/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/", $value);
+        $matches = preg_match('/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/', $value);
         return is_int($matches) && $matches > 0;
     }
 
@@ -91,57 +90,57 @@ class Is
      * Is email.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function email(string $value)
+    public static function email(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_EMAIL);
-        return is_string($result) && $value == $result;
+        return is_string($result) && $value === $result;
     }
 
     /**
      * Is url.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function url(string $value)
+    public static function url(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_URL);
-        return is_string($result) && $value == $result;
+        return is_string($result) && $value === $result;
     }
 
     /**
      * Is ip.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function ip(string $value)
+    public static function ip(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_IP);
-        return is_string($result) && $value == $result;
+        return is_string($result) && $value === $result;
     }
 
     /**
      * Is mac-address.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function macAddress(string $value)
+    public static function macAddress(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_MAC);
-        return is_string($result) && $value == $result;
+        return is_string($result) && $value === $result;
     }
 
     /**
      * Is timezone.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public static function timezone(string $value)
+    public static function timezone(string $value): bool
     {
         return in_array($value, timezone_identifiers_list());
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\CoRex\Helpers;
 
 use CoRex\Helpers\Bag;
@@ -9,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class BagTest extends TestCase
 {
+    /** @var string[] */
     private $data = [
         'actor' => [
             'firstname' => 'Roger',
@@ -21,7 +24,7 @@ class BagTest extends TestCase
      *
      * @throws Exception
      */
-    public function testConstructorNull()
+    public function testConstructorNull(): void
     {
         $container = new Bag(null);
         $this->assertEquals([], Obj::getProperty('properties', $container));
@@ -30,7 +33,7 @@ class BagTest extends TestCase
     /**
      * Test constructor no data.
      */
-    public function testConstructorNoData()
+    public function testConstructorNoData(): void
     {
         $container = new Bag();
         $this->assertEquals([], $container->all());
@@ -39,7 +42,7 @@ class BagTest extends TestCase
     /**
      * Test constructor with data.
      */
-    public function testConstructorWithData()
+    public function testConstructorWithData(): void
     {
         $container = new Bag($this->data);
         $this->assertEquals($this->data, $container->all());
@@ -48,7 +51,7 @@ class BagTest extends TestCase
     /**
      * Test clear no data.
      */
-    public function testClearNoData()
+    public function testClearNoData(): void
     {
         $container = new Bag();
         $this->assertEquals([], $container->all());
@@ -57,7 +60,7 @@ class BagTest extends TestCase
     /**
      * Test clear null.
      */
-    public function testClearNull()
+    public function testClearNull(): void
     {
         $container = new Bag();
         $container->clear(null);
@@ -67,7 +70,7 @@ class BagTest extends TestCase
     /**
      * Test clear with data.
      */
-    public function testClearWithData()
+    public function testClearWithData(): void
     {
         $container = new Bag();
         $container->clear($this->data);
@@ -79,7 +82,7 @@ class BagTest extends TestCase
      *
      * @throws Exception
      */
-    public function testHasNoData()
+    public function testHasNoData(): void
     {
         $container = new Bag();
         $this->assertFalse($container->has('actor.firstname'));
@@ -90,7 +93,7 @@ class BagTest extends TestCase
      *
      * @throws Exception
      */
-    public function testHasWithData()
+    public function testHasWithData(): void
     {
         $container = new Bag();
         $container->clear($this->data);
@@ -102,7 +105,7 @@ class BagTest extends TestCase
      *
      * @throws Exception
      */
-    public function testSet()
+    public function testSet(): void
     {
         $container = new Bag($this->data);
 
@@ -124,7 +127,7 @@ class BagTest extends TestCase
      *
      * @throws Exception
      */
-    public function testSetArray()
+    public function testSetArray(): void
     {
         $container = new Bag();
         $container->setArray($this->data);
@@ -139,7 +142,7 @@ class BagTest extends TestCase
      *
      * @throws Exception
      */
-    public function testGet()
+    public function testGet(): void
     {
         $container = new Bag($this->data);
 
@@ -153,7 +156,7 @@ class BagTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRemove()
+    public function testRemove(): void
     {
         $container = new Bag($this->data);
 
@@ -172,7 +175,7 @@ class BagTest extends TestCase
     /**
      * Test keys.
      */
-    public function testKeys()
+    public function testKeys(): void
     {
         $container = new Bag($this->data);
         $all = $container->all();
@@ -182,7 +185,7 @@ class BagTest extends TestCase
     /**
      * Test all.
      */
-    public function testAll()
+    public function testAll(): void
     {
         $container = new Bag($this->data);
         $this->assertEquals($this->data, $container->all());

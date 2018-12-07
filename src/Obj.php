@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CoRex\Helpers;
 
 use Exception;
@@ -9,17 +11,17 @@ use ReflectionProperty;
 
 class Obj
 {
-    const PROPERTY_PRIVATE = ReflectionProperty::IS_PRIVATE;
-    const PROPERTY_PROTECTED = ReflectionProperty::IS_PROTECTED;
-    const PROPERTY_PUBLIC = ReflectionProperty::IS_PUBLIC;
+    public const PROPERTY_PRIVATE = ReflectionProperty::IS_PRIVATE;
+    public const PROPERTY_PROTECTED = ReflectionProperty::IS_PROTECTED;
+    public const PROPERTY_PUBLIC = ReflectionProperty::IS_PUBLIC;
 
     /**
      * Get constants.
      *
      * @param object|string $objectOrClass
-     * @return array
+     * @return string[]
      */
-    public static function getConstants($objectOrClass)
+    public static function getConstants($objectOrClass): array
     {
         try {
             $reflectionClass = self::getReflectionClass($objectOrClass);
@@ -34,12 +36,15 @@ class Obj
      *
      * @param object $object
      * @param string $classOverride Default null which means class from $object.
-     * @param integer $propertyType Default null.
-     * @return array
+     * @param int $propertyType Default null.
+     * @return string[]
      * @throws \ReflectionException
      */
-    public static function getProperties($object, $classOverride = null, $propertyType = null)
-    {
+    public static function getProperties(
+        ?object $object,
+        ?string $classOverride = null,
+        ?int $propertyType = null
+    ): array {
         $reflectionClass = self::getReflectionClass($object, $classOverride);
         $properties = [];
         $reflectionProperties = $reflectionClass->getProperties($propertyType);
@@ -60,8 +65,12 @@ class Obj
      * @return mixed
      * @throws \ReflectionException
      */
-    public static function getProperty($property, $object, $defaultValue = null, $classOverride = null)
-    {
+    public static function getProperty(
+        string $property,
+        ?object $object,
+        $defaultValue = null,
+        ?string $classOverride = null
+    ) {
         $reflectionClass = self::getReflectionClass($object, $classOverride);
         try {
             $property = $reflectionClass->getProperty($property);
@@ -79,15 +88,15 @@ class Obj
      * Set properties.
      *
      * @param object $object
-     * @param array $propertiesValues Key/value.
+     * @param string[] $propertiesValues Key/value.
      * @param string $classOverride Default null which means class from $object.
-     * @return boolean
+     * @return bool
      * @throws \ReflectionException
      */
-    public static function setProperties($object, array $propertiesValues, $classOverride = null)
+    public static function setProperties(object $object, array $propertiesValues, ?string $classOverride = null): bool
     {
         $reflectionClass = self::getReflectionClass($object, $classOverride);
-        if (count($propertiesValues) == 0) {
+        if (count($propertiesValues) === 0) {
             return false;
         }
         try {
@@ -109,10 +118,10 @@ class Obj
      * @param object $object
      * @param mixed $value
      * @param string $classOverride Default null which means class from $object.
-     * @return boolean
+     * @return bool
      * @throws \ReflectionException
      */
-    public static function setProperty($property, $object, $value, $classOverride = null)
+    public static function setProperty(string $property, ?object $object, $value, ?string $classOverride = null): bool
     {
         $reflectionClass = self::getReflectionClass($object, $classOverride);
         try {
@@ -130,29 +139,32 @@ class Obj
      *
      * @param string $name
      * @param object $object
-     * @param array $arguments Default [].
+     * @param string[] $arguments Default [].
      * @param string $classOverride Default null.
      * @return mixed
      * @throws \ReflectionException
      */
-    public static function callMethod($name, $object, array $arguments = [], $classOverride = null)
-    {
+    public static function callMethod(
+        string $name,
+        ?object $object,
+        array $arguments = [],
+        ?string $classOverride = null
+    ) {
         $method = self::getReflectionMethod($name, $object, $classOverride);
         $method->setAccessible(true);
         if (count($arguments) > 0) {
             return $method->invokeArgs($object, $arguments);
-        } else {
-            return $method->invoke($object);
         }
+        return $method->invoke($object);
     }
 
     /**
      * Get interfaces.
      *
      * @param object|string $objectOrClass
-     * @return array
+     * @return string[]
      */
-    public static function getInterfaces($objectOrClass)
+    public static function getInterfaces($objectOrClass): array
     {
         if (is_object($objectOrClass)) {
             $objectOrClass = get_class($objectOrClass);
@@ -165,9 +177,9 @@ class Obj
      *
      * @param object|string $objectOrClass
      * @param string $interfaceClassName
-     * @return boolean
+     * @return bool
      */
-    public static function hasInterface($objectOrClass, $interfaceClassName)
+    public static function hasInterface($objectOrClass, string $interfaceClassName): bool
     {
         return in_array($interfaceClassName, self::getInterfaces($objectOrClass));
     }
@@ -176,9 +188,9 @@ class Obj
      * Get extends.
      *
      * @param object|string $objectOrClass
-     * @return array
+     * @return string[]
      */
-    public static function getExtends($objectOrClass)
+    public static function getExtends($objectOrClass): array
     {
         if (is_object($objectOrClass)) {
             $objectOrClass = get_class($objectOrClass);
@@ -191,9 +203,9 @@ class Obj
      *
      * @param object|string $objectOrClass
      * @param string $class
-     * @return boolean
+     * @return bool
      */
-    public static function hasExtends($objectOrClass, $class)
+    public static function hasExtends($objectOrClass, string $class): bool
     {
         return in_array($class, self::getExtends($objectOrClass));
     }
@@ -203,9 +215,9 @@ class Obj
      *
      * @param string $method
      * @param object|string $objectOrClass
-     * @return boolean
+     * @return bool
      */
-    public static function hasMethod($method, $objectOrClass)
+    public static function hasMethod(string $method, $objectOrClass): bool
     {
         try {
             $reflectionClass = self::getReflectionClass($objectOrClass);
@@ -223,7 +235,7 @@ class Obj
      * @return ReflectionClass
      * @throws \ReflectionException
      */
-    private static function getReflectionClass($objectOrClass, $classOverride = null)
+    private static function getReflectionClass($objectOrClass, $classOverride = null): ReflectionClass
     {
         $class = $classOverride;
         if ($class === null) {
@@ -245,7 +257,7 @@ class Obj
      * @return ReflectionMethod
      * @throws \ReflectionException
      */
-    private static function getReflectionMethod($method, $objectOrClass, $classOverride = null)
+    private static function getReflectionMethod(string $method, $objectOrClass, $classOverride = null): ReflectionMethod
     {
         $class = $classOverride;
         if ($class === null) {

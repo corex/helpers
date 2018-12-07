@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CoRex\Helpers;
 
 class Bag
 {
+    /** @var mixed[] */
     private $properties;
 
     /**
-     * Constructor.
+     * Bag.
      *
      * @param mixed $properties
      */
@@ -21,7 +24,7 @@ class Bag
      *
      * @param mixed $properties
      */
-    public function clear($properties = null)
+    public function clear($properties = null): void
     {
         $this->properties = [];
         if ($properties === null) {
@@ -36,9 +39,9 @@ class Bag
      * Check if key exist.
      *
      * @param string $key Uses dot notation.
-     * @return boolean
+     * @return bool
      */
-    public function has($key)
+    public function has(string $key): bool
     {
         $key = $this->prepareKey($key);
         return Arr::has($this->properties, $key);
@@ -49,9 +52,9 @@ class Bag
      *
      * @param string $key Uses dot notation.
      * @param mixed $value
-     * @param boolean $create Default false.
+     * @param bool $create Default false.
      */
-    public function set($key, $value, $create = false)
+    public function set(string $key, $value, $create = false): void
     {
         $key = $this->prepareKey($key);
         Arr::set($this->properties, $key, $value, $create);
@@ -60,10 +63,10 @@ class Bag
     /**
      * Set array (merged by key).
      *
-     * @param array $data
-     * @param boolean $create Default false.
+     * @param mixed[] $data
+     * @param bool $create Default false.
      */
-    public function setArray(array $data, $create = false)
+    public function setArray(array $data, bool $create = false): void
     {
         foreach ($data as $key => $value) {
             $this->set($key, $value, $create);
@@ -77,7 +80,7 @@ class Bag
      * @param mixed $defaultValue
      * @return mixed
      */
-    public function get($key, $defaultValue = null)
+    public function get(string $key, $defaultValue = null)
     {
         $key = $this->prepareKey($key);
         return Arr::get($this->properties, $key, $defaultValue);
@@ -88,7 +91,7 @@ class Bag
      *
      * @param string $key Uses dot notation.
      */
-    public function remove($key)
+    public function remove(string $key): void
     {
         $key = $this->prepareKey($key);
         $this->properties = Arr::remove($this->properties, $key);
@@ -97,9 +100,9 @@ class Bag
     /**
      * Keys.
      *
-     * @return array
+     * @return string[]
      */
-    public function keys()
+    public function keys(): array
     {
         return array_keys($this->all());
     }
@@ -107,9 +110,9 @@ class Bag
     /**
      * All.
      *
-     * @return array
+     * @return mixed[]
      */
-    public function all()
+    public function all(): array
     {
         return (array)$this->properties;
     }
@@ -120,7 +123,7 @@ class Bag
      * @param string $key
      * @return string
      */
-    protected function prepareKey($key)
+    protected function prepareKey(string $key): string
     {
         return $key;
     }

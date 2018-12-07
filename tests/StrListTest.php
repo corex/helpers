@@ -1,23 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\CoRex\Helpers;
 
-use CoRex\Helpers\Obj;
 use CoRex\Helpers\StrList;
 use PHPUnit\Framework\TestCase;
 
 class StrListTest extends TestCase
 {
+    /** @var string */
     private $item1 = 'Item 1';
+
+    /** @var string */
     private $item2 = 'Item 2';
+
+    /** @var string */
     private $item3 = 'Item 3';
+
+    /** @var string */
     private $item4 = 'Item 4';
+
+    /** @var string */
     private $items;
 
     /**
      * Setup.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->items = $this->item1 . '|' . $this->item2 . '|' . $this->item3;
@@ -26,7 +36,7 @@ class StrListTest extends TestCase
     /**
      * Test count.
      */
-    public function testCount()
+    public function testCount(): void
     {
         $this->assertEquals(3, StrList::count($this->items, '|'));
     }
@@ -34,7 +44,7 @@ class StrListTest extends TestCase
     /**
      * Test count empty.
      */
-    public function testCountEmpty()
+    public function testCountEmpty(): void
     {
         $this->assertEquals(0, StrList::count('', '|'));
     }
@@ -42,7 +52,7 @@ class StrListTest extends TestCase
     /**
      * Test add.
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $this->assertEquals(3, StrList::count($this->items, '|'));
         $items = StrList::add($this->items, $this->item4, '|');
@@ -53,7 +63,7 @@ class StrListTest extends TestCase
     /**
      * Test get.
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertEquals($this->item3, StrList::get($this->items, 2, '|'));
     }
@@ -61,7 +71,7 @@ class StrListTest extends TestCase
     /**
      * Test get tag.
      */
-    public function testGetTag()
+    public function testGetTag(): void
     {
         $this->assertEquals('3', StrList::get('-1-|-2-|-3-|-4-', 2, '|', '-'));
     }
@@ -69,7 +79,7 @@ class StrListTest extends TestCase
     /**
      * Test get empty.
      */
-    public function testGetEmpty()
+    public function testGetEmpty(): void
     {
         $this->assertEquals('', StrList::get('', 2, '|'));
     }
@@ -77,7 +87,7 @@ class StrListTest extends TestCase
     /**
      * Test pos.
      */
-    public function testPos()
+    public function testPos(): void
     {
         $this->assertEquals(2, StrList::pos($this->items, $this->item3, '|'));
     }
@@ -85,7 +95,7 @@ class StrListTest extends TestCase
     /**
      * Test pos empty.
      */
-    public function testPosEmpty()
+    public function testPosEmpty(): void
     {
         $this->assertEquals(-1, StrList::pos('', $this->item3, '|'));
     }
@@ -93,7 +103,7 @@ class StrListTest extends TestCase
     /**
      * Test remove.
      */
-    public function testRemove()
+    public function testRemove(): void
     {
         $items = $this->items . '|' . $this->item4;
         $this->assertEquals($this->items, StrList::remove($items, $this->item4, '|'));
@@ -102,7 +112,7 @@ class StrListTest extends TestCase
     /**
      * Test remove index.
      */
-    public function testRemoveIndex()
+    public function testRemoveIndex(): void
     {
         $items = $this->items . '|' . $this->item4;
         $this->assertEquals($this->items, StrList::removeIndex($items, 3, '|'));
@@ -111,7 +121,7 @@ class StrListTest extends TestCase
     /**
      * Test exist.
      */
-    public function testExist()
+    public function testExist(): void
     {
         $this->assertTrue(StrList::exist($this->items, $this->item2, '|'));
         $this->assertFalse(StrList::exist($this->items, $this->item4, '|'));
@@ -120,7 +130,7 @@ class StrListTest extends TestCase
     /**
      * Test merge.
      */
-    public function testMerge()
+    public function testMerge(): void
     {
         $items1 = $this->item2 . '|' . $this->item1;
         $items2 = $this->item4 . '|' . $this->item3;
@@ -131,51 +141,14 @@ class StrListTest extends TestCase
     }
 
     /**
-     * Test sortCompare asc.
-     *
-     * @throws \ReflectionException
+     * Test merge sort.
      */
-    public function testSortCompareAsc()
+    public function testMergeSort(): void
     {
-        $params = ['item1' => 'a', 'item2' => 'b'];
-        $check = Obj::callMethod('sortCompare', null, $params, StrList::class);
-        $this->assertEquals(-1, $check);
-    }
-
-    /**
-     * Test sortCompare desc.
-     *
-     * @throws \ReflectionException
-     */
-    public function testSortCompareDesc()
-    {
-        $params = ['item1' => 'b', 'item2' => 'a'];
-        $check = Obj::callMethod('sortCompare', null, $params, StrList::class);
-        $this->assertEquals(1, $check);
-    }
-
-    /**
-     * Test sortCompare equal.
-     *
-     * @throws \ReflectionException
-     */
-    public function testSortCompareEqual()
-    {
-        $params = ['item1' => 'a', 'item2' => 'a'];
-        $check = Obj::callMethod('sortCompare', null, $params, StrList::class);
-        $this->assertEquals(0, $check);
-    }
-
-    /**
-     * Test sortCompare tag.
-     *
-     * @throws \ReflectionException
-     */
-    public function testSortCompareTag()
-    {
-        Obj::setProperty('usortTag', null, '-', StrList::class);
-        $params = ['item1' => '-a-', 'item2' => '-b-'];
-        $check = Obj::callMethod('sortCompare', null, $params, StrList::class);
-        $this->assertEquals(-1, $check);
+        $items1 = $this->item2 . '|' . $this->item1;
+        $items2 = $this->item4 . '|' . $this->item3;
+        $items = StrList::merge($items1, $items2, true, '|');
+        $checkItems = [$this->item1, $this->item2, $this->item3, $this->item4];
+        $this->assertEquals(implode('|', $checkItems), $items);
     }
 }

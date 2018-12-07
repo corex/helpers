@@ -1,19 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CoRex\Helpers;
 
 class StrList
 {
-    private static $usortTag;
-
     /**
      * Count.
      *
      * @param string $list
      * @param string $separator
-     * @return integer
+     * @return int
      */
-    public static function count($list, $separator)
+    public static function count(string $list, string $separator): int
     {
         return count(self::explode($separator, $list));
     }
@@ -27,7 +27,7 @@ class StrList
      * @param string $tag Default ''.
      * @return string
      */
-    public static function add($list, $item, $separator, $tag = '')
+    public static function add(string $list, string $item, string $separator, string $tag = ''): string
     {
         $items = self::explode($separator, $list);
         if (!in_array($tag . $item . $tag, $items)) {
@@ -40,17 +40,17 @@ class StrList
      * Get.
      *
      * @param string $list
-     * @param string $index
+     * @param string|int $index
      * @param string $separator
      * @param string $tag Default ''.
      * @return string
      */
-    public static function get($list, $index, $separator, $tag = '')
+    public static function get(string $list, $index, string $separator, string $tag = ''): string
     {
         $items = self::explode($separator, $list);
         if (isset($items[$index])) {
             $item = $items[$index];
-            if ($tag != '' && substr($item, 0, 1) == $tag && substr($item, -1) == $tag) {
+            if ($tag !== '' && substr($item, 0, 1) === $tag && substr($item, -1) === $tag) {
                 $item = substr($item, 1, -1);
             }
             return $item;
@@ -65,9 +65,9 @@ class StrList
      * @param string $item
      * @param string $separator
      * @param string $tag Default ''.
-     * @return integer
+     * @return int
      */
-    public static function pos($list, $item, $separator, $tag = '')
+    public static function pos(string $list, string $item, string $separator, string $tag = ''): int
     {
         $items = self::explode($separator, $list);
         $pos = array_search($tag . $item . $tag, $items);
@@ -86,7 +86,7 @@ class StrList
      * @param string $tag Default ''.
      * @return string
      */
-    public static function remove($list, $item, $separator, $tag = '')
+    public static function remove(string $list, string $item, string $separator, string $tag = ''): string
     {
         $items = self::explode($separator, $list);
         $pos = self::pos($list, $item, $separator, $tag);
@@ -100,11 +100,11 @@ class StrList
      * Remove index.
      *
      * @param string $list
-     * @param string $index
+     * @param string|int $index
      * @param string $separator
      * @return string
      */
-    public static function removeIndex($list, $index, $separator)
+    public static function removeIndex(string $list, $index, string $separator): string
     {
         $items = self::explode($separator, $list);
         if (isset($items[$index])) {
@@ -120,9 +120,9 @@ class StrList
      * @param string $item
      * @param string $separator
      * @param string $tag Default ''.
-     * @return boolean
+     * @return bool
      */
-    public static function exist($list, $item, $separator, $tag = '')
+    public static function exist(string $list, string $item, string $separator, string $tag = ''): bool
     {
         $items = self::explode($separator, $list);
         return in_array($tag . $item . $tag, $items);
@@ -133,14 +133,18 @@ class StrList
      *
      * @param string $list1
      * @param string $list2
-     * @param boolean $sort Default false.
+     * @param bool $sort Default false.
      * @param string $separator
      * @param string $tag Default ''.
      * @return string
      */
-    public static function merge($list1, $list2, $sort, $separator, $tag = '')
-    {
-        self::$usortTag = $tag;
+    public static function merge(
+        string $list1,
+        string $list2,
+        bool $sort,
+        string $separator,
+        string $tag = ''
+    ): string {
         $items1 = self::explode($separator, $list1);
         $items2 = self::explode($separator, $list2);
         if (count($items2) > 0) {
@@ -151,32 +155,9 @@ class StrList
             }
         }
         if ($sort) {
-            usort($items1, ['self', 'sortCompare']);
+            sort($items1);
         }
         return implode($separator, $items1);
-    }
-
-    /**
-     * Sort compare (usort for merge).
-     *
-     * @param string $item1
-     * @param string $item2
-     * @return integer
-     */
-    private static function sortCompare($item1, $item2)
-    {
-        if (self::$usortTag != '') {
-            if (substr($item1, 0, 1) == self::$usortTag && substr($item1, -1) == self::$usortTag) {
-                $item1 = substr($item1, 1, -1);
-            }
-            if (substr($item2, 0, 1) == self::$usortTag && substr($item2, -1) == self::$usortTag) {
-                $item2 = substr($item2, 1, -1);
-            }
-        }
-        if ($item1 == $item2) {
-            return 0;
-        }
-        return ($item1 < $item2) ? -1 : 1;
     }
 
     /**
@@ -184,11 +165,11 @@ class StrList
      *
      * @param string $separator
      * @param string $list
-     * @return array
+     * @return string[]
      */
-    private static function explode($separator, $list)
+    private static function explode(string $separator, string $list): array
     {
-        if ($list != '') {
+        if ($list !== '') {
             return explode($separator, $list);
         }
         return [];
