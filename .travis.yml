@@ -1,0 +1,13 @@
+language: php
+
+php:
+  - 7.2
+  - 7.3
+
+install:
+  - composer self-update
+  - travis_retry composer install --no-interaction --prefer-source
+
+before_script: git reset --hard HEAD
+
+script: vendor/bin/phpunit
