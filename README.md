@@ -2,6 +2,10 @@
 
 **_Versioning for this package follows http://semver.org/. Backwards compatibility might break on upgrade to major versions._**
 
+[![Build Status](https://travis-ci.org/corex/helpers.svg?branch=master)](https://travis-ci.org/corex/helpers)
+[![Latest Stable Version](https://poser.pugx.org/corex/helpers/v/stable)](https://packagist.org/packages/corex/helpers)
+[![License](https://poser.pugx.org/corex/helpers/license)](https://packagist.org/packages/corex/helpers)
+
 
 ### Arr
 Various array helpers.
