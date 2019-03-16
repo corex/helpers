@@ -4,10 +4,12 @@ php:
   - 7.2
   - 7.3
 
-install:
-  - composer self-update
+before_script:
+  - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source
 
-before_script: git reset --hard HEAD
+script:
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
 
-script: vendor/bin/phpunit
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

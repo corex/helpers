@@ -2,9 +2,10 @@
 
 **_Versioning for this package follows http://semver.org/. Backwards compatibility might break on upgrade to major versions._**
 
-[![Build Status](https://travis-ci.org/corex/helpers.svg?branch=master)](https://travis-ci.org/corex/helpers)
-[![Latest Stable Version](https://poser.pugx.org/corex/helpers/v/stable)](https://packagist.org/packages/corex/helpers)
-[![License](https://poser.pugx.org/corex/helpers/license)](https://packagist.org/packages/corex/helpers)
+![Packagist](https://img.shields.io/packagist/v/corex/helpers.svg)
+![License](https://img.shields.io/packagist/l/corex/helpers.svg)
+![Build Status](https://travis-ci.org/corex/helpers.svg?branch=master)
+![codecov](https://codecov.io/gh/corex/helpers/branch/master/graph/badge.svg)
 
 
 ### Arr
