@@ -1,7 +1,5 @@
 # Helpers (string, array, ...)
 
-**_Versioning for this package follows http://semver.org/. Backwards compatibility might break on upgrade to major versions._**
-
 ![Packagist](https://img.shields.io/packagist/v/corex/helpers.svg)
 ![License](https://img.shields.io/packagist/l/corex/helpers.svg)
 ![Build Status](https://travis-ci.org/corex/helpers.svg?branch=master)
