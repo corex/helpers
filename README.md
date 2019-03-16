@@ -1,6 +1,5 @@
 # Helpers (string, array, ...)
 
-![Packagist](https://img.shields.io/packagist/v/corex/helpers.svg)
 ![License](https://img.shields.io/packagist/l/corex/helpers.svg)
 ![Build Status](https://travis-ci.org/corex/helpers.svg?branch=master)
 ![codecov](https://codecov.io/gh/corex/helpers/branch/master/graph/badge.svg)

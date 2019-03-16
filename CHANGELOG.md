@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 2.0.2
+
+### Removed
+- Removed version badge due to lack of update.
+
 ## 2.0.1
 
 ### Added
