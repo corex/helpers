@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 2.1.0
+
+### Added
+- Added Obj::getPublicConstants().
+- Added Obj::getPrivateConstants().
+- Added trait ConstantsTrait to get and check for all, public and private constants.
+
 ## 2.0.2
 
 ### Removed

@@ -34,7 +34,11 @@ class ObjTest extends TestCase
     {
         $this->assertEquals([
             'ACTOR_FIRSTNAME' => Constants::ACTOR_FIRSTNAME,
-            'ACTOR_LASTNAME' => Constants::ACTOR_LASTNAME
+            'ACTOR_LASTNAME' => Constants::ACTOR_LASTNAME,
+            'PRIVATE_FIRSTNAME' => 'Sean',
+            'PRIVATE_LASTNAME' => 'Connery',
+            'FIRSTNAME' => Constants::FIRSTNAME,
+            'LASTNAME' => Constants::LASTNAME
         ], Obj::getConstants(Constants::class));
     }
 
@@ -44,6 +48,46 @@ class ObjTest extends TestCase
     public function testGetConstantsFailure(): void
     {
         $this->assertEquals([], Obj::getConstants('unknown'));
+    }
+
+    /**
+     * Test getPublicConstants.
+     */
+    public function testGetPublicConstants(): void
+    {
+        $this->assertEquals([
+            'ACTOR_FIRSTNAME' => Constants::ACTOR_FIRSTNAME,
+            'ACTOR_LASTNAME' => Constants::ACTOR_LASTNAME,
+            'FIRSTNAME' => Constants::FIRSTNAME,
+            'LASTNAME' => Constants::LASTNAME
+        ], Obj::getPublicConstants(Constants::class));
+    }
+
+    /**
+     * Test getPublicConstants failure.
+     */
+    public function testGetPublicConstantsFailure(): void
+    {
+        $this->assertEquals([], Obj::getPublicConstants('unknown'));
+    }
+
+    /**
+     * Test getPrivateConstants.
+     */
+    public function testGetPrivateConstants(): void
+    {
+        $this->assertEquals([
+            'PRIVATE_FIRSTNAME' => 'Sean',
+            'PRIVATE_LASTNAME' => 'Connery'
+        ], Obj::getPrivateConstants(Constants::class));
+    }
+
+    /**
+     * Test getPrivateConstants failure.
+     */
+    public function testGetPrivateConstantsFailure(): void
+    {
+        $this->assertEquals([], Obj::getPrivateConstants('unknown'));
     }
 
     /**

@@ -32,6 +32,60 @@ class Obj
     }
 
     /**
+     * Get public constants.
+     *
+     * @param object|string $objectOrClass
+     * @return string[]
+     */
+    public static function getPublicConstants($objectOrClass): array
+    {
+        try {
+            $reflectionClass = self::getReflectionClass($objectOrClass);
+            $constants = $reflectionClass->getConstants();
+
+            // Loop to find constants.
+            $result = [];
+            foreach ($constants as $name => $value) {
+                $reflectionClassConstant = new \ReflectionClassConstant($objectOrClass, $name);
+                if ($reflectionClassConstant->isPublic()) {
+                    $result[$name] = $value;
+                }
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    /**
+     * Get private constants.
+     *
+     * @param object|string $objectOrClass
+     * @return string[]
+     */
+    public static function getPrivateConstants($objectOrClass): array
+    {
+        try {
+            $reflectionClass = self::getReflectionClass($objectOrClass);
+            $constants = $reflectionClass->getConstants();
+
+            // Loop to find constants.
+            $result = [];
+            foreach ($constants as $name => $value) {
+                $reflectionClassConstant = new \ReflectionClassConstant($objectOrClass, $name);
+                if ($reflectionClassConstant->isPrivate()) {
+                    $result[$name] = $value;
+                }
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    /**
      * Get properties.
      *
      * @param object $object
