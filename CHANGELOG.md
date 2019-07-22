@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 2.2.0
+
+### Added
+- Added trait ConstantsStaticTrait to get and check for all public and private constants on static class.
+
 ## 2.1.0
 
 ### Added

@@ -19,6 +19,17 @@ trait ConstantsTrait
     }
 
     /**
+     * Get class constant by value.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private function getClassConstantByValue($value): ?string
+    {
+        return array_search($value, $this->getClassConstants(), true) ?: null;
+    }
+
+    /**
      * Get public class constants.
      *
      * @return string[]
@@ -26,6 +37,17 @@ trait ConstantsTrait
     private function getPublicClassConstants(): array
     {
         return Obj::getPublicConstants($this);
+    }
+
+    /**
+     * Get public class constant by value.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private function getPublicClassConstantByValue($value): ?string
+    {
+        return array_search($value, $this->getPublicClassConstants(), true) ?: null;
     }
 
     /**
@@ -39,6 +61,17 @@ trait ConstantsTrait
     }
 
     /**
+     * Get private class constant by value.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private function getPrivateClassConstantByValue($value): ?string
+    {
+        return array_search($value, $this->getPrivateClassConstants(), true) ?: null;
+    }
+
+    /**
      * Has class constant.
      *
      * @param string $constantName
@@ -46,7 +79,22 @@ trait ConstantsTrait
      */
     private function hasClassConstant(string $constantName): bool
     {
-        return in_array($constantName, array_keys($this->getClassConstants()));
+        return in_array($constantName, array_keys($this->getClassConstants()), true);
+    }
+
+    /**
+     * Has class constant by value.
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    private function hasClassConstantByValue($value): bool
+    {
+        $constant = $this->getClassConstantByValue($value);
+        if ($constant !== null) {
+            return $this->hasClassConstant($constant);
+        }
+        return false;
     }
 
     /**
@@ -57,7 +105,22 @@ trait ConstantsTrait
      */
     private function hasPublicClassConstant(string $constantName): bool
     {
-        return in_array($constantName, array_keys($this->getPublicClassConstants()));
+        return in_array($constantName, array_keys($this->getPublicClassConstants()), true);
+    }
+
+    /**
+     * Has public class constant by value.
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    private function hasPublicClassConstantByValue($value): bool
+    {
+        $constant = $this->getPublicClassConstantByValue($value);
+        if ($constant !== null) {
+            return $this->hasPublicClassConstant($constant);
+        }
+        return false;
     }
 
     /**
@@ -68,6 +131,21 @@ trait ConstantsTrait
      */
     private function hasPrivateClassConstant(string $constantName): bool
     {
-        return in_array($constantName, array_keys($this->getPrivateClassConstants()));
+        return in_array($constantName, array_keys($this->getPrivateClassConstants()), true);
+    }
+
+    /**
+     * Has private class constant by value.
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    private function hasPrivateClassConstantByValue($value): bool
+    {
+        $constant = $this->getPrivateClassConstantByValue($value);
+        if ($constant !== null) {
+            return $this->hasPrivateClassConstant($constant);
+        }
+        return false;
     }
 }
