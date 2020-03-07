@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Tests\CoRex\Helpers;
 
 use CoRex\Helpers\Obj;
+use CoRex\Helpers\Traits\ConstantsStaticTrait;
+use CoRex\Helpers\Traits\ConstantsTrait;
+use CoRex\Helpers\Traits\DataTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+use Tests\CoRex\Helpers\Helpers\ClassWithTraits;
 use Tests\CoRex\Helpers\Helpers\Constants;
 use Tests\CoRex\Helpers\Helpers\ObjHelperInterface;
 use Tests\CoRex\Helpers\Helpers\ObjHelperObject;
@@ -516,6 +520,48 @@ class ObjTest extends TestCase
             'arguments' => '.test'
         ], ObjHelperStatic::class);
         $this->assertEquals('(' . $method . ').test', $check);
+    }
+
+    /**
+     * Test get traits.
+     */
+    public function testGetTraits(): void
+    {
+        $traits = Obj::getTraits(ClassWithTraits::class);
+        $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits));
+        $this->assertTrue(in_array(DataTrait::class, $traits));
+        $this->assertFalse(in_array(ConstantsTrait::class, $traits));
+    }
+
+    /**
+     * Test get traits object.
+     */
+    public function testGetTraitsObject(): void
+    {
+        $classWithTraits = new ClassWithTraits();
+        $traits = Obj::getTraits($classWithTraits);
+        $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits));
+        $this->assertTrue(in_array(DataTrait::class, $traits));
+        $this->assertFalse(in_array(ConstantsTrait::class, $traits));
+    }
+
+    /**
+     * Test get traits none.
+     */
+    public function testGetTraitsNone(): void
+    {
+        $traits = Obj::getTraits(ObjHelperObject::class);
+        $this->assertTrue(count($traits) === 0);
+    }
+
+    /**
+     * Test has trait.
+     */
+    public function testHasTrait(): void
+    {
+        $this->assertTrue(Obj::hasTrait(ClassWithTraits::class, ConstantsStaticTrait::class));
+        $this->assertTrue(Obj::hasTrait(ClassWithTraits::class, DataTrait::class));
+        $this->assertFalse(Obj::hasTrait(ClassWithTraits::class, ConstantsTrait::class));
     }
 
     /**

@@ -265,6 +265,33 @@ class Obj
     }
 
     /**
+     * Get traits.
+     *
+     * @param object|string $objectOrClass
+     * @return array
+     */
+    public static function getTraits($objectOrClass): array
+    {
+        if (is_object($objectOrClass)) {
+            $objectOrClass = get_class($objectOrClass);
+        }
+
+        return array_values(class_uses($objectOrClass));
+    }
+
+    /**
+     * Has trait.
+     *
+     * @param object|string $objectOrTrait
+     * @param string $class
+     * @return bool
+     */
+    public static function hasTrait($objectOrTrait, string $class): bool
+    {
+        return in_array($class, self::getTraits($objectOrTrait));
+    }
+
+    /**
      * Has method.
      *
      * @param string $method
