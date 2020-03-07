@@ -1,4 +1,4 @@
-# ChangeLog
+# Changelog
 
 ## 2.3.0
 
