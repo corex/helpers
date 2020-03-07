@@ -141,6 +141,7 @@ class Str
         if (mb_strwidth($value, 'UTF-8') <= $limit) {
             return $value;
         }
+
         return rtrim(mb_strimwidth($value, 0, $limit, '', 'UTF-8')) . $end;
     }
 
@@ -157,6 +158,7 @@ class Str
         if ($separator !== '') {
             $data = trim($data, $separator);
         }
+
         return static::substr($data, 0, static::length($prefix)) === $prefix;
     }
 
@@ -173,15 +175,19 @@ class Str
         if ($data === '') {
             return $data;
         }
+
         if ($separator !== '') {
             $data = ltrim($data, $separator);
         }
+
         if (static::substr($data, 0, static::length($prefix)) === $prefix) {
             $data = static::substr($data, static::length($prefix));
         }
+
         if ($separator !== '') {
             $data = ltrim($data, $separator);
         }
+
         return $data;
     }
 
@@ -198,15 +204,19 @@ class Str
         if ($data === '') {
             return $data;
         }
+
         if ($separator !== '') {
             $data = trim($data, $separator);
         }
+
         if (static::substr($data, 0, static::length($prefix)) !== $prefix) {
             if ($separator !== '') {
                 $prefix .= $separator;
             }
+
             $data = $prefix . $data;
         }
+
         return $data;
     }
 
@@ -223,6 +233,7 @@ class Str
         if ($separator !== '') {
             $data = trim($data, $separator);
         }
+
         return static::substr($data, -static::length($suffix)) === $suffix;
     }
 
@@ -239,15 +250,19 @@ class Str
         if ($data === '') {
             return $data;
         }
+
         if ($separator !== '') {
             $data = rtrim($data, $separator);
         }
+
         if (static::substr($data, -static::length($prefix)) === $prefix) {
             $data = static::substr($data, 0, -static::length($prefix));
         }
+
         if ($separator !== '') {
             $data = rtrim($data, $separator);
         }
+
         return $data;
     }
 
@@ -264,15 +279,19 @@ class Str
         if ($data === '') {
             return $data;
         }
+
         if ($separator !== '') {
             $data = trim($data, $separator);
         }
+
         if (static::substr($data, -static::length($prefix)) !== $prefix) {
             if ($separator !== '') {
                 $data .= $separator;
             }
+
             $data .= $prefix;
         }
+
         return $data;
     }
 
@@ -291,6 +310,7 @@ class Str
                 $string = str_replace('{' . $key . '}', $value, $string);
             }
         }
+
         return $string;
     }
 
@@ -305,6 +325,7 @@ class Str
     {
         $string = explode($separator, $string);
         $string = Arr::removeFirst($string);
+
         return implode($separator, $string);
     }
 
@@ -319,6 +340,7 @@ class Str
     {
         $string = explode($separator, $string);
         $string = Arr::removeLast($string);
+
         return implode($separator, $string);
     }
 
@@ -332,6 +354,7 @@ class Str
     public static function first(string $string, string $separator): string
     {
         $string = explode($separator, $string);
+
         return Arr::first($string);
     }
 
@@ -345,6 +368,7 @@ class Str
     public static function last(string $string, string $separator): string
     {
         $string = explode($separator, $string);
+
         return Arr::last($string);
     }
 
@@ -365,6 +389,7 @@ class Str
                 return $string[$index];
             }
         }
+
         return $defaultValue;
     }
 
@@ -380,6 +405,7 @@ class Str
         if (trim($line) === '') {
             return [];
         }
+
         $fields = [];
         $parts = str_getcsv($line, $delimiter);
         if ($parts !== null && count($parts) > 0) {
@@ -388,14 +414,17 @@ class Str
                 if (substr($part, 0, 1) === '"' || substr($part, 0, 1) === '\'') {
                     $part = substr($part, 1);
                 }
+
                 if (substr($part, -1) === '"' || substr($part, -1) === '\'') {
                     $part = substr($part, 0, -1);
                 }
+
                 if ($part !== '') {
                     $fields[] = $part;
                 }
             }
         }
+
         return $fields;
     }
 
@@ -437,12 +466,14 @@ class Str
             if (count($parts) > count($keys)) {
                 $parts = array_slice($parts, 0, count($keys));
             }
+
             if (count($keys) > count($parts)) {
                 $keys = array_slice($keys, 0, count($parts));
             }
 
             $result = array_combine($keys, $parts);
         }
+
         return $result;
     }
 
@@ -459,9 +490,11 @@ class Str
         if ($prefix !== '') {
             $unique = $prefix . $unique;
         }
+
         if ($suffix !== '') {
             $unique .= $suffix;
         }
+
         return $unique;
     }
 
@@ -478,12 +511,14 @@ class Str
         if ($separator === "\n") {
             $content = str_replace("\r", '', $content);
         }
+
         $items = explode($separator, $content);
         if (is_callable($itemFunction)) {
             foreach ($items as $index => $item) {
                 $items[$index] = $itemFunction($item);
             }
         }
+
         return $items;
     }
 
@@ -502,6 +537,7 @@ class Str
                 $items[$index] = $itemFunction($item);
             }
         }
+
         return implode($separator, $items);
     }
 
@@ -515,9 +551,10 @@ class Str
      */
     public static function padLeft(string $string, int $length, string $filler = ' '): string
     {
-        while (self::length($string) <= ($length - self::length($filler))) {
+        while (self::length($string) <= $length - self::length($filler)) {
             $string = $filler . $string;
         }
+
         return $string;
     }
 
@@ -531,9 +568,10 @@ class Str
      */
     public static function padRight(string $string, int $length, string $filler = ' '): string
     {
-        while (self::length($string) <= ($length - self::length($filler))) {
+        while (self::length($string) <= $length - self::length($filler)) {
             $string = $string . $filler;
         }
+
         return $string;
     }
 
@@ -550,6 +588,7 @@ class Str
         if ($text === '' || self::length($text) === $length) {
             return $text;
         }
+
         $endedWithLinebreak = substr($text, -1) === "\n";
         $text = str_replace("\r", '', $text);
         $text = str_replace("\n", '', $text);
@@ -561,17 +600,21 @@ class Str
             if (!isset($result[$lineNo])) {
                 $result[$lineNo] = '';
             }
+
             $lastLineNo = count($result) - 1;
 
-            if ((self::length($result[$lastLineNo]) + self::length($word)) >= $length) {
+            if (self::length($result[$lastLineNo]) + self::length($word) >= $length) {
                 $lineNo++;
                 if (!isset($result[$lineNo])) {
                     $result[$lineNo] = '';
                 }
+
                 $lastLineNo = count($result) - 1;
             }
 
-            $result[$lastLineNo] .= $result[$lastLineNo] !== '' ? ' ' : '';
+            $result[$lastLineNo] .= $result[$lastLineNo] !== ''
+                ? ' '
+                : '';
             $result[$lastLineNo] .= $word;
         }
 
@@ -579,6 +622,7 @@ class Str
         if ($endedWithLinebreak) {
             $text .= "\n";
         }
+
         return $text;
     }
 
@@ -591,6 +635,7 @@ class Str
     public static function pascalCase(string $value): string
     {
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
+
         return str_replace(' ', '', $value);
     }
 
@@ -620,7 +665,10 @@ class Str
             [' ', $separator, '$1' . $separator . '$2', $separator],
             trim($value)
         ));
-        return $toLowerCase ? strtolower($replace) : $replace;
+
+        return $toLowerCase
+            ? strtolower($replace)
+            : $replace;
     }
 
     /**
@@ -653,11 +701,14 @@ class Str
             if (!preg_match('/^\d+$/', $key)) {
                 $key = self::$method(preg_replace('/\-/', '_', $key), true, $separator);
             }
+
             if (is_array($value)) {
                 $value = self::caseConvertArrayKeysRecursively($value, $method);
             }
+
             $return[$key] = $value;
         }
+
         return $return;
     }
 
@@ -685,7 +736,10 @@ class Str
     public static function indexOf(string $haystack, string $needle, int $offset = 0): int
     {
         $pos = self::strpos($haystack, $needle, $offset);
-        return is_int($pos) ? $pos : -1;
+
+        return is_int($pos)
+            ? $pos
+            : -1;
     }
 
     /**

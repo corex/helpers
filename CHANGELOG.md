@@ -1,5 +1,14 @@
 # ChangeLog
 
+## 2.3.0
+
+### Added
+- Added Obj::getTraits().
+- Added Obj::hasTrait().
+
+### Changed
+- Freshened up coding guidelines.
+
 ## 2.2.0
 
 ### Added

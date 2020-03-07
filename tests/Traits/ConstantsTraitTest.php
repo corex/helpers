@@ -161,8 +161,8 @@ class ConstantsTraitTest extends TestCase
         $this->assertFalse($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'unknown']));
         $this->assertFalse($this->callMethod(
             'hasPrivateClassConstantByValue',
-            ['constantName' => Constants::ACTOR_FIRSTNAME])
-        );
+            ['constantName' => Constants::ACTOR_FIRSTNAME]
+        ));
         $this->assertTrue($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'Connery']));
     }
 

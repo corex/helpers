@@ -672,10 +672,11 @@ class ObjTest extends TestCase
      * @return ReflectionClass
      * @throws ReflectionException
      */
-    private function getReflectionClassFromObj($objectOrClass, $classOverride = null): ReflectionClass
+    private function getReflectionClassFromObj($objectOrClass, ?string $classOverride = null): ReflectionClass
     {
         $reflectionMethod = new ReflectionMethod(Obj::class, 'getReflectionClass');
         $reflectionMethod->setAccessible(true);
+
         return $reflectionMethod->invokeArgs(null, [$objectOrClass, $classOverride]);
     }
 
@@ -695,6 +696,7 @@ class ObjTest extends TestCase
     ): ReflectionMethod {
         $reflectionMethod = new ReflectionMethod(Obj::class, 'getReflectionMethod');
         $reflectionMethod->setAccessible(true);
+
         return $reflectionMethod->invokeArgs(null, [$method, $objectOrClass, $classOverride]);
     }
 }

@@ -35,6 +35,7 @@ trait DataTrait
         } else {
             $this->data = $data;
         }
+
         return $this;
     }
 
@@ -71,6 +72,7 @@ trait DataTrait
     public function set(string $key, $value): self
     {
         Arr::set($this->data, $key, $value, true);
+
         return $this;
     }
 
@@ -96,6 +98,7 @@ trait DataTrait
     public function setInt(string $key, int $value): self
     {
         $this->set($key, intval($value));
+
         return $this;
     }
 
@@ -112,6 +115,7 @@ trait DataTrait
         if (is_string($value)) {
             $value = strtolower($value);
         }
+
         return in_array($value, [1, true, '1', 'true', 'yes', 'on'], true);
     }
 
@@ -127,7 +131,9 @@ trait DataTrait
         if (is_string($value)) {
             $value = strtolower($value);
         }
+
         $this->set($key, in_array($value, [1, true, '1', 'true', 'yes', 'on'], true));
+
         return $this;
     }
 
@@ -150,6 +156,7 @@ trait DataTrait
     public function remove(string $key): self
     {
         $this->data = Arr::remove($this->data, $key);
+
         return $this;
     }
 

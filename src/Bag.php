@@ -30,6 +30,7 @@ class Bag
         if ($properties === null) {
             $properties = [];
         }
+
         foreach ($properties as $key => $value) {
             $this->set($key, $value);
         }
@@ -44,6 +45,7 @@ class Bag
     public function has(string $key): bool
     {
         $key = $this->prepareKey($key);
+
         return Arr::has($this->properties, $key);
     }
 
@@ -54,7 +56,7 @@ class Bag
      * @param mixed $value
      * @param bool $create Default false.
      */
-    public function set(string $key, $value, $create = false): void
+    public function set(string $key, $value, bool $create = false): void
     {
         $key = $this->prepareKey($key);
         Arr::set($this->properties, $key, $value, $create);
@@ -83,6 +85,7 @@ class Bag
     public function get(string $key, $defaultValue = null)
     {
         $key = $this->prepareKey($key);
+
         return Arr::get($this->properties, $key, $defaultValue);
     }
 

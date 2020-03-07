@@ -33,6 +33,7 @@ class StrList
         if (!in_array($tag . $item . $tag, $items)) {
             $items[] = $tag . $item . $tag;
         }
+
         return implode($separator, $items);
     }
 
@@ -53,8 +54,10 @@ class StrList
             if ($tag !== '' && substr($item, 0, 1) === $tag && substr($item, -1) === $tag) {
                 $item = substr($item, 1, -1);
             }
+
             return $item;
         }
+
         return '';
     }
 
@@ -74,6 +77,7 @@ class StrList
         if ($pos === false) {
             $pos = -1;
         }
+
         return $pos;
     }
 
@@ -93,6 +97,7 @@ class StrList
         if ($pos > -1 && isset($items[$pos])) {
             unset($items[$pos]);
         }
+
         return implode($separator, $items);
     }
 
@@ -110,6 +115,7 @@ class StrList
         if (isset($items[$index])) {
             unset($items[$index]);
         }
+
         return implode($separator, $items);
     }
 
@@ -125,6 +131,7 @@ class StrList
     public static function exist(string $list, string $item, string $separator, string $tag = ''): bool
     {
         $items = self::explode($separator, $list);
+
         return in_array($tag . $item . $tag, $items);
     }
 
@@ -135,15 +142,13 @@ class StrList
      * @param string $list2
      * @param bool $sort Default false.
      * @param string $separator
-     * @param string $tag Default ''.
      * @return string
      */
     public static function merge(
         string $list1,
         string $list2,
         bool $sort,
-        string $separator,
-        string $tag = ''
+        string $separator
     ): string {
         $items1 = self::explode($separator, $list1);
         $items2 = self::explode($separator, $list2);
@@ -154,9 +159,11 @@ class StrList
                 }
             }
         }
+
         if ($sort) {
             sort($items1);
         }
+
         return implode($separator, $items1);
     }
 
@@ -172,6 +179,7 @@ class StrList
         if ($list !== '') {
             return explode($separator, $list);
         }
+
         return [];
     }
 }

@@ -94,6 +94,7 @@ trait ConstantsStaticTrait
         if ($constant !== null) {
             return self::hasClassConstant($constant);
         }
+
         return false;
     }
 
@@ -120,6 +121,7 @@ trait ConstantsStaticTrait
         if ($constant !== null) {
             return self::hasPublicClassConstant($constant);
         }
+
         return false;
     }
 
@@ -146,6 +148,7 @@ trait ConstantsStaticTrait
         if ($constant !== null) {
             return self::hasPrivateClassConstant($constant);
         }
+
         return false;
     }
 

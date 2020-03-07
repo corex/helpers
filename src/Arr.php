@@ -20,6 +20,7 @@ class Arr
         if ($data === null) {
             $data = $defaultValue;
         }
+
         return $data;
     }
 
@@ -38,10 +39,10 @@ class Arr
         $key = Str::removeLast($key, '.');
 
         // Extract data.
-        $pathArray = null;
         if ($key !== '' && $key !== null) {
             $array = &self::dataByPath($array, $key, $create);
         }
+
         if ($array !== null || $create) {
             $array[$keyLast] = $value;
         }
@@ -57,6 +58,7 @@ class Arr
     public static function has(array $array, string $key): bool
     {
         $check = self::dataByPath($array, $key, false, 'not.found');
+
         return $check !== 'not.found';
     }
 
@@ -72,11 +74,13 @@ class Arr
         if (count($data) === 0) {
             return null;
         }
+
         reset($data);
         $element = current($data);
         if ($key !== null && is_array($element) && isset($element[$key])) {
             return $element[$key];
         }
+
         return $element;
     }
 
@@ -92,17 +96,19 @@ class Arr
         if (count($data) === 0) {
             return null;
         }
+
         $element = end($data);
         if ($key !== null && is_array($element) && isset($element[$key])) {
             return $element[$key];
         }
+
         return $element;
     }
 
     /**
      * Remove.
      *
-     * @param mixed[] array $array
+     * @param mixed[] $array
      * @param string $key Uses dot notation.
      * @return mixed[]
      */
@@ -134,6 +140,7 @@ class Arr
         if (count($data) > 0) {
             array_shift($data);
         }
+
         return $data;
     }
 
@@ -148,6 +155,7 @@ class Arr
         if (count($data) > 0) {
             unset($data[count($data) - 1]);
         }
+
         return $data;
     }
 
@@ -167,6 +175,7 @@ class Arr
                 }
             }
         }
+
         return $isList;
     }
 
@@ -183,16 +192,19 @@ class Arr
         if (count($list) === 0) {
             return $stringInList;
         }
+
         foreach ($list as $item) {
             if ($key !== null && isset($item[$key])) {
                 $value = $item[$key];
             } else {
                 $value = $item;
             }
+
             if (!is_numeric($value)) {
                 $stringInList = true;
             }
         }
+
         return $stringInList;
     }
 
@@ -210,17 +222,23 @@ class Arr
         foreach ($array as $index => $item) {
             if ($key !== null) {
                 if (is_object($item)) {
-                    $checkValue = isset($item->{$key}) ? $item->{$key} : null;
+                    $checkValue = isset($item->{$key})
+                        ? $item->{$key}
+                        : null;
                 } else {
-                    $checkValue = isset($item[$key]) ? $item[$key] : null;
+                    $checkValue = isset($item[$key])
+                        ? $item[$key]
+                        : null;
                 }
             } else {
                 $checkValue = $item;
             }
+
             if ($checkValue !== null && $checkValue === $value) {
                 return $index;
             }
         }
+
         return -1;
     }
 
@@ -240,6 +258,7 @@ class Arr
                 }
             }
         }
+
         return true;
     }
 
@@ -257,7 +276,7 @@ class Arr
     /**
      * Values (0..n).
      *
-     * @param mixed[] array $array
+     * @param mixed[] $array
      * @return mixed[]
      */
     public static function values(array $array): array
@@ -274,6 +293,7 @@ class Arr
     public static function isAssociative(array $array): bool
     {
         $keys = array_keys($array);
+
         return array_keys($keys) !== $keys;
     }
 
@@ -300,6 +320,7 @@ class Arr
         if ($key !== '' && $key !== null) {
             $array = self::dataByPath($array, $key, false, []);
         }
+
         foreach ($array as $item) {
             $value = $defaultValue;
             if (is_object($item) && isset($item->{$keyLast})) {
@@ -307,6 +328,7 @@ class Arr
             } elseif (is_array($item) && isset($item[$keyLast])) {
                 $value = $item[$keyLast];
             }
+
             $result[] = $value;
         }
 
@@ -340,6 +362,7 @@ class Arr
             } else {
                 $isHit = false;
             }
+
             if ($suffix !== '' && $suffix !== null && Str::endsWith(trim($line), $suffix)) {
                 if ($removePrefixSuffix) {
                     $line = substr(trim($line), 0, -strlen($suffix));
@@ -347,13 +370,16 @@ class Arr
             } else {
                 $isHit = false;
             }
+
             if ($isHit) {
                 if ($doTrim) {
                     $line = trim($line);
                 }
+
                 $result[] = $line;
             }
         }
+
         return $result;
     }
 
@@ -371,9 +397,11 @@ class Arr
                 $stringOrArray = explode($separator, $stringOrArray);
             }
         }
+
         if (!is_array($stringOrArray)) {
             return [];
         }
+
         return $stringOrArray;
     }
 
@@ -391,9 +419,11 @@ class Arr
         if ($unescapedSlashes) {
             $options += JSON_UNESCAPED_SLASHES;
         }
+
         if ($prettyPrint) {
             $options += JSON_PRETTY_PRINT;
         }
+
         return json_encode($array, $options);
     }
 
@@ -411,16 +441,20 @@ class Arr
         if ($key === '') {
             return $data;
         }
+
         $pathSegments = explode('.', $key);
         foreach ($pathSegments as $pathSegment) {
             if (!is_array($data)) {
                 $data = [];
             }
+
             if (!array_key_exists($pathSegment, $data) && !$create) {
                 return $defaultValue;
             }
+
             $data = &$data[$pathSegment];
         }
+
         return $data;
     }
 }

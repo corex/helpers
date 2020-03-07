@@ -105,8 +105,10 @@ class ConstantsStaticTraitTest extends TestCase
     public function testHasConstantByValue(): void
     {
         $this->assertFalse($this->callMethod('hasClassConstantByValue', ['constantName' => 'unknown']));
-        $this->assertTrue($this->callMethod('hasClassConstantByValue',
-            ['constantName' => ConstantsStatic::ACTOR_FIRSTNAME]));
+        $this->assertTrue($this->callMethod(
+            'hasClassConstantByValue',
+            ['constantName' => ConstantsStatic::ACTOR_FIRSTNAME]
+        ));
         $this->assertTrue($this->callMethod('hasClassConstantByValue', ['constantName' => 'Connery']));
     }
 
@@ -130,8 +132,10 @@ class ConstantsStaticTraitTest extends TestCase
     public function testHasPublicConstantByValue(): void
     {
         $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['constantName' => 'unknown']));
-        $this->assertTrue($this->callMethod('hasPublicClassConstantByValue',
-            ['constantName' => ConstantsStatic::ACTOR_FIRSTNAME]));
+        $this->assertTrue($this->callMethod(
+            'hasPublicClassConstantByValue',
+            ['constantName' => ConstantsStatic::ACTOR_FIRSTNAME]
+        ));
         $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['constantName' => 'Connery']));
     }
 
@@ -157,8 +161,8 @@ class ConstantsStaticTraitTest extends TestCase
         $this->assertFalse($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'unknown']));
         $this->assertFalse($this->callMethod(
             'hasPrivateClassConstantByValue',
-            ['constantName' => ConstantsStatic::ACTOR_FIRSTNAME])
-        );
+            ['constantName' => ConstantsStatic::ACTOR_FIRSTNAME]
+        ));
         $this->assertTrue($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'Connery']));
     }
 

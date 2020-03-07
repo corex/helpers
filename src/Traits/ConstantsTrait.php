@@ -94,6 +94,7 @@ trait ConstantsTrait
         if ($constant !== null) {
             return $this->hasClassConstant($constant);
         }
+
         return false;
     }
 
@@ -120,6 +121,7 @@ trait ConstantsTrait
         if ($constant !== null) {
             return $this->hasPublicClassConstant($constant);
         }
+
         return false;
     }
 
@@ -146,6 +148,7 @@ trait ConstantsTrait
         if ($constant !== null) {
             return $this->hasPrivateClassConstant($constant);
         }
+
         return false;
     }
 }

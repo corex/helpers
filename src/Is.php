@@ -59,6 +59,7 @@ class Is
     public static function date(string $value): bool
     {
         $matches = preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value);
+
         return is_int($matches) && $matches > 0;
     }
 
@@ -71,6 +72,7 @@ class Is
     public static function time(string $value): bool
     {
         $matches = preg_match('/^(\d{2}):(\d{2}):(\d{2})$/', $value);
+
         return is_int($matches) && $matches > 0;
     }
 
@@ -83,6 +85,7 @@ class Is
     public static function datetime(string $value): bool
     {
         $matches = preg_match('/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/', $value);
+
         return is_int($matches) && $matches > 0;
     }
 
@@ -95,6 +98,7 @@ class Is
     public static function email(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_EMAIL);
+
         return is_string($result) && $value === $result;
     }
 
@@ -107,6 +111,7 @@ class Is
     public static function url(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_URL);
+
         return is_string($result) && $value === $result;
     }
 
@@ -119,6 +124,7 @@ class Is
     public static function ip(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_IP);
+
         return is_string($result) && $value === $result;
     }
 
@@ -131,6 +137,7 @@ class Is
     public static function macAddress(string $value): bool
     {
         $result = filter_var($value, FILTER_VALIDATE_MAC);
+
         return is_string($result) && $value === $result;
     }
 
