@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.4.0
+
+### Added
+- Added Traits/DataPrivateTrait for generic private data handling in class.
+
 ## 2.3.0
 
 ### Added
