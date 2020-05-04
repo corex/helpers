@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.4.1
+
+### Fixed
+- Changed public methods in DataPrivateTrait to private methods.
+
 ## 2.4.0
 
 ### Added

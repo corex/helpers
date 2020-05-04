@@ -101,7 +101,7 @@ trait DataPrivateTrait
      * @param int $value
      * @return $this
      */
-    public function dataPrivateSetInt(string $key, int $value): self
+    private function dataPrivateSetInt(string $key, int $value): self
     {
         $this->dataPrivateSet($key, intval($value));
 
@@ -144,7 +144,7 @@ trait DataPrivateTrait
      * @param mixed $value Supported values: 1, true, '1', 'true', 'yes', 'on'. Otherwise false.
      * @return $this
      */
-    public function dataPrivateSetBool(string $key, $value)
+    private function dataPrivateSetBool(string $key, $value)
     {
         if (is_string($value)) {
             $value = strtolower($value);
@@ -189,7 +189,7 @@ trait DataPrivateTrait
      *
      * @param string $key
      */
-    public function dataPrivateSetNull(string $key): void
+    private function dataPrivateSetNull(string $key): void
     {
         $this->dataPrivateSet($key, null);
     }
