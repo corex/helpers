@@ -27,7 +27,7 @@ class BagTest extends TestCase
     public function testConstructorNull(): void
     {
         $container = new Bag(null);
-        $this->assertEquals([], Obj::getProperty('properties', $container));
+        $this->assertSame([], Obj::getProperty('properties', $container));
     }
 
     /**
@@ -36,7 +36,7 @@ class BagTest extends TestCase
     public function testConstructorNoData(): void
     {
         $container = new Bag();
-        $this->assertEquals([], $container->all());
+        $this->assertSame([], $container->all());
     }
 
     /**
@@ -45,7 +45,7 @@ class BagTest extends TestCase
     public function testConstructorWithData(): void
     {
         $container = new Bag($this->data);
-        $this->assertEquals($this->data, $container->all());
+        $this->assertSame($this->data, $container->all());
     }
 
     /**
@@ -54,7 +54,7 @@ class BagTest extends TestCase
     public function testClearNoData(): void
     {
         $container = new Bag();
-        $this->assertEquals([], $container->all());
+        $this->assertSame([], $container->all());
     }
 
     /**
@@ -64,7 +64,7 @@ class BagTest extends TestCase
     {
         $container = new Bag();
         $container->clear(null);
-        $this->assertEquals([], $container->all());
+        $this->assertSame([], $container->all());
     }
 
     /**
@@ -74,7 +74,7 @@ class BagTest extends TestCase
     {
         $container = new Bag();
         $container->clear($this->data);
-        $this->assertEquals($this->data, $container->all());
+        $this->assertSame($this->data, $container->all());
     }
 
     /**
@@ -110,16 +110,16 @@ class BagTest extends TestCase
         $container = new Bag($this->data);
 
         // Check standard data.
-        $this->assertEquals($this->data['actor']['firstname'], $container->get('actor.firstname'));
-        $this->assertEquals($this->data['actor']['lastname'], $container->get('actor.lastname'));
+        $this->assertSame($this->data['actor']['firstname'], $container->get('actor.firstname'));
+        $this->assertSame($this->data['actor']['lastname'], $container->get('actor.lastname'));
 
         // Swap data.
         $container->set('actor.firstname', $this->data['actor']['lastname']);
         $container->set('actor.lastname', $this->data['actor']['firstname']);
 
         // Check swapped data.
-        $this->assertEquals($this->data['actor']['lastname'], $container->get('actor.firstname'));
-        $this->assertEquals($this->data['actor']['firstname'], $container->get('actor.lastname'));
+        $this->assertSame($this->data['actor']['lastname'], $container->get('actor.firstname'));
+        $this->assertSame($this->data['actor']['firstname'], $container->get('actor.lastname'));
     }
 
     /**
@@ -133,8 +133,8 @@ class BagTest extends TestCase
         $container->setArray($this->data);
 
         // Check standard data.
-        $this->assertEquals($this->data['actor']['firstname'], $container->get('actor.firstname'));
-        $this->assertEquals($this->data['actor']['lastname'], $container->get('actor.lastname'));
+        $this->assertSame($this->data['actor']['firstname'], $container->get('actor.firstname'));
+        $this->assertSame($this->data['actor']['lastname'], $container->get('actor.lastname'));
     }
 
     /**
@@ -147,8 +147,8 @@ class BagTest extends TestCase
         $container = new Bag($this->data);
 
         // Check standard data.
-        $this->assertEquals($this->data['actor']['firstname'], $container->get('actor.firstname'));
-        $this->assertEquals($this->data['actor']['lastname'], $container->get('actor.lastname'));
+        $this->assertSame($this->data['actor']['firstname'], $container->get('actor.firstname'));
+        $this->assertSame($this->data['actor']['lastname'], $container->get('actor.lastname'));
     }
 
     /**
@@ -161,15 +161,15 @@ class BagTest extends TestCase
         $container = new Bag($this->data);
 
         // Check standard data.
-        $this->assertEquals($this->data['actor']['firstname'], $container->get('actor.firstname'));
-        $this->assertEquals($this->data['actor']['lastname'], $container->get('actor.lastname'));
+        $this->assertSame($this->data['actor']['firstname'], $container->get('actor.firstname'));
+        $this->assertSame($this->data['actor']['lastname'], $container->get('actor.lastname'));
 
         // Delete data.
         $container->remove('actor.firstname');
 
         // Check standard data.
         $this->assertNull($container->get('actor.firstname'));
-        $this->assertEquals($this->data['actor']['lastname'], $container->get('actor.lastname'));
+        $this->assertSame($this->data['actor']['lastname'], $container->get('actor.lastname'));
     }
 
     /**
@@ -179,7 +179,7 @@ class BagTest extends TestCase
     {
         $container = new Bag($this->data);
         $all = $container->all();
-        $this->assertEquals(array_keys($all), $container->keys());
+        $this->assertSame(array_keys($all), $container->keys());
     }
 
     /**
@@ -188,6 +188,6 @@ class BagTest extends TestCase
     public function testAll(): void
     {
         $container = new Bag($this->data);
-        $this->assertEquals($this->data, $container->all());
+        $this->assertSame($this->data, $container->all());
     }
 }

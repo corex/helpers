@@ -30,7 +30,7 @@ class StrList
     public static function add(string $list, string $item, string $separator, string $tag = ''): string
     {
         $items = self::explode($separator, $list);
-        if (!in_array($tag . $item . $tag, $items)) {
+        if (!in_array($tag . $item . $tag, $items, true)) {
             $items[] = $tag . $item . $tag;
         }
 
@@ -73,7 +73,7 @@ class StrList
     public static function pos(string $list, string $item, string $separator, string $tag = ''): int
     {
         $items = self::explode($separator, $list);
-        $pos = array_search($tag . $item . $tag, $items);
+        $pos = array_search($tag . $item . $tag, $items, true);
         if ($pos === false) {
             $pos = -1;
         }
@@ -132,7 +132,7 @@ class StrList
     {
         $items = self::explode($separator, $list);
 
-        return in_array($tag . $item . $tag, $items);
+        return in_array($tag . $item . $tag, $items, true);
     }
 
     /**
@@ -154,7 +154,7 @@ class StrList
         $items2 = self::explode($separator, $list2);
         if (count($items2) > 0) {
             foreach ($items2 as $item) {
-                if (!in_array($item, $items1)) {
+                if (!in_array($item, $items1, true)) {
                     $items1[] = $item;
                 }
             }

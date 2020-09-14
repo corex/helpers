@@ -12,8 +12,8 @@ class ConstantsStatic
 
     public const ACTOR_FIRSTNAME = 'Roger';
     public const ACTOR_LASTNAME = 'Moore';
+    public const FIRSTNAME = 'Daniel';
+    public const LASTNAME = 'Craig';
     private const PRIVATE_FIRSTNAME = 'Sean';
     private const PRIVATE_LASTNAME = 'Connery';
-    const FIRSTNAME = 'Daniel';
-    const LASTNAME = 'Craig';
 }

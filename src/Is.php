@@ -149,6 +149,6 @@ class Is
      */
     public static function timezone(string $value): bool
     {
-        return in_array($value, timezone_identifiers_list());
+        return in_array($value, timezone_identifiers_list(), true);
     }
 }

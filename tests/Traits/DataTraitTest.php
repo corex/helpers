@@ -19,9 +19,9 @@ class DataTraitTest extends TestCase
             ->set('mixed', 'something')
             ->setInt('value', 7)
             ->setBool('bool', true);
-        $this->assertNotEquals([], $data->all());
+        $this->assertNotSame([], $data->all());
         $data->clear();
-        $this->assertEquals([], $data->all());
+        $this->assertSame([], $data->all());
     }
 
     /**
@@ -29,7 +29,7 @@ class DataTraitTest extends TestCase
      */
     public function testSetArrayNoMerge(): void
     {
-        $md5 = md5((string)mt_rand(1, 100000));
+        $md5 = md5((string)random_int(1, 100000));
         $check1 = $md5 . '1';
         $check2 = $md5 . '2';
         $check3 = $md5 . '3';
@@ -41,10 +41,10 @@ class DataTraitTest extends TestCase
             'check4' => $check4
         ];
         $data = $this->data()->setArray($check);
-        $this->assertEquals($check1, $data->get('check1'));
-        $this->assertEquals($check2, $data->get('check2'));
-        $this->assertEquals($check3, $data->get('check3'));
-        $this->assertEquals($check4, $data->get('check4'));
+        $this->assertSame($check1, $data->get('check1'));
+        $this->assertSame($check2, $data->get('check2'));
+        $this->assertSame($check3, $data->get('check3'));
+        $this->assertSame($check4, $data->get('check4'));
     }
 
     /**
@@ -52,7 +52,7 @@ class DataTraitTest extends TestCase
      */
     public function testSetArrayMerge(): void
     {
-        $md5 = md5((string)mt_rand(1, 100000));
+        $md5 = md5((string)random_int(1, 100000));
         $check1 = $md5 . '1';
         $check2 = $md5 . '2';
         $check3 = $md5 . '3';
@@ -61,8 +61,8 @@ class DataTraitTest extends TestCase
         $data = $this->data()
             ->set('check1', $check1)
             ->set('check2', $check2);
-        $this->assertEquals($check1, $data->get('check1'));
-        $this->assertEquals($check2, $data->get('check2'));
+        $this->assertSame($check1, $data->get('check1'));
+        $this->assertSame($check2, $data->get('check2'));
         $this->assertNull($data->get('check3'));
         $this->assertNull($data->get('check4'));
 
@@ -71,10 +71,10 @@ class DataTraitTest extends TestCase
             'check4' => $check4
         ], true);
 
-        $this->assertEquals($check1, $data->get('check1'));
-        $this->assertEquals($check2, $data->get('check2'));
-        $this->assertEquals($check3, $data->get('check3'));
-        $this->assertEquals($check4, $data->get('check4'));
+        $this->assertSame($check1, $data->get('check1'));
+        $this->assertSame($check2, $data->get('check2'));
+        $this->assertSame($check3, $data->get('check3'));
+        $this->assertSame($check4, $data->get('check4'));
     }
 
     /**
@@ -93,9 +93,9 @@ class DataTraitTest extends TestCase
      */
     public function testGetSet(): void
     {
-        $check = md5((string)mt_rand(1, 100000));
+        $check = md5((string)random_int(1, 100000));
         $data = $this->data()->set('mixed', $check);
-        $this->assertEquals($check, $data->get('mixed'));
+        $this->assertSame($check, $data->get('mixed'));
     }
 
     /**
@@ -103,9 +103,9 @@ class DataTraitTest extends TestCase
      */
     public function testGetInt(): void
     {
-        $value = mt_rand(1, 100000);
+        $value = random_int(1, 100000);
         $data = $this->data()->set('int', $value);
-        $this->assertEquals($value, $data->getInt('int'));
+        $this->assertSame($value, $data->getInt('int'));
     }
 
     /**
@@ -113,9 +113,9 @@ class DataTraitTest extends TestCase
      */
     public function testSetInt(): void
     {
-        $value = mt_rand(1, 100000);
+        $value = random_int(1, 100000);
         $data = $this->data()->setInt('int', $value);
-        $this->assertEquals(['int' => $value], $data->all());
+        $this->assertSame(['int' => $value], $data->all());
     }
 
     /**
@@ -196,10 +196,10 @@ class DataTraitTest extends TestCase
     public function testSetBoolAsNumeric(): void
     {
         $data = $this->data()->setBool('bool', 1);
-        $this->assertEquals(['bool' => true], $data->all());
+        $this->assertSame(['bool' => true], $data->all());
 
         $data = $this->data()->setBool('bool', 0);
-        $this->assertEquals(['bool' => false], $data->all());
+        $this->assertSame(['bool' => false], $data->all());
     }
 
     /**
@@ -208,10 +208,10 @@ class DataTraitTest extends TestCase
     public function testSetBoolAsBool(): void
     {
         $data = $this->data()->setBool('bool', true);
-        $this->assertEquals(['bool' => true], $data->all());
+        $this->assertSame(['bool' => true], $data->all());
 
         $data = $this->data()->setBool('bool', false);
-        $this->assertEquals(['bool' => false], $data->all());
+        $this->assertSame(['bool' => false], $data->all());
     }
 
     /**
@@ -220,10 +220,10 @@ class DataTraitTest extends TestCase
     public function testSetBoolAsStringNumeric(): void
     {
         $data = $this->data()->setBool('bool', '1');
-        $this->assertEquals(['bool' => true], $data->all());
+        $this->assertSame(['bool' => true], $data->all());
 
         $data = $this->data()->setBool('bool', '0');
-        $this->assertEquals(['bool' => false], $data->all());
+        $this->assertSame(['bool' => false], $data->all());
     }
 
     /**
@@ -232,10 +232,10 @@ class DataTraitTest extends TestCase
     public function testSetBoolAsStringBool(): void
     {
         $data = $this->data()->setBool('bool', 'true');
-        $this->assertEquals(['bool' => true], $data->all());
+        $this->assertSame(['bool' => true], $data->all());
 
         $data = $this->data()->setBool('bool', 'false');
-        $this->assertEquals(['bool' => false], $data->all());
+        $this->assertSame(['bool' => false], $data->all());
     }
 
     /**
@@ -244,10 +244,10 @@ class DataTraitTest extends TestCase
     public function testSetBoolAsStringYesNo(): void
     {
         $data = $this->data()->setBool('bool', 'yes');
-        $this->assertEquals(['bool' => true], $data->all());
+        $this->assertSame(['bool' => true], $data->all());
 
         $data = $this->data()->setBool('bool', 'no');
-        $this->assertEquals(['bool' => false], $data->all());
+        $this->assertSame(['bool' => false], $data->all());
     }
 
     /**
@@ -256,10 +256,10 @@ class DataTraitTest extends TestCase
     public function testSetBoolAsStringOnOff(): void
     {
         $data = $this->data()->setBool('bool', 'on');
-        $this->assertEquals(['bool' => true], $data->all());
+        $this->assertSame(['bool' => true], $data->all());
 
         $data = $this->data()->setBool('bool', 'off');
-        $this->assertEquals(['bool' => false], $data->all());
+        $this->assertSame(['bool' => false], $data->all());
     }
 
     /**
@@ -269,9 +269,9 @@ class DataTraitTest extends TestCase
     {
         $data = $this->data();
         $data->set('test', 'something');
-        $this->assertEquals('something', $data->get('test'));
+        $this->assertSame('something', $data->get('test'));
         $data->setNull('test');
-        $this->assertEquals(['test' => null], $data->all());
+        $this->assertSame(['test' => null], $data->all());
     }
 
     /**
@@ -281,9 +281,9 @@ class DataTraitTest extends TestCase
     {
         $data = $this->data();
         $data->set('test', 'something');
-        $this->assertEquals('something', $data->get('test'));
+        $this->assertSame('something', $data->get('test'));
         $data->remove('test');
-        $this->assertEquals([], $data->all());
+        $this->assertSame([], $data->all());
     }
 
     /**
@@ -292,11 +292,11 @@ class DataTraitTest extends TestCase
     public function testAll(): void
     {
         $data = $this->data();
-        $this->assertEquals([], $data->all());
+        $this->assertSame([], $data->all());
         $data->set('mixed', 'something');
         $data->setInt('value', 7);
         $data->setBool('bool', true);
-        $this->assertNotEquals([], $data->all());
+        $this->assertNotSame([], $data->all());
     }
 
     /**

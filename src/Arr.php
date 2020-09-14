@@ -66,7 +66,7 @@ class Arr
      * Get first element of array.
      *
      * @param mixed[] $data
-     * @param string $key Get key from element if array. Default null.
+     * @param string|null $key Get key from element if array. Default null.
      * @return mixed
      */
     public static function first(array $data, ?string $key = null)
@@ -88,7 +88,7 @@ class Arr
      * Get last element of array.
      *
      * @param mixed[] $data
-     * @param string $key Get key from element if array. Default null.
+     * @param string|null $key Get key from element if array. Default null.
      * @return mixed
      */
     public static function last(array $data, ?string $key = null)
@@ -183,7 +183,7 @@ class Arr
      * Is string in list.
      *
      * @param string[] $list
-     * @param string $key Default null.
+     * @param string|null $key Default null.
      * @return bool
      */
     public static function isStringInList(array $list, ?string $key = null): bool
@@ -214,7 +214,7 @@ class Arr
      *
      * @param string[] $array
      * @param string $value
-     * @param string $key Default null which means the item itself (not associative array).
+     * @param string|null $key Default null which means the item itself (not associative array).
      * @return int|string -1 if not found.
      */
     public static function indexOf(array $array, string $value, ?string $key = null)
@@ -222,13 +222,9 @@ class Arr
         foreach ($array as $index => $item) {
             if ($key !== null) {
                 if (is_object($item)) {
-                    $checkValue = isset($item->{$key})
-                        ? $item->{$key}
-                        : null;
+                    $checkValue = isset($item->{$key}) ? $item->{$key} : null;
                 } else {
-                    $checkValue = isset($item[$key])
-                        ? $item[$key]
-                        : null;
+                    $checkValue = isset($item[$key]) ? $item[$key] : null;
                 }
             } else {
                 $checkValue = $item;

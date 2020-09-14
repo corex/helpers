@@ -26,7 +26,7 @@ trait ConstantsStaticTrait
      */
     private static function getClassConstantByValue($value): ?string
     {
-        return array_search($value, self::getClassConstants()) ?: null;
+        return array_search($value, self::getClassConstants(), true) ?: null;
     }
 
     /**
@@ -47,7 +47,7 @@ trait ConstantsStaticTrait
      */
     private static function getPublicClassConstantByValue($value): ?string
     {
-        return array_search($value, self::getPublicClassConstants()) ?: null;
+        return array_search($value, self::getPublicClassConstants(), true) ?: null;
     }
 
     /**
@@ -68,7 +68,7 @@ trait ConstantsStaticTrait
      */
     private static function getPrivateClassConstantByValue($value): ?string
     {
-        return array_search($value, self::getPrivateClassConstants()) ?: null;
+        return array_search($value, self::getPrivateClassConstants(), true) ?: null;
     }
 
     /**
@@ -79,7 +79,7 @@ trait ConstantsStaticTrait
      */
     private static function hasClassConstant(string $constantName): bool
     {
-        return in_array($constantName, array_keys(self::getClassConstants()));
+        return in_array($constantName, array_keys(self::getClassConstants()), true);
     }
 
     /**
@@ -106,7 +106,7 @@ trait ConstantsStaticTrait
      */
     private static function hasPublicClassConstant(string $constantName): bool
     {
-        return in_array($constantName, array_keys(self::getPublicClassConstants()));
+        return in_array($constantName, array_keys(self::getPublicClassConstants()), true);
     }
 
     /**
@@ -133,7 +133,7 @@ trait ConstantsStaticTrait
      */
     private static function hasPrivateClassConstant(string $constantName): bool
     {
-        return in_array($constantName, array_keys(self::getPrivateClassConstants()));
+        return in_array($constantName, array_keys(self::getPrivateClassConstants()), true);
     }
 
     /**
@@ -159,6 +159,6 @@ trait ConstantsStaticTrait
      */
     private static function calledClass(): string
     {
-        return get_called_class();
+        return static::class;
     }
 }

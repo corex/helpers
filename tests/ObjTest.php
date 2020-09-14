@@ -36,14 +36,19 @@ class ObjTest extends TestCase
      */
     public function testGetConstants(): void
     {
-        $this->assertEquals([
-            'ACTOR_FIRSTNAME' => Constants::ACTOR_FIRSTNAME,
-            'ACTOR_LASTNAME' => Constants::ACTOR_LASTNAME,
-            'PRIVATE_FIRSTNAME' => 'Sean',
-            'PRIVATE_LASTNAME' => 'Connery',
-            'FIRSTNAME' => Constants::FIRSTNAME,
-            'LASTNAME' => Constants::LASTNAME
-        ], Obj::getConstants(Constants::class));
+        $this->assertSame(
+            [
+                'PUBLIC_FIRSTNAME' => Constants::PUBLIC_FIRSTNAME,
+                'PUBLIC_LASTNAME' => Constants::PUBLIC_LASTNAME,
+                'PRIVATE_FIRSTNAME' => 'Sean',
+                'PRIVATE_LASTNAME' => 'Connery',
+                'PROTECTED_FIRSTNAME' => 'Pierce',
+                'PROTECTED_LASTNAME' => 'Brosnan',
+                'ANY_FIRSTNAME' => Constants::ANY_FIRSTNAME,
+                'ANY_LASTNAME' => Constants::ANY_LASTNAME
+            ],
+            Obj::getConstants(Constants::class)
+        );
     }
 
     /**
@@ -51,7 +56,7 @@ class ObjTest extends TestCase
      */
     public function testGetConstantsFailure(): void
     {
-        $this->assertEquals([], Obj::getConstants('unknown'));
+        $this->assertSame([], Obj::getConstants('unknown'));
     }
 
     /**
@@ -59,12 +64,15 @@ class ObjTest extends TestCase
      */
     public function testGetPublicConstants(): void
     {
-        $this->assertEquals([
-            'ACTOR_FIRSTNAME' => Constants::ACTOR_FIRSTNAME,
-            'ACTOR_LASTNAME' => Constants::ACTOR_LASTNAME,
-            'FIRSTNAME' => Constants::FIRSTNAME,
-            'LASTNAME' => Constants::LASTNAME
-        ], Obj::getPublicConstants(Constants::class));
+        $this->assertSame(
+            [
+                'PUBLIC_FIRSTNAME' => Constants::PUBLIC_FIRSTNAME,
+                'PUBLIC_LASTNAME' => Constants::PUBLIC_LASTNAME,
+                'ANY_FIRSTNAME' => Constants::ANY_FIRSTNAME,
+                'ANY_LASTNAME' => Constants::ANY_LASTNAME
+            ],
+            Obj::getPublicConstants(Constants::class)
+        );
     }
 
     /**
@@ -72,7 +80,7 @@ class ObjTest extends TestCase
      */
     public function testGetPublicConstantsFailure(): void
     {
-        $this->assertEquals([], Obj::getPublicConstants('unknown'));
+        $this->assertSame([], Obj::getPublicConstants('unknown'));
     }
 
     /**
@@ -80,10 +88,13 @@ class ObjTest extends TestCase
      */
     public function testGetPrivateConstants(): void
     {
-        $this->assertEquals([
-            'PRIVATE_FIRSTNAME' => 'Sean',
-            'PRIVATE_LASTNAME' => 'Connery'
-        ], Obj::getPrivateConstants(Constants::class));
+        $this->assertSame(
+            [
+                'PRIVATE_FIRSTNAME' => 'Sean',
+                'PRIVATE_LASTNAME' => 'Connery'
+            ],
+            Obj::getPrivateConstants(Constants::class)
+        );
     }
 
     /**
@@ -91,7 +102,29 @@ class ObjTest extends TestCase
      */
     public function testGetPrivateConstantsFailure(): void
     {
-        $this->assertEquals([], Obj::getPrivateConstants('unknown'));
+        $this->assertSame([], Obj::getPrivateConstants('unknown'));
+    }
+
+    /**
+     * Test getProtectedConstants.
+     */
+    public function testGetProtectedConstants(): void
+    {
+        $this->assertSame(
+            [
+                'PROTECTED_FIRSTNAME' => 'Pierce',
+                'PROTECTED_LASTNAME' => 'Brosnan'
+            ],
+            Obj::getProtectedConstants(Constants::class)
+        );
+    }
+
+    /**
+     * Test getProtectedConstants failure.
+     */
+    public function testGetProtectedConstantsFailure(): void
+    {
+        $this->assertSame([], Obj::getProtectedConstants('unknown'));
     }
 
     /**
@@ -103,7 +136,7 @@ class ObjTest extends TestCase
     {
         $objHelperObject = new ObjHelperObject();
         $properties = Obj::getProperties($objHelperObject, null, Obj::PROPERTY_PRIVATE);
-        $this->assertEquals($this->checkProperties, $properties);
+        $this->assertSame($this->checkProperties, $properties);
     }
 
     /**
@@ -114,7 +147,7 @@ class ObjTest extends TestCase
     public function testGetPrivatePropertiesFromStatic(): void
     {
         $properties = Obj::getProperties(null, ObjHelperStatic::class, Obj::PROPERTY_PRIVATE);
-        $this->assertEquals($this->checkProperties, $properties);
+        $this->assertSame($this->checkProperties, $properties);
     }
 
     /**
@@ -196,7 +229,7 @@ class ObjTest extends TestCase
     {
         $objHelperObjectExtended = new ObjHelperObjectExtended();
         $extends = Obj::getExtends($objHelperObjectExtended);
-        $this->assertTrue(in_array(ObjHelperObject::class, $extends));
+        $this->assertTrue(in_array(ObjHelperObject::class, $extends, true));
     }
 
     /**
@@ -205,7 +238,7 @@ class ObjTest extends TestCase
     public function testGetExtendsWithFromClass(): void
     {
         $extends = Obj::getExtends(ObjHelperObjectExtended::class);
-        $this->assertTrue(in_array(ObjHelperObject::class, $extends));
+        $this->assertTrue(in_array(ObjHelperObject::class, $extends, true));
     }
 
     /**
@@ -215,7 +248,7 @@ class ObjTest extends TestCase
     {
         $objHelperObject = new ObjHelperObject();
         $extends = Obj::getExtends($objHelperObject);
-        $this->assertEquals([], $extends);
+        $this->assertSame([], $extends);
     }
 
     /**
@@ -224,7 +257,7 @@ class ObjTest extends TestCase
     public function testGetExtendsWithoutFromClass(): void
     {
         $extends = Obj::getExtends(ObjHelperObject::class);
-        $this->assertEquals([], $extends);
+        $this->assertSame([], $extends);
     }
 
     /**
@@ -363,10 +396,10 @@ class ObjTest extends TestCase
         $this->assertTrue(Obj::setProperty('property4', $objHelperObject, $check4));
 
         $properties = Obj::getProperties($objHelperObject, null, Obj::PROPERTY_PRIVATE);
-        $this->assertEquals($check1, $properties['property1']);
-        $this->assertEquals($check2, $properties['property2']);
-        $this->assertEquals($check3, $properties['property3']);
-        $this->assertEquals($check4, $properties['property4']);
+        $this->assertSame($check1, $properties['property1']);
+        $this->assertSame($check2, $properties['property2']);
+        $this->assertSame($check3, $properties['property3']);
+        $this->assertSame($check4, $properties['property4']);
     }
 
     /**
@@ -392,7 +425,7 @@ class ObjTest extends TestCase
         $check = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
         $property = Obj::getProperty('unknown', $objHelperObject, $check);
-        $this->assertEquals($check, $property);
+        $this->assertSame($check, $property);
     }
 
     /**
@@ -407,8 +440,8 @@ class ObjTest extends TestCase
         $objHelperObject = new ObjHelperObject();
         Obj::setProperty('property1', $objHelperObject, $check1);
         Obj::setProperty('property2', $objHelperObject, $check2);
-        $this->assertEquals($check1, Obj::getProperty('property1', $objHelperObject));
-        $this->assertEquals($check2, Obj::getProperty('property2', $objHelperObject));
+        $this->assertSame($check1, Obj::getProperty('property1', $objHelperObject));
+        $this->assertSame($check2, Obj::getProperty('property2', $objHelperObject));
     }
 
     /**
@@ -418,10 +451,10 @@ class ObjTest extends TestCase
      */
     public function testGetPropertyFoundStatic(): void
     {
-        $check1 = md5((string)mt_rand(1, 100000));
-        $check2 = md5((string)mt_rand(1, 100000));
-        $check3 = md5((string)mt_rand(1, 100000));
-        $check4 = md5((string)mt_rand(1, 100000));
+        $check1 = md5((string)random_int(1, 100000));
+        $check2 = md5((string)random_int(1, 100000));
+        $check3 = md5((string)random_int(1, 100000));
+        $check4 = md5((string)random_int(1, 100000));
         Obj::setProperty('property1', null, $check1, ObjHelperStatic::class);
         Obj::setProperty('property2', null, $check2, ObjHelperStatic::class);
         Obj::setProperty('property3', null, $check3, ObjHelperStatic::class);
@@ -430,10 +463,10 @@ class ObjTest extends TestCase
         $value2 = Obj::getProperty('property2', null, null, ObjHelperStatic::class);
         $value3 = Obj::getProperty('property3', null, null, ObjHelperStatic::class);
         $value4 = Obj::getProperty('property4', null, null, ObjHelperStatic::class);
-        $this->assertEquals($check1, $value1);
-        $this->assertEquals($check2, $value2);
-        $this->assertEquals($check3, $value3);
-        $this->assertEquals($check4, $value4);
+        $this->assertSame($check1, $value1);
+        $this->assertSame($check2, $value2);
+        $this->assertSame($check3, $value3);
+        $this->assertSame($check4, $value4);
     }
 
     /**
@@ -465,7 +498,7 @@ class ObjTest extends TestCase
         $objHelperObject = new ObjHelperObject();
         Obj::setProperties($objHelperObject, $propertiesValues);
         $properties = Obj::getProperties($objHelperObject, null, Obj::PROPERTY_PRIVATE);
-        $this->assertEquals($propertiesValues, $properties);
+        $this->assertSame($propertiesValues, $properties);
     }
 
     /**
@@ -505,7 +538,7 @@ class ObjTest extends TestCase
     {
         $method = 'privateMethod';
         $check = Obj::callMethod($method, null, [], ObjHelperStatic::class);
-        $this->assertEquals('(' . $method . ')', $check);
+        $this->assertSame('(' . $method . ')', $check);
     }
 
     /**
@@ -516,10 +549,15 @@ class ObjTest extends TestCase
     public function testCallMethodPrivateStaticWithArguments(): void
     {
         $method = 'privateMethod';
-        $check = Obj::callMethod($method, null, [
-            'arguments' => '.test'
-        ], ObjHelperStatic::class);
-        $this->assertEquals('(' . $method . ').test', $check);
+        $check = Obj::callMethod(
+            $method,
+            null,
+            [
+                'arguments' => '.test'
+            ],
+            ObjHelperStatic::class
+        );
+        $this->assertSame('(' . $method . ').test', $check);
     }
 
     /**
@@ -528,9 +566,9 @@ class ObjTest extends TestCase
     public function testGetTraits(): void
     {
         $traits = Obj::getTraits(ClassWithTraits::class);
-        $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits));
-        $this->assertTrue(in_array(DataTrait::class, $traits));
-        $this->assertFalse(in_array(ConstantsTrait::class, $traits));
+        $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits, true));
+        $this->assertTrue(in_array(DataTrait::class, $traits, true));
+        $this->assertFalse(in_array(ConstantsTrait::class, $traits, true));
     }
 
     /**
@@ -540,9 +578,9 @@ class ObjTest extends TestCase
     {
         $classWithTraits = new ClassWithTraits();
         $traits = Obj::getTraits($classWithTraits);
-        $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits));
-        $this->assertTrue(in_array(DataTrait::class, $traits));
-        $this->assertFalse(in_array(ConstantsTrait::class, $traits));
+        $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits, true));
+        $this->assertTrue(in_array(DataTrait::class, $traits, true));
+        $this->assertFalse(in_array(ConstantsTrait::class, $traits, true));
     }
 
     /**
@@ -573,7 +611,7 @@ class ObjTest extends TestCase
     {
         $objHelperObject = new ObjHelperObject();
         $reflectionClass = $this->getReflectionClassFromObj($objHelperObject);
-        $this->assertEquals(ObjHelperObject::class, $reflectionClass->getName());
+        $this->assertSame(ObjHelperObject::class, $reflectionClass->getName());
     }
 
     /**
@@ -584,7 +622,7 @@ class ObjTest extends TestCase
     public function testGetReflectionClassByClass(): void
     {
         $reflectionClass = $this->getReflectionClassFromObj(ObjHelperObject::class);
-        $this->assertEquals(ObjHelperObject::class, $reflectionClass->getName());
+        $this->assertSame(ObjHelperObject::class, $reflectionClass->getName());
     }
 
     /**
@@ -596,7 +634,7 @@ class ObjTest extends TestCase
     {
         $objHelperObjectExtended = new ObjHelperObjectExtended();
         $reflectionClass = $this->getReflectionClassFromObj($objHelperObjectExtended, ObjHelperObject::class);
-        $this->assertEquals(ObjHelperObject::class, $reflectionClass->getName());
+        $this->assertSame(ObjHelperObject::class, $reflectionClass->getName());
     }
 
     /**
@@ -607,7 +645,7 @@ class ObjTest extends TestCase
     public function testGetReflectionClassByByClassOverride(): void
     {
         $reflectionClass = $this->getReflectionClassFromObj(ObjHelperObjectExtended::class, ObjHelperObject::class);
-        $this->assertEquals(ObjHelperObject::class, $reflectionClass->getName());
+        $this->assertSame(ObjHelperObject::class, $reflectionClass->getName());
     }
 
     /**
@@ -619,8 +657,8 @@ class ObjTest extends TestCase
     {
         $objHelperObject = new ObjHelperObject();
         $reflectionMethod = $this->getReflectionMethodFromObj('privateMethod', $objHelperObject);
-        $this->assertEquals('privateMethod', $reflectionMethod->name);
-        $this->assertEquals(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
+        $this->assertSame('privateMethod', $reflectionMethod->name);
+        $this->assertSame(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
     }
 
     /**
@@ -631,8 +669,8 @@ class ObjTest extends TestCase
     public function testGetReflectionMethodByClass(): void
     {
         $reflectionMethod = $this->getReflectionMethodFromObj('privateMethod', null, ObjHelperObject::class);
-        $this->assertEquals('privateMethod', $reflectionMethod->name);
-        $this->assertEquals(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
+        $this->assertSame('privateMethod', $reflectionMethod->name);
+        $this->assertSame(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
     }
 
     /**
@@ -648,8 +686,8 @@ class ObjTest extends TestCase
             $objHelperObjectExtended,
             ObjHelperObject::class
         );
-        $this->assertEquals('privateMethod', $reflectionMethod->name);
-        $this->assertEquals(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
+        $this->assertSame('privateMethod', $reflectionMethod->name);
+        $this->assertSame(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
     }
 
     /**
@@ -660,8 +698,8 @@ class ObjTest extends TestCase
     public function testGetReflectionMethodByByClassOverride(): void
     {
         $reflectionMethod = $this->getReflectionMethodFromObj('privateMethod', ObjHelperObjectExtended::class);
-        $this->assertEquals('privateMethod', $reflectionMethod->name);
-        $this->assertEquals(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
+        $this->assertSame('privateMethod', $reflectionMethod->name);
+        $this->assertSame(ObjHelperObject::class, Obj::getProperty('class', $reflectionMethod));
     }
 
     /**

@@ -53,7 +53,7 @@ class StrTest extends TestCase
      */
     public function testLength(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             mb_strlen($this->stringLeft . $this->stringRight),
             Str::length($this->stringLeft . $this->stringRight)
         );
@@ -64,7 +64,7 @@ class StrTest extends TestCase
      */
     public function testLower(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringLeft . $this->stringLeft,
             Str::lower($this->stringLeft . $this->stringRight)
         );
@@ -75,7 +75,7 @@ class StrTest extends TestCase
      */
     public function testUpper(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringRight . $this->stringRight,
             Str::upper($this->stringLeft . $this->stringRight)
         );
@@ -86,11 +86,11 @@ class StrTest extends TestCase
      */
     public function testSubstr(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringLeft,
             Str::substr($this->stringLeft . $this->stringRight, 0, 3)
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringRight,
             Str::substr($this->stringLeft . $this->stringRight, 3, 3)
         );
@@ -101,7 +101,7 @@ class StrTest extends TestCase
      */
     public function testLeft(): void
     {
-        $this->assertEquals($this->stringLeft, Str::left($this->stringLeft . $this->stringRight, 3));
+        $this->assertSame($this->stringLeft, Str::left($this->stringLeft . $this->stringRight, 3));
     }
 
     /**
@@ -109,7 +109,7 @@ class StrTest extends TestCase
      */
     public function testRight(): void
     {
-        $this->assertEquals($this->stringRight, Str::right($this->stringLeft . $this->stringRight, 3));
+        $this->assertSame($this->stringRight, Str::right($this->stringLeft . $this->stringRight, 3));
     }
 
     /**
@@ -133,7 +133,7 @@ class StrTest extends TestCase
      */
     public function testUcfirst(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             Str::substr($this->stringRight, 0, 1) . Str::substr($this->stringLeft, 1, 2),
             Str::ucfirst($this->stringLeft)
         );
@@ -144,7 +144,7 @@ class StrTest extends TestCase
      */
     public function testLcfirst(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             Str::substr($this->stringLeft, 0, 1) . Str::substr($this->stringRight, 1, 2),
             Str::lcfirst($this->stringRight)
         );
@@ -155,16 +155,16 @@ class StrTest extends TestCase
      */
     public function testLimit(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringLeft . Str::LIMIT_SUFFIX,
             Str::limit($this->stringLeft . $this->stringRight, 3)
         );
         $test = 'test';
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringLeft . $test,
             Str::limit($this->stringLeft . $this->stringRight, 3, $test)
         );
-        $this->assertEquals(
+        $this->assertSame(
             'test',
             Str::limit('test', 10, $test)
         );
@@ -185,12 +185,12 @@ class StrTest extends TestCase
      */
     public function testStripPrefix(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringRight,
             Str::stripPrefix($this->stringLeft . $this->stringRight, $this->stringLeft)
         );
-        $this->assertEquals('', Str::stripPrefix('', '-'));
-        $this->assertEquals('', Str::stripPrefix('--', '-', '-'));
+        $this->assertSame('', Str::stripPrefix('', '-'));
+        $this->assertSame('', Str::stripPrefix('--', '-', '-'));
     }
 
     /**
@@ -198,12 +198,12 @@ class StrTest extends TestCase
      */
     public function testForcePrefix(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringLeft . $this->stringRight,
             Str::forcePrefix($this->stringRight, $this->stringLeft)
         );
-        $this->assertEquals('', Str::forcePrefix('', '-'));
-        $this->assertEquals('-_test', Str::forcePrefix('_test_', '-', '_'));
+        $this->assertSame('', Str::forcePrefix('', '-'));
+        $this->assertSame('-_test', Str::forcePrefix('_test_', '-', '_'));
     }
 
     /**
@@ -221,12 +221,12 @@ class StrTest extends TestCase
      */
     public function testStripSuffix(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringLeft,
             Str::stripSuffix($this->stringLeft . $this->stringRight, $this->stringRight)
         );
-        $this->assertEquals('', Str::stripSuffix('', '-'));
-        $this->assertEquals('', Str::stripSuffix('--', '-', '-'));
+        $this->assertSame('', Str::stripSuffix('', '-'));
+        $this->assertSame('', Str::stripSuffix('--', '-', '-'));
     }
 
     /**
@@ -234,12 +234,12 @@ class StrTest extends TestCase
      */
     public function testForceSuffix(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $this->stringLeft . $this->stringRight,
             Str::forceSuffix($this->stringLeft, $this->stringRight)
         );
-        $this->assertEquals('', Str::forceSuffix('', '-'));
-        $this->assertEquals('test_-', Str::forceSuffix('_test_', '-', '_'));
+        $this->assertSame('', Str::forceSuffix('', '-'));
+        $this->assertSame('test_-', Str::forceSuffix('_test_', '-', '_'));
     }
 
     /**
@@ -247,7 +247,7 @@ class StrTest extends TestCase
      */
     public function testReplaceToken(): void
     {
-        $this->assertEquals($this->stringLeft . $this->stringRight, Str::replaceToken($this->template, [
+        $this->assertSame($this->stringLeft . $this->stringRight, Str::replaceToken($this->template, [
             'left' => $this->stringLeft,
             'right' => $this->stringRight
         ]));
@@ -258,7 +258,7 @@ class StrTest extends TestCase
      */
     public function testRemoveFirst(): void
     {
-        $this->assertEquals($this->part2, Str::removeFirst($this->part1 . '/' . $this->part2, '/'));
+        $this->assertSame($this->part2, Str::removeFirst($this->part1 . '/' . $this->part2, '/'));
     }
 
     /**
@@ -266,7 +266,7 @@ class StrTest extends TestCase
      */
     public function testRemoveLast(): void
     {
-        $this->assertEquals($this->part1, Str::removeLast($this->part1 . '/' . $this->part2, '/'));
+        $this->assertSame($this->part1, Str::removeLast($this->part1 . '/' . $this->part2, '/'));
     }
 
     /**
@@ -274,7 +274,7 @@ class StrTest extends TestCase
      */
     public function testGetFirst(): void
     {
-        $this->assertEquals($this->part1, Str::first($this->part1 . '/' . $this->part2, '/'));
+        $this->assertSame($this->part1, Str::first($this->part1 . '/' . $this->part2, '/'));
     }
 
     /**
@@ -282,7 +282,7 @@ class StrTest extends TestCase
      */
     public function testGetLast(): void
     {
-        $this->assertEquals($this->part2, Str::last($this->part1 . '/' . $this->part2, '/'));
+        $this->assertSame($this->part2, Str::last($this->part1 . '/' . $this->part2, '/'));
     }
 
     /**
@@ -290,9 +290,9 @@ class StrTest extends TestCase
      */
     public function testGetPart(): void
     {
-        $this->assertEquals($this->part1, Str::part($this->part1 . '/' . $this->part2, '/', 0));
-        $this->assertEquals($this->part2, Str::part($this->part1 . '/' . $this->part2, '/', 1));
-        $this->assertEquals('', Str::part($this->part1 . '/' . $this->part2, '/', 2));
+        $this->assertSame($this->part1, Str::part($this->part1 . '/' . $this->part2, '/', 0));
+        $this->assertSame($this->part2, Str::part($this->part1 . '/' . $this->part2, '/', 1));
+        $this->assertSame('', Str::part($this->part1 . '/' . $this->part2, '/', 2));
     }
 
     /**
@@ -301,10 +301,10 @@ class StrTest extends TestCase
     public function testGetCsvFields(): void
     {
         $csv = '"' . $this->part1 . '","' . $this->part2 . '"';
-        $this->assertEquals([$this->part1, $this->part2], Str::csvFields($csv));
-        $this->assertEquals([], Str::csvFields(''));
+        $this->assertSame([$this->part1, $this->part2], Str::csvFields($csv));
+        $this->assertSame([], Str::csvFields(''));
         $csv = '\'' . $this->part1 . '\',\'' . $this->part2 . '\'';
-        $this->assertEquals([$this->part1, $this->part2], Str::csvFields($csv));
+        $this->assertSame([$this->part1, $this->part2], Str::csvFields($csv));
     }
 
     /**
@@ -313,10 +313,10 @@ class StrTest extends TestCase
     public function testSlug(): void
     {
         // Test standard separator.
-        $this->assertEquals($this->slugTestValid, Str::slug($this->slugTest));
+        $this->assertSame($this->slugTestValid, Str::slug($this->slugTest));
 
         // Test not standard separator.
-        $this->assertEquals(
+        $this->assertSame(
             str_replace('.', '-', $this->slugTestValid),
             Str::slug($this->slugTest, '-')
         );
@@ -330,11 +330,11 @@ class StrTest extends TestCase
         $uri = 'component/security/user/enable';
         $keys = ['type', 'component', 'controller', 'action'];
         $keyValues = Str::splitIntoKeyValue($uri, '/', $keys);
-        $this->assertEquals(4, count($keyValues));
-        $this->assertEquals('component', $keyValues['type']);
-        $this->assertEquals('security', $keyValues['component']);
-        $this->assertEquals('user', $keyValues['controller']);
-        $this->assertEquals('enable', $keyValues['action']);
+        $this->assertSame(4, count($keyValues));
+        $this->assertSame('component', $keyValues['type']);
+        $this->assertSame('security', $keyValues['component']);
+        $this->assertSame('user', $keyValues['controller']);
+        $this->assertSame('enable', $keyValues['action']);
     }
 
     /**
@@ -345,10 +345,10 @@ class StrTest extends TestCase
         $uri = 'component/security/user/enable';
         $keys = ['type', 'component', 'controller'];
         $keyValues = Str::splitIntoKeyValue($uri, '/', $keys);
-        $this->assertEquals(3, count($keyValues));
-        $this->assertEquals('component', $keyValues['type']);
-        $this->assertEquals('security', $keyValues['component']);
-        $this->assertEquals('user', $keyValues['controller']);
+        $this->assertSame(3, count($keyValues));
+        $this->assertSame('component', $keyValues['type']);
+        $this->assertSame('security', $keyValues['component']);
+        $this->assertSame('user', $keyValues['controller']);
     }
 
     /**
@@ -359,10 +359,10 @@ class StrTest extends TestCase
         $uri = 'component/security/user';
         $keys = ['type', 'component', 'controller', 'action'];
         $keyValues = Str::splitIntoKeyValue($uri, '/', $keys);
-        $this->assertEquals(3, count($keyValues));
-        $this->assertEquals('component', $keyValues['type']);
-        $this->assertEquals('security', $keyValues['component']);
-        $this->assertEquals('user', $keyValues['controller']);
+        $this->assertSame(3, count($keyValues));
+        $this->assertSame('component', $keyValues['type']);
+        $this->assertSame('security', $keyValues['component']);
+        $this->assertSame('user', $keyValues['controller']);
     }
 
     /**
@@ -372,7 +372,7 @@ class StrTest extends TestCase
     {
         $unique1 = Str::unique();
         $unique2 = Str::unique();
-        $this->assertNotEquals($unique1, $unique2);
+        $this->assertNotSame($unique1, $unique2);
     }
 
     /**
@@ -382,11 +382,11 @@ class StrTest extends TestCase
     {
         $uniquePrefix1 = Str::unique('test');
         $uniquePrefix2 = Str::unique('test');
-        $this->assertNotEquals($uniquePrefix1, $uniquePrefix2);
-        $this->assertEquals('test', substr($uniquePrefix1, 0, 4));
-        $this->assertEquals('test', substr($uniquePrefix2, 0, 4));
-        $this->assertNotEquals('test', substr($uniquePrefix1, -4));
-        $this->assertNotEquals('test', substr($uniquePrefix2, -4));
+        $this->assertNotSame($uniquePrefix1, $uniquePrefix2);
+        $this->assertSame('test', substr($uniquePrefix1, 0, 4));
+        $this->assertSame('test', substr($uniquePrefix2, 0, 4));
+        $this->assertNotSame('test', substr($uniquePrefix1, -4));
+        $this->assertNotSame('test', substr($uniquePrefix2, -4));
     }
 
     /**
@@ -396,11 +396,11 @@ class StrTest extends TestCase
     {
         $uniqueSuffix1 = Str::unique('', 'test');
         $uniqueSuffix2 = Str::unique('', 'test');
-        $this->assertNotEquals($uniqueSuffix1, $uniqueSuffix2);
-        $this->assertNotEquals('test', substr($uniqueSuffix1, 0, 4));
-        $this->assertNotEquals('test', substr($uniqueSuffix2, 0, 4));
-        $this->assertEquals('test', substr($uniqueSuffix1, -4));
-        $this->assertEquals('test', substr($uniqueSuffix2, -4));
+        $this->assertNotSame($uniqueSuffix1, $uniqueSuffix2);
+        $this->assertNotSame('test', substr($uniqueSuffix1, 0, 4));
+        $this->assertNotSame('test', substr($uniqueSuffix2, 0, 4));
+        $this->assertSame('test', substr($uniqueSuffix1, -4));
+        $this->assertSame('test', substr($uniqueSuffix2, -4));
     }
 
     /**
@@ -410,7 +410,7 @@ class StrTest extends TestCase
     {
         $string = 'item1|item2|item3|item4';
         $stringResult = ['item1', 'item2', 'item3', 'item4'];
-        $this->assertEquals($stringResult, Str::explode('|', $string));
+        $this->assertSame($stringResult, Str::explode('|', $string));
     }
 
     /**
@@ -420,7 +420,7 @@ class StrTest extends TestCase
     {
         $string = "item1\r\nitem2\r\nitem3\r\nitem4";
         $stringResult = ['item1', 'item2', 'item3', 'item4'];
-        $this->assertEquals($stringResult, Str::explode("\n", $string));
+        $this->assertSame($stringResult, Str::explode("\n", $string));
     }
 
     /**
@@ -430,7 +430,7 @@ class StrTest extends TestCase
     {
         $string = 'item1|item2|item3|item4';
         $stringResult = ['{item1}', '{item2}', '{item3}', '{item4}'];
-        $this->assertEquals($stringResult, Str::explode('|', $string, function ($line) {
+        $this->assertSame($stringResult, Str::explode('|', $string, function ($line) {
             return '{' . $line . '}';
         }));
     }
@@ -442,7 +442,7 @@ class StrTest extends TestCase
     {
         $items = ['item1', 'item2', 'item3', 'item4'];
         $itemsResult = 'item1|item2|item3|item4';
-        $this->assertEquals($itemsResult, Str::implode('|', $items));
+        $this->assertSame($itemsResult, Str::implode('|', $items));
     }
 
     /**
@@ -452,7 +452,7 @@ class StrTest extends TestCase
     {
         $items = ['item1', 'item2', 'item3', 'item4'];
         $itemsResult = '{item1}|{item2}|{item3}|{item4}';
-        $this->assertEquals($itemsResult, Str::implode('|', $items, function ($line) {
+        $this->assertSame($itemsResult, Str::implode('|', $items, function ($line) {
             return '{' . $line . '}';
         }));
     }
@@ -463,7 +463,7 @@ class StrTest extends TestCase
     public function testPadLeftDefaultFiller(): void
     {
         $paddedString = Str::padLeft($this->stringLeft, 4);
-        $this->assertEquals(' ' . $this->stringLeft, $paddedString);
+        $this->assertSame(' ' . $this->stringLeft, $paddedString);
     }
 
     /**
@@ -472,7 +472,7 @@ class StrTest extends TestCase
     public function testPadLeftSpecifiedFiller(): void
     {
         $paddedString = Str::padLeft($this->stringLeft, 4, '0');
-        $this->assertEquals('0' . $this->stringLeft, $paddedString);
+        $this->assertSame('0' . $this->stringLeft, $paddedString);
     }
 
     /**
@@ -481,7 +481,7 @@ class StrTest extends TestCase
     public function testPadRightDefaultFiller(): void
     {
         $paddedString = Str::padRight($this->stringLeft, 4);
-        $this->assertEquals($this->stringLeft . ' ', $paddedString);
+        $this->assertSame($this->stringLeft . ' ', $paddedString);
     }
 
     /**
@@ -490,7 +490,7 @@ class StrTest extends TestCase
     public function testPadRightSpecifiedFIller(): void
     {
         $paddedString = Str::padRight($this->stringLeft, 4);
-        $this->assertEquals($this->stringLeft . ' ', $paddedString);
+        $this->assertSame($this->stringLeft . ' ', $paddedString);
     }
 
     /**
@@ -500,7 +500,7 @@ class StrTest extends TestCase
     {
         $string = 'test1 test2 test3';
         $wrapped = Str::wrap($string, 20);
-        $this->assertEquals($string, $wrapped);
+        $this->assertSame($string, $wrapped);
     }
 
     /**
@@ -510,7 +510,7 @@ class StrTest extends TestCase
     {
         $string = 'test1 test2 test3';
         $wrapped = Str::wrap($string, 8);
-        $this->assertEquals(str_replace(' ', "\n", $string), $wrapped);
+        $this->assertSame(str_replace(' ', "\n", $string), $wrapped);
     }
 
     /**
@@ -518,7 +518,7 @@ class StrTest extends TestCase
      */
     public function testWrapEmpty(): void
     {
-        $this->assertEquals('', Str::wrap('', 8));
+        $this->assertSame('', Str::wrap('', 8));
     }
 
     /**
@@ -526,7 +526,7 @@ class StrTest extends TestCase
      */
     public function testWrapEmptyLinebreak(): void
     {
-        $this->assertEquals("test\n", Str::wrap("test\n", 8));
+        $this->assertSame("test\n", Str::wrap("test\n", 8));
     }
 
     /**
@@ -535,18 +535,18 @@ class StrTest extends TestCase
     public function testPascalCase(): void
     {
         // Standard.
-        $this->assertEquals($this->pascalCase, Str::pascalCase($this->pascalCase), 'CASE: pascal > pascal');
-        $this->assertEquals($this->pascalCase, Str::pascalCase($this->camelCase), 'CASE: camel > pascal');
-        $this->assertEquals($this->pascalCase, Str::pascalCase($this->snakeCase), 'CASE: snake > pascal');
-        $this->assertEquals($this->pascalCase, Str::pascalCase($this->kebabCase), 'CASE: kebab > pascal');
+        $this->assertSame($this->pascalCase, Str::pascalCase($this->pascalCase), 'CASE: pascal > pascal');
+        $this->assertSame($this->pascalCase, Str::pascalCase($this->camelCase), 'CASE: camel > pascal');
+        $this->assertSame($this->pascalCase, Str::pascalCase($this->snakeCase), 'CASE: snake > pascal');
+        $this->assertSame($this->pascalCase, Str::pascalCase($this->kebabCase), 'CASE: kebab > pascal');
 
         // Id.
-        $this->assertEquals(
+        $this->assertSame(
             $this->idPascalCase,
             Str::pascalCase($this->idCamelCase),
             'CASE: id camel > pascal'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->idPascalCase,
             Str::pascalCase($this->idPascalCase),
             'CASE: id pascal > pascal'
@@ -559,18 +559,18 @@ class StrTest extends TestCase
     public function testCamelCase(): void
     {
         // Standard.
-        $this->assertEquals($this->camelCase, Str::camelCase($this->pascalCase), 'CASE: pascal > camel');
-        $this->assertEquals($this->camelCase, Str::camelCase($this->camelCase), 'CASE: camel > camel');
-        $this->assertEquals($this->camelCase, Str::camelCase($this->snakeCase), 'CASE: snake > camel');
-        $this->assertEquals($this->camelCase, Str::camelCase($this->kebabCase), 'CASE: kebab > camel');
+        $this->assertSame($this->camelCase, Str::camelCase($this->pascalCase), 'CASE: pascal > camel');
+        $this->assertSame($this->camelCase, Str::camelCase($this->camelCase), 'CASE: camel > camel');
+        $this->assertSame($this->camelCase, Str::camelCase($this->snakeCase), 'CASE: snake > camel');
+        $this->assertSame($this->camelCase, Str::camelCase($this->kebabCase), 'CASE: kebab > camel');
 
         // Id.
-        $this->assertEquals(
+        $this->assertSame(
             $this->idCamelCase,
             Str::camelCase($this->idCamelCase),
             'CASE: id camel > camel'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->idCamelCase,
             Str::camelCase($this->idPascalCase),
             'CASE: pascal > camel'
@@ -583,20 +583,20 @@ class StrTest extends TestCase
     public function testSnakeCase(): void
     {
         // Standard.
-        $this->assertEquals($this->snakeCase, Str::snakeCase($this->pascalCase), 'CASE: pascal > snake');
-        $this->assertEquals($this->snakeCase, Str::snakeCase($this->camelCase), 'CASE: camel > snake');
-        $this->assertEquals($this->snakeCase, Str::snakeCase($this->snakeCase), 'CASE: snake > snake');
-        $this->assertEquals($this->snakeCase, Str::snakeCase($this->kebabCase), 'CASE: kebab > snake');
+        $this->assertSame($this->snakeCase, Str::snakeCase($this->pascalCase, true), 'CASE: pascal > snake');
+        $this->assertSame($this->snakeCase, Str::snakeCase($this->camelCase, true), 'CASE: camel > snake');
+        $this->assertSame($this->snakeCase, Str::snakeCase($this->snakeCase), 'CASE: snake > snake');
+        $this->assertSame($this->snakeCase, Str::snakeCase($this->kebabCase), 'CASE: kebab > snake');
 
         // Id.
-        $this->assertEquals(
+        $this->assertSame(
             $this->idCamelCase,
             Str::snakeCase($this->idCamelCase),
             'CASE: id camel > snake'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->idCamelCase,
-            Str::snakeCase($this->idPascalCase),
+            Str::snakeCase($this->idPascalCase, true),
             'CASE: id pascal > snake'
         );
     }
@@ -607,18 +607,18 @@ class StrTest extends TestCase
     public function testKebabCase(): void
     {
         // Standard.
-        $this->assertEquals($this->kebabCase, Str::kebabCase($this->pascalCase), 'CASE: pascal > kebab');
-        $this->assertEquals($this->kebabCase, Str::kebabCase($this->camelCase), 'CASE: camel > kebab');
-        $this->assertEquals($this->kebabCase, Str::kebabCase($this->snakeCase), 'CASE: snake > kebab');
-        $this->assertEquals($this->kebabCase, Str::kebabCase($this->kebabCase), 'CASE: kebab > kebab');
+        $this->assertSame($this->kebabCase, Str::kebabCase($this->pascalCase), 'CASE: pascal > kebab');
+        $this->assertSame($this->kebabCase, Str::kebabCase($this->camelCase), 'CASE: camel > kebab');
+        $this->assertSame($this->kebabCase, Str::kebabCase($this->snakeCase), 'CASE: snake > kebab');
+        $this->assertSame($this->kebabCase, Str::kebabCase($this->kebabCase), 'CASE: kebab > kebab');
 
         // Id.
-        $this->assertEquals(
+        $this->assertSame(
             $this->idCamelCase,
             Str::kebabCase($this->idCamelCase),
             'CASE: id camel > kebab'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->idCamelCase,
             Str::kebabCase($this->idPascalCase),
             'CASE: id pascal > kebab'
@@ -636,7 +636,7 @@ class StrTest extends TestCase
                 'lastname' => 'Moore'
             ]
         ]);
-        $this->assertEquals([
+        $this->assertSame([
             'Id' => [
                 'Firstname' => 'Roger',
                 'Lastname' => 'Moore'
@@ -650,17 +650,17 @@ class StrTest extends TestCase
     public function testStrpos(): void
     {
         // Check random character starting from 0+.
-        $check = substr($this->slugTestValid, mt_rand(1, strlen($this->slugTestValid) - 1), 1);
+        $check = substr($this->slugTestValid, random_int(1, strlen($this->slugTestValid) - 1), 1);
         $checkPos = strpos($this->slugTestValid, $check);
         $pos = Str::strpos($this->slugTestValid, $check);
         $this->assertTrue(is_int($pos));
-        $this->assertEquals($checkPos, $pos);
+        $this->assertSame($checkPos, $pos);
 
         // Check first character.
         $check = substr($this->slugTestValid, 0, 1);
         $pos = Str::strpos($this->slugTestValid, $check);
         $this->assertTrue(is_int($pos));
-        $this->assertEquals(0, $pos);
+        $this->assertSame(0, $pos);
 
         // Check unknown character.
         $check = '-';
@@ -675,23 +675,23 @@ class StrTest extends TestCase
     public function testIndexOf(): void
     {
         // Check random character starting from 0+.
-        $check = substr($this->slugTestValid, mt_rand(1, strlen($this->slugTestValid) - 1), 1);
+        $check = substr($this->slugTestValid, random_int(1, strlen($this->slugTestValid) - 1), 1);
         $checkPos = strpos($this->slugTestValid, $check);
         $pos = Str::indexOf($this->slugTestValid, $check);
         $this->assertTrue(is_int($pos));
-        $this->assertEquals($checkPos, $pos);
+        $this->assertSame($checkPos, $pos);
 
         // Check first character.
         $check = substr($this->slugTestValid, 0, 1);
         $pos = Str::indexOf($this->slugTestValid, $check);
         $this->assertTrue(is_int($pos));
-        $this->assertEquals(0, $pos);
+        $this->assertSame(0, $pos);
 
         // Check unknown character.
         $check = '-';
         $pos = Str::indexOf($this->slugTestValid, $check);
         $this->assertTrue(is_int($pos));
-        $this->assertEquals(-1, $pos);
+        $this->assertSame(-1, $pos);
     }
 
     /**
@@ -700,7 +700,7 @@ class StrTest extends TestCase
     public function testContains(): void
     {
         // Check random character starting from 0+.
-        $check = substr($this->slugTestValid, mt_rand(1, strlen($this->slugTestValid) - 1), 1);
+        $check = substr($this->slugTestValid, random_int(1, strlen($this->slugTestValid) - 1), 1);
         $this->assertTrue(Str::contains($this->slugTestValid, $check));
 
         // Check first character.

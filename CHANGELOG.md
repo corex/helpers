@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.4.2
+
+### Fixed
+- Fixed snakeCase().
+
+### Added
+- Added git attributes.
+
+### Changed
+- Refactored Obj::class.
+- Refactored tests.
+
 ## 2.4.1
 
 ### Fixed

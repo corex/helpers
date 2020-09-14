@@ -85,8 +85,8 @@ class Str
     /**
      * Determine if a given string starts with a given substring.
      *
-     * @param  string $haystack
-     * @param  string $needle
+     * @param string $haystack
+     * @param string $needle
      * @return bool
      */
     public static function startsWith(string $haystack, string $needle): bool
@@ -97,8 +97,8 @@ class Str
     /**
      * Determine if a given string ends with a given substring.
      *
-     * @param  string $haystack
-     * @param  string $needle
+     * @param string $haystack
+     * @param string $needle
      * @return bool
      */
     public static function endsWith(string $haystack, string $needle): bool
@@ -109,7 +109,7 @@ class Str
     /**
      * Make a string's first character uppercase.
      *
-     * @param  string $string
+     * @param string $string
      * @return string
      */
     public static function ucfirst(string $string): string
@@ -461,7 +461,6 @@ class Str
         $parts = explode($separator, $string);
         $result = [];
         if (count($keys) > 0) {
-
             // Make sure arrays has equal number of items.
             if (count($parts) > count($keys)) {
                 $parts = array_slice($parts, 0, count($keys));
@@ -569,7 +568,7 @@ class Str
     public static function padRight(string $string, int $length, string $filler = ' '): string
     {
         while (self::length($string) <= $length - self::length($filler)) {
-            $string = $string . $filler;
+            $string .= $filler;
         }
 
         return $string;
@@ -660,11 +659,11 @@ class Str
      */
     public static function snakeCase(string $value, bool $toLowerCase = false, string $separator = '_'): string
     {
-        $replace = strtolower(preg_replace(
+        $replace = preg_replace(
             ['/\s+/', '/\s/', '/(?|([a-z\d])([A-Z])|([^\^])([A-Z][a-z]))/', '/[-_]+/'],
             [' ', $separator, '$1' . $separator . '$2', $separator],
             trim($value)
-        ));
+        );
 
         return $toLowerCase
             ? strtolower($replace)

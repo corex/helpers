@@ -20,9 +20,9 @@ class ObjHelperObject
     private $property4 = 'property 4';
 
     /**
-     * Private method.
+     * Public method.
      */
-    private function privateMethod(): void
+    public function publicMethod(): void
     {
     }
 
@@ -34,9 +34,9 @@ class ObjHelperObject
     }
 
     /**
-     * Public method.
+     * Private method.
      */
-    public function publicMethod(): void
+    private function privateMethod(): void
     {
     }
 }

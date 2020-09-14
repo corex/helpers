@@ -25,20 +25,11 @@ class StrListTest extends TestCase
     private $items;
 
     /**
-     * Setup.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->items = $this->item1 . '|' . $this->item2 . '|' . $this->item3;
-    }
-
-    /**
      * Test count.
      */
     public function testCount(): void
     {
-        $this->assertEquals(3, StrList::count($this->items, '|'));
+        $this->assertSame(3, StrList::count($this->items, '|'));
     }
 
     /**
@@ -46,7 +37,7 @@ class StrListTest extends TestCase
      */
     public function testCountEmpty(): void
     {
-        $this->assertEquals(0, StrList::count('', '|'));
+        $this->assertSame(0, StrList::count('', '|'));
     }
 
     /**
@@ -54,10 +45,10 @@ class StrListTest extends TestCase
      */
     public function testAdd(): void
     {
-        $this->assertEquals(3, StrList::count($this->items, '|'));
+        $this->assertSame(3, StrList::count($this->items, '|'));
         $items = StrList::add($this->items, $this->item4, '|');
-        $this->assertEquals(4, StrList::count($items, '|'));
-        $this->assertEquals($this->items . '|' . $this->item4, $items);
+        $this->assertSame(4, StrList::count($items, '|'));
+        $this->assertSame($this->items . '|' . $this->item4, $items);
     }
 
     /**
@@ -65,7 +56,7 @@ class StrListTest extends TestCase
      */
     public function testGet(): void
     {
-        $this->assertEquals($this->item3, StrList::get($this->items, 2, '|'));
+        $this->assertSame($this->item3, StrList::get($this->items, 2, '|'));
     }
 
     /**
@@ -73,7 +64,7 @@ class StrListTest extends TestCase
      */
     public function testGetTag(): void
     {
-        $this->assertEquals('3', StrList::get('-1-|-2-|-3-|-4-', 2, '|', '-'));
+        $this->assertSame('3', StrList::get('-1-|-2-|-3-|-4-', 2, '|', '-'));
     }
 
     /**
@@ -81,7 +72,7 @@ class StrListTest extends TestCase
      */
     public function testGetEmpty(): void
     {
-        $this->assertEquals('', StrList::get('', 2, '|'));
+        $this->assertSame('', StrList::get('', 2, '|'));
     }
 
     /**
@@ -89,7 +80,7 @@ class StrListTest extends TestCase
      */
     public function testPos(): void
     {
-        $this->assertEquals(2, StrList::pos($this->items, $this->item3, '|'));
+        $this->assertSame(2, StrList::pos($this->items, $this->item3, '|'));
     }
 
     /**
@@ -97,7 +88,7 @@ class StrListTest extends TestCase
      */
     public function testPosEmpty(): void
     {
-        $this->assertEquals(-1, StrList::pos('', $this->item3, '|'));
+        $this->assertSame(-1, StrList::pos('', $this->item3, '|'));
     }
 
     /**
@@ -106,7 +97,7 @@ class StrListTest extends TestCase
     public function testRemove(): void
     {
         $items = $this->items . '|' . $this->item4;
-        $this->assertEquals($this->items, StrList::remove($items, $this->item4, '|'));
+        $this->assertSame($this->items, StrList::remove($items, $this->item4, '|'));
     }
 
     /**
@@ -115,7 +106,7 @@ class StrListTest extends TestCase
     public function testRemoveIndex(): void
     {
         $items = $this->items . '|' . $this->item4;
-        $this->assertEquals($this->items, StrList::removeIndex($items, 3, '|'));
+        $this->assertSame($this->items, StrList::removeIndex($items, 3, '|'));
     }
 
     /**
@@ -135,9 +126,9 @@ class StrListTest extends TestCase
         $items1 = $this->item2 . '|' . $this->item1;
         $items2 = $this->item4 . '|' . $this->item3;
         $items = StrList::merge($items1, $items2, false, '|');
-        $this->assertNotEquals($this->items . '|' . $this->item4, $items);
+        $this->assertNotSame($this->items . '|' . $this->item4, $items);
         $items = StrList::merge($items1, $items2, true, '|');
-        $this->assertEquals($this->items . '|' . $this->item4, $items);
+        $this->assertSame($this->items . '|' . $this->item4, $items);
     }
 
     /**
@@ -149,6 +140,16 @@ class StrListTest extends TestCase
         $items2 = $this->item4 . '|' . $this->item3;
         $items = StrList::merge($items1, $items2, true, '|');
         $checkItems = [$this->item1, $this->item2, $this->item3, $this->item4];
-        $this->assertEquals(implode('|', $checkItems), $items);
+        $this->assertSame(implode('|', $checkItems), $items);
+    }
+
+    /**
+     * Setup.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->items = $this->item1 . '|' . $this->item2 . '|' . $this->item3;
     }
 }

@@ -6,6 +6,7 @@ namespace CoRex\Helpers;
 
 use Exception;
 use ReflectionClass;
+use ReflectionClassConstant;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionProperty;
@@ -24,13 +25,7 @@ class Obj
      */
     public static function getConstants($objectOrClass): array
     {
-        try {
-            $reflectionClass = self::getReflectionClass($objectOrClass);
-
-            return $reflectionClass->getConstants();
-        } catch (\Exception $e) {
-            return [];
-        }
+        return self::getClassConstants($objectOrClass, []);
     }
 
     /**
@@ -41,23 +36,7 @@ class Obj
      */
     public static function getPublicConstants($objectOrClass): array
     {
-        try {
-            $reflectionClass = self::getReflectionClass($objectOrClass);
-            $constants = $reflectionClass->getConstants();
-
-            // Loop to find constants.
-            $result = [];
-            foreach ($constants as $name => $value) {
-                $reflectionClassConstant = new \ReflectionClassConstant($objectOrClass, $name);
-                if ($reflectionClassConstant->isPublic()) {
-                    $result[$name] = $value;
-                }
-            }
-
-            return $result;
-        } catch (\Exception $e) {
-            return [];
-        }
+        return self::getClassConstants($objectOrClass, [self::PROPERTY_PUBLIC]);
     }
 
     /**
@@ -68,31 +47,26 @@ class Obj
      */
     public static function getPrivateConstants($objectOrClass): array
     {
-        try {
-            $reflectionClass = self::getReflectionClass($objectOrClass);
-            $constants = $reflectionClass->getConstants();
+        return self::getClassConstants($objectOrClass, [self::PROPERTY_PRIVATE]);
+    }
 
-            // Loop to find constants.
-            $result = [];
-            foreach ($constants as $name => $value) {
-                $reflectionClassConstant = new \ReflectionClassConstant($objectOrClass, $name);
-                if ($reflectionClassConstant->isPrivate()) {
-                    $result[$name] = $value;
-                }
-            }
-
-            return $result;
-        } catch (\Exception $e) {
-            return [];
-        }
+    /**
+     * Get protected constants.
+     *
+     * @param object|string $objectOrClass
+     * @return string[]
+     */
+    public static function getProtectedConstants($objectOrClass): array
+    {
+        return self::getClassConstants($objectOrClass, [self::PROPERTY_PROTECTED]);
     }
 
     /**
      * Get properties.
      *
-     * @param object $object
-     * @param string $classOverride Default null which means class from $object.
-     * @param int $propertyType Default null.
+     * @param object|null $object $object
+     * @param string|null $classOverride Default null which means class from $object.
+     * @param int|null $propertyType Default null.
      * @return string[]
      * @throws ReflectionException
      */
@@ -116,9 +90,9 @@ class Obj
      * Get property.
      *
      * @param string $property
-     * @param object $object
+     * @param object|null $object $object
      * @param mixed $defaultValue Default null.
-     * @param string $classOverride Default null which means class from $object.
+     * @param string|null $classOverride Default null which means class from $object.
      * @return mixed
      * @throws ReflectionException
      */
@@ -148,7 +122,7 @@ class Obj
      *
      * @param object $object
      * @param string[] $propertiesValues Key/value.
-     * @param string $classOverride Default null which means class from $object.
+     * @param string|null $classOverride Default null which means class from $object.
      * @return bool
      * @throws ReflectionException
      */
@@ -176,9 +150,9 @@ class Obj
      * Set property.
      *
      * @param string $property
-     * @param object $object
+     * @param object|null $object $object
      * @param mixed $value
-     * @param string $classOverride Default null which means class from $object.
+     * @param string|null $classOverride Default null which means class from $object.
      * @return bool
      * @throws ReflectionException
      */
@@ -197,12 +171,30 @@ class Obj
     }
 
     /**
+     * Has method.
+     *
+     * @param string $method
+     * @param object|string $objectOrClass
+     * @return bool
+     */
+    public static function hasMethod(string $method, $objectOrClass): bool
+    {
+        try {
+            $reflectionClass = self::getReflectionClass($objectOrClass);
+
+            return $reflectionClass->hasMethod($method);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Call method.
      *
      * @param string $name
-     * @param object $object
+     * @param object|null $object $object
      * @param string[] $arguments Default [].
-     * @param string $classOverride Default null.
+     * @param string|null $classOverride Default null.
      * @return mixed
      * @throws ReflectionException
      */
@@ -245,7 +237,7 @@ class Obj
      */
     public static function hasInterface($objectOrClass, string $interfaceClassName): bool
     {
-        return in_array($interfaceClassName, self::getInterfaces($objectOrClass));
+        return in_array($interfaceClassName, self::getInterfaces($objectOrClass), true);
     }
 
     /**
@@ -267,12 +259,12 @@ class Obj
      * Has extends.
      *
      * @param object|string $objectOrClass
-     * @param string $class
+     * @param string $extendsClass
      * @return bool
      */
-    public static function hasExtends($objectOrClass, string $class): bool
+    public static function hasExtends($objectOrClass, string $extendsClass): bool
     {
-        return in_array($class, self::getExtends($objectOrClass));
+        return in_array($extendsClass, self::getExtends($objectOrClass), true);
     }
 
     /**
@@ -294,29 +286,52 @@ class Obj
      * Has trait.
      *
      * @param object|string $objectOrTrait
-     * @param string $class
+     * @param string $traitClass
      * @return bool
      */
-    public static function hasTrait($objectOrTrait, string $class): bool
+    public static function hasTrait($objectOrTrait, string $traitClass): bool
     {
-        return in_array($class, self::getTraits($objectOrTrait));
+        return in_array($traitClass, self::getTraits($objectOrTrait), true);
     }
 
     /**
-     * Has method.
+     * Get class constants by types.
      *
-     * @param string $method
      * @param object|string $objectOrClass
-     * @return bool
+     * @param int[] $types Use ReflectionProperty::IS_*.
+     * @return array
      */
-    public static function hasMethod(string $method, $objectOrClass): bool
+    private static function getClassConstants($objectOrClass, array $types): array
     {
         try {
             $reflectionClass = self::getReflectionClass($objectOrClass);
+            $constants = $reflectionClass->getConstants();
 
-            return $reflectionClass->hasMethod($method);
-        } catch (Exception $e) {
-            return false;
+            // Loop to find constants.
+            $result = [];
+            foreach ($constants as $name => $value) {
+                $reflectionClassConstant = new ReflectionClassConstant($objectOrClass, $name);
+                $modifiers = $reflectionClassConstant->getModifiers();
+
+                $doAdd = false;
+                if (count($types) > 0) {
+                    foreach ($types as $type) {
+                        if (($modifiers | $type) === $modifiers) {
+                            $doAdd = true;
+                        }
+                    }
+                } else {
+                    $doAdd = true;
+                }
+
+                if ($doAdd) {
+                    $result[$name] = $value;
+                }
+            }
+
+            return $result;
+        } catch (Exception $exception) {
+            return [];
         }
     }
 
@@ -324,7 +339,7 @@ class Obj
      * Get reflection class.
      *
      * @param object|string $objectOrClass
-     * @param string $classOverride Default null which means class from $object.
+     * @param string|null $classOverride Default null which means class from $object.
      * @return ReflectionClass
      * @throws ReflectionException
      */
@@ -347,7 +362,7 @@ class Obj
      *
      * @param string $method
      * @param object|string $objectOrClass
-     * @param string $classOverride Default null which means class from $object.
+     * @param string|null $classOverride Default null which means class from $object.
      * @return ReflectionMethod
      * @throws ReflectionException
      */

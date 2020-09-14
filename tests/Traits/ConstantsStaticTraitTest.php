@@ -6,6 +6,7 @@ namespace Tests\CoRex\Helpers\Traits;
 
 use CoRex\Helpers\Obj;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use Tests\CoRex\Helpers\Helpers\ConstantsStatic;
 
 class ConstantsStaticTraitTest extends TestCase
@@ -13,22 +14,22 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test getClassConstants.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetClassConstants(): void
     {
         $constants = $this->callMethod('getClassConstants');
-        $this->assertEquals(Obj::getConstants(ConstantsStatic::class), $constants);
+        $this->assertSame(Obj::getConstants(ConstantsStatic::class), $constants);
     }
 
     /**
      * Test getClassConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetClassConstantByValue(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             'ACTOR_LASTNAME',
             $this->callMethod('getClassConstantByValue', ['value' => ConstantsStatic::ACTOR_LASTNAME])
         );
@@ -38,22 +39,22 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test getPublicClassConstants.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPublicClassConstants(): void
     {
         $constants = $this->callMethod('getPublicClassConstants');
-        $this->assertEquals(Obj::getPublicConstants(ConstantsStatic::class), $constants);
+        $this->assertSame(Obj::getPublicConstants(ConstantsStatic::class), $constants);
     }
 
     /**
      * Test getPublicClassConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPublicClassConstantByValue(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             'ACTOR_LASTNAME',
             $this->callMethod('getPublicClassConstantByValue', ['value' => ConstantsStatic::ACTOR_LASTNAME])
         );
@@ -63,22 +64,22 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test getPrivateClassConstants.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPrivateClassConstants(): void
     {
         $constants = $this->callMethod('getPrivateClassConstants');
-        $this->assertEquals(Obj::getPrivateConstants(ConstantsStatic::class), $constants);
+        $this->assertSame(Obj::getPrivateConstants(ConstantsStatic::class), $constants);
     }
 
     /**
      * Test getPrivateClassConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPrivateClassConstantByValue(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             'PRIVATE_LASTNAME',
             $this->callMethod('getPrivateClassConstantByValue', ['value' => 'Connery'])
         );
@@ -88,7 +89,7 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test hasConstant.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasConstant(): void
     {
@@ -100,7 +101,7 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test hasConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasConstantByValue(): void
     {
@@ -115,7 +116,7 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test hasPublicConstant.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPublicConstant(): void
     {
@@ -127,7 +128,7 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test hasPublicConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPublicConstantByValue(): void
     {
@@ -142,7 +143,7 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test hasPrivateConstant.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPrivateConstant(): void
     {
@@ -154,7 +155,7 @@ class ConstantsStaticTraitTest extends TestCase
     /**
      * Test hasPrivateConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPrivateConstantByValue(): void
     {
@@ -172,7 +173,7 @@ class ConstantsStaticTraitTest extends TestCase
      * @param string $method
      * @param string[] $arguments
      * @return mixed
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function callMethod(string $method, array $arguments = [])
     {

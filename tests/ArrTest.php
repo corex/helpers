@@ -32,9 +32,9 @@ class ArrTest extends TestCase
     public function testGet(): void
     {
         $data = ['actor' => $this->actor1];
-        $this->assertEquals($this->actor1['firstname'], Arr::get($data, 'actor.firstname'));
-        $this->assertEquals($this->actor1['lastname'], Arr::get($data, 'actor.lastname'));
-        $this->assertEquals('test', Arr::get($data, 'actor.test', 'test'));
+        $this->assertSame($this->actor1['firstname'], Arr::get($data, 'actor.firstname'));
+        $this->assertSame($this->actor1['lastname'], Arr::get($data, 'actor.lastname'));
+        $this->assertSame('test', Arr::get($data, 'actor.test', 'test'));
         $this->assertNull(Arr::get($data, 'actor.test'));
     }
 
@@ -44,10 +44,10 @@ class ArrTest extends TestCase
     public function testGetEmptyKey(): void
     {
         $data = ['actor' => $this->actor1];
-        $this->assertEquals($this->actor1['firstname'], Arr::get($data, 'actor.firstname'));
-        $this->assertEquals($this->actor1['lastname'], Arr::get($data, 'actor.lastname'));
-        $this->assertEquals('test', Arr::get($data, 'actor.test', 'test'));
-        $this->assertEquals($data, Arr::get($data, ''));
+        $this->assertSame($this->actor1['firstname'], Arr::get($data, 'actor.firstname'));
+        $this->assertSame($this->actor1['lastname'], Arr::get($data, 'actor.lastname'));
+        $this->assertSame('test', Arr::get($data, 'actor.test', 'test'));
+        $this->assertSame($data, Arr::get($data, ''));
     }
 
     /**
@@ -58,7 +58,7 @@ class ArrTest extends TestCase
         $data = [];
         $this->assertNull(Arr::get($data, 'actor.test1.test2'));
         Arr::set($data, 'actor.test1.test2', 'testing', true);
-        $this->assertEquals('testing', Arr::get($data, 'actor.test1.test2'));
+        $this->assertSame('testing', Arr::get($data, 'actor.test1.test2'));
     }
 
     /**
@@ -67,8 +67,8 @@ class ArrTest extends TestCase
     public function testGetFirst(): void
     {
         $data = [$this->actor1, $this->actor2, $this->actor3, $this->actor4, $this->actor5];
-        $this->assertEquals($this->actor1, Arr::first($data));
-        $this->assertEquals($this->actor1['firstname'], Arr::first($data, 'firstname'));
+        $this->assertSame($this->actor1, Arr::first($data));
+        $this->assertSame($this->actor1['firstname'], Arr::first($data, 'firstname'));
     }
 
     /**
@@ -85,8 +85,8 @@ class ArrTest extends TestCase
     public function testGetLast(): void
     {
         $data = [$this->actor1, $this->actor2, $this->actor3, $this->actor4, $this->actor5];
-        $this->assertEquals($this->actor5, Arr::last($data));
-        $this->assertEquals($this->actor5['firstname'], Arr::last($data, 'firstname'));
+        $this->assertSame($this->actor5, Arr::last($data));
+        $this->assertSame($this->actor5['firstname'], Arr::last($data, 'firstname'));
     }
 
     /**
@@ -108,7 +108,7 @@ class ArrTest extends TestCase
             'this' => [
                 'is' => [
                     'a' => [
-                        'test' => md5((string)mt_rand(1, 100000))
+                        'test' => md5((string)random_int(1, 100000))
                     ]
                 ]
             ]
@@ -128,7 +128,7 @@ class ArrTest extends TestCase
             'this' => [
                 'is' => [
                     'a' => [
-                        'test' => md5((string)mt_rand(1, 100000))
+                        'test' => md5((string)random_int(1, 100000))
                     ]
                 ]
             ]
@@ -145,7 +145,7 @@ class ArrTest extends TestCase
     {
         $data = [$this->actor1, $this->actor2, $this->actor3, $this->actor4, $this->actor5];
         $data = Arr::removeFirst($data);
-        $this->assertEquals($this->actor2, Arr::first($data));
+        $this->assertSame($this->actor2, Arr::first($data));
     }
 
     /**
@@ -155,7 +155,7 @@ class ArrTest extends TestCase
     {
         $data = [$this->actor1, $this->actor2, $this->actor3, $this->actor4, $this->actor5];
         $data = Arr::removeLast($data);
-        $this->assertEquals($this->actor4, Arr::last($data));
+        $this->assertSame($this->actor4, Arr::last($data));
     }
 
     /**
@@ -195,21 +195,13 @@ class ArrTest extends TestCase
     }
 
     /**
-     * Test index of not array.
-     */
-//    public function testIndexOfNotArray(): void
-//    {
-//        $this->assertEquals(-1, Arr::indexOf('not array', 'not.existing'));
-//    }
-
-    /**
      * Test index of simple.
      */
     public function testIndexOfSimple(): void
     {
         // Test simple array.
         $data = ['test1', 'test2', 'test3'];
-        $this->assertEquals(1, Arr::indexOf($data, 'test2'));
+        $this->assertSame(1, Arr::indexOf($data, 'test2'));
     }
 
     /**
@@ -219,7 +211,7 @@ class ArrTest extends TestCase
     {
         // Test simple array with associative item.
         $data = [$this->actor1, $this->actor2, $this->actor3, $this->actor4, $this->actor5];
-        $this->assertEquals(1, Arr::indexOf($data, $this->actor2['firstname'], 'firstname'));
+        $this->assertSame(1, Arr::indexOf($data, $this->actor2['firstname'], 'firstname'));
     }
 
     /**
@@ -229,7 +221,7 @@ class ArrTest extends TestCase
     {
         // Test associative array.
         $data = ['test1' => 'test1', 'test2' => 'test2', 'test3' => 'test3'];
-        $this->assertEquals('test2', Arr::indexOf($data, 'test2'));
+        $this->assertSame('test2', Arr::indexOf($data, 'test2'));
     }
 
     /**
@@ -248,7 +240,7 @@ class ArrTest extends TestCase
         $actor2->value = 'test2';
         $data[] = $actor2;
 
-        $this->assertEquals(1, Arr::indexOf($data, 'test2', 'value'));
+        $this->assertSame(1, Arr::indexOf($data, 'test2', 'value'));
     }
 
     /**
@@ -264,7 +256,7 @@ class ArrTest extends TestCase
             'actor4' => $this->actor4,
             'actor5' => $this->actor5
         ];
-        $this->assertEquals('actor2', Arr::indexOf($data, $this->actor2['firstname'], 'firstname'));
+        $this->assertSame('actor2', Arr::indexOf($data, $this->actor2['firstname'], 'firstname'));
     }
 
     /**
@@ -272,7 +264,7 @@ class ArrTest extends TestCase
      */
     public function testIndexOfEmptyArray(): void
     {
-        $this->assertEquals(-1, Arr::indexOf([], 'not.existing'));
+        $this->assertSame(-1, Arr::indexOf([], 'not.existing'));
     }
 
     /**
@@ -291,7 +283,7 @@ class ArrTest extends TestCase
     public function testKeys(): void
     {
         $data = ['actor1' => 'test', 'actor2' => 'test', 'actor3' => 'test', 'actor4' => 'test'];
-        $this->assertEquals(array_keys($data), Arr::keys($data));
+        $this->assertSame(array_keys($data), Arr::keys($data));
     }
 
     /**
@@ -310,12 +302,12 @@ class ArrTest extends TestCase
      */
     public function testValues(): void
     {
-        $check1 = md5((string)mt_rand(1, 100000));
-        $check2 = md5((string)mt_rand(1, 100000));
+        $check1 = md5((string)random_int(1, 100000));
+        $check2 = md5((string)random_int(1, 100000));
         $data = [];
         $data[4] = $check1;
         $data[7] = $check2;
-        $this->assertEquals([$check1, $check2], Arr::values($data));
+        $this->assertSame([$check1, $check2], Arr::values($data));
     }
 
     /**
@@ -323,7 +315,7 @@ class ArrTest extends TestCase
      */
     public function testPluckNotArray(): void
     {
-        $this->assertEquals([], Arr::pluck('not.array', 'dummy.key'));
+        $this->assertSame([], Arr::pluck('not.array', 'dummy.key'));
     }
 
     /**
@@ -334,7 +326,7 @@ class ArrTest extends TestCase
         // Test simple array with associative item.
         $checkData = [$this->actor1['firstname'], $this->actor2['firstname']];
         $data = [$this->actor1, $this->actor2];
-        $this->assertEquals($checkData, Arr::pluck($data, 'firstname'));
+        $this->assertSame($checkData, Arr::pluck($data, 'firstname'));
     }
 
     /**
@@ -344,7 +336,7 @@ class ArrTest extends TestCase
     {
         // Test associative array.
         $data = ['test1' => 'test1', 'test2' => 'test2', 'test3' => 'test3'];
-        $this->assertEquals([null, null, null], Arr::pluck($data, 'test2'));
+        $this->assertSame([null, null, null], Arr::pluck($data, 'test2'));
     }
 
     /**
@@ -363,7 +355,7 @@ class ArrTest extends TestCase
         $actor2->value = 'test2';
         $data[] = $actor2;
 
-        $this->assertEquals(['test1', 'test2'], Arr::pluck($data, 'value'));
+        $this->assertSame(['test1', 'test2'], Arr::pluck($data, 'value'));
     }
 
     /**
@@ -373,7 +365,7 @@ class ArrTest extends TestCase
     {
         // Test associative array.
         $data = ['test1' => ['test2' => ['test2' => ['test3' => 'test3']]]];
-        $this->assertEquals(['test3'], Arr::pluck($data, 'test1.test2.test3'));
+        $this->assertSame(['test3'], Arr::pluck($data, 'test1.test2.test3'));
     }
 
     /**
@@ -393,7 +385,7 @@ class ArrTest extends TestCase
             'CoRex\Support\System\Directory',
             'CoRex\Support\System\Template'
         ];
-        $this->assertEquals($linesMatch, Arr::lineMatch($lines, 'use ', ';', true, true));
+        $this->assertSame($linesMatch, Arr::lineMatch($lines, 'use ', ';', true, true));
     }
 
     /**
@@ -407,7 +399,7 @@ class ArrTest extends TestCase
             'use CoRex\Support\System\Directory;               ',
             '            use CoRex\Support\System\Template;       '
         ];
-        $this->assertEquals([], Arr::lineMatch($lines, '-', '-', true, true));
+        $this->assertSame([], Arr::lineMatch($lines, '-', '-', true, true));
     }
 
     /**
@@ -415,7 +407,7 @@ class ArrTest extends TestCase
      */
     public function testToArrayByString(): void
     {
-        $this->assertEquals(['a', 'b', 'c', 'd'], Arr::toArray('a.b.c.d'));
+        $this->assertSame(['a', 'b', 'c', 'd'], Arr::toArray('a.b.c.d'));
     }
 
     /**
@@ -423,7 +415,7 @@ class ArrTest extends TestCase
      */
     public function testToArrayByEmptyString(): void
     {
-        $this->assertEquals([], Arr::toArray(''));
+        $this->assertSame([], Arr::toArray(''));
     }
 
     /**
@@ -431,7 +423,7 @@ class ArrTest extends TestCase
      */
     public function testToArrayByArray(): void
     {
-        $this->assertEquals(['a', 'b', 'c', 'd'], Arr::toArray(['a', 'b', 'c', 'd']));
+        $this->assertSame(['a', 'b', 'c', 'd'], Arr::toArray(['a', 'b', 'c', 'd']));
     }
 
     /**
@@ -439,7 +431,7 @@ class ArrTest extends TestCase
      */
     public function testToArrayByEmptyArray(): void
     {
-        $this->assertEquals([], Arr::toArray([]));
+        $this->assertSame([], Arr::toArray([]));
     }
 
     /**
@@ -447,7 +439,7 @@ class ArrTest extends TestCase
      */
     public function testToArrayByOtherType(): void
     {
-        $this->assertEquals([], Arr::toArray(false));
+        $this->assertSame([], Arr::toArray(false));
     }
 
     /**
@@ -455,7 +447,7 @@ class ArrTest extends TestCase
      */
     public function testToArrayByStringSingle(): void
     {
-        $this->assertEquals(['a'], Arr::toArray('a'));
+        $this->assertSame(['a'], Arr::toArray('a'));
     }
 
     /**
@@ -471,7 +463,7 @@ class ArrTest extends TestCase
             'path' => '/home/test/this/is/i/path'
         ];
         $json = Arr::toJson($data);
-        $this->assertEquals(json_encode($data, JSON_UNESCAPED_SLASHES + JSON_PRETTY_PRINT), $json);
+        $this->assertSame(json_encode($data, JSON_UNESCAPED_SLASHES + JSON_PRETTY_PRINT), $json);
     }
 
     /**
@@ -487,7 +479,7 @@ class ArrTest extends TestCase
             'path' => '/home/test/this/is/i/path'
         ];
         $json = Arr::toJson($data, false);
-        $this->assertEquals(json_encode($data, JSON_UNESCAPED_SLASHES), $json);
+        $this->assertSame(json_encode($data, JSON_UNESCAPED_SLASHES), $json);
     }
 
     /**
@@ -503,6 +495,6 @@ class ArrTest extends TestCase
             'path' => '/home/test/this/is/i/path'
         ];
         $json = Arr::toJson($data, true, false);
-        $this->assertEquals(json_encode($data, JSON_PRETTY_PRINT), $json);
+        $this->assertSame(json_encode($data, JSON_PRETTY_PRINT), $json);
     }
 }

@@ -6,6 +6,7 @@ namespace Tests\CoRex\Helpers\Traits;
 
 use CoRex\Helpers\Obj;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use Tests\CoRex\Helpers\Helpers\Constants;
 
 class ConstantsTraitTest extends TestCase
@@ -16,24 +17,24 @@ class ConstantsTraitTest extends TestCase
     /**
      * Test getClassConstants.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetClassConstants(): void
     {
         $constants = $this->callMethod('getClassConstants');
-        $this->assertEquals(Obj::getConstants($this->constants), $constants);
+        $this->assertSame(Obj::getConstants($this->constants), $constants);
     }
 
     /**
      * Test getClassConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetClassConstantByValue(): void
     {
-        $this->assertEquals(
-            'ACTOR_LASTNAME',
-            $this->callMethod('getClassConstantByValue', ['value' => Constants::ACTOR_LASTNAME])
+        $this->assertSame(
+            'PUBLIC_LASTNAME',
+            $this->callMethod('getClassConstantByValue', ['value' => Constants::PUBLIC_LASTNAME])
         );
         $this->assertNull($this->callMethod('getClassConstantByValue', ['value' => 'unknown']));
     }
@@ -41,24 +42,24 @@ class ConstantsTraitTest extends TestCase
     /**
      * Test getPublicClassConstants.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPublicClassConstants(): void
     {
         $constants = $this->callMethod('getPublicClassConstants');
-        $this->assertEquals(Obj::getPublicConstants($this->constants), $constants);
+        $this->assertSame(Obj::getPublicConstants($this->constants), $constants);
     }
 
     /**
      * Test getPublicClassConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPublicClassConstantByValue(): void
     {
-        $this->assertEquals(
-            'ACTOR_LASTNAME',
-            $this->callMethod('getPublicClassConstantByValue', ['value' => Constants::ACTOR_LASTNAME])
+        $this->assertSame(
+            'PUBLIC_LASTNAME',
+            $this->callMethod('getPublicClassConstantByValue', ['value' => Constants::PUBLIC_LASTNAME])
         );
         $this->assertNull($this->callMethod('getPublicClassConstantByValue', ['value' => 'unknown']));
     }
@@ -66,22 +67,22 @@ class ConstantsTraitTest extends TestCase
     /**
      * Test getPrivateClassConstants.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPrivateClassConstants(): void
     {
         $constants = $this->callMethod('getPrivateClassConstants');
-        $this->assertEquals(Obj::getPrivateConstants($this->constants), $constants);
+        $this->assertSame(Obj::getPrivateConstants($this->constants), $constants);
     }
 
     /**
      * Test getPrivateClassConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testGetPrivateClassConstantByValue(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             'PRIVATE_LASTNAME',
             $this->callMethod('getPrivateClassConstantByValue', ['value' => 'Connery'])
         );
@@ -91,50 +92,50 @@ class ConstantsTraitTest extends TestCase
     /**
      * Test hasConstant.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasConstant(): void
     {
         $this->assertFalse($this->callMethod('hasClassConstant', ['constantName' => 'unknown']));
-        $this->assertTrue($this->callMethod('hasClassConstant', ['constantName' => 'ACTOR_FIRSTNAME']));
+        $this->assertTrue($this->callMethod('hasClassConstant', ['constantName' => 'PUBLIC_FIRSTNAME']));
         $this->assertTrue($this->callMethod('hasClassConstant', ['constantName' => 'PRIVATE_FIRSTNAME']));
     }
 
     /**
      * Test hasConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasConstantByValue(): void
     {
         $this->assertFalse($this->callMethod('hasClassConstantByValue', ['constantName' => 'unknown']));
-        $this->assertTrue($this->callMethod('hasClassConstantByValue', ['constantName' => Constants::ACTOR_FIRSTNAME]));
+        $this->assertTrue($this->callMethod('hasClassConstantByValue', ['constantName' => Constants::PUBLIC_FIRSTNAME]));
         $this->assertTrue($this->callMethod('hasClassConstantByValue', ['constantName' => 'Connery']));
     }
 
     /**
      * Test hasPublicConstant.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPublicConstant(): void
     {
         $this->assertFalse($this->callMethod('hasPublicClassConstant', ['constantName' => 'unknown']));
-        $this->assertTrue($this->callMethod('hasPublicClassConstant', ['constantName' => 'ACTOR_FIRSTNAME']));
+        $this->assertTrue($this->callMethod('hasPublicClassConstant', ['constantName' => 'PUBLIC_FIRSTNAME']));
         $this->assertFalse($this->callMethod('hasPublicClassConstant', ['constantName' => 'PRIVATE_FIRSTNAME']));
     }
 
     /**
      * Test hasPublicConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPublicConstantByValue(): void
     {
         $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['constantName' => 'unknown']));
         $this->assertTrue($this->callMethod(
             'hasPublicClassConstantByValue',
-            ['constantName' => Constants::ACTOR_FIRSTNAME]
+            ['constantName' => Constants::PUBLIC_FIRSTNAME]
         ));
         $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['constantName' => 'Connery']));
     }
@@ -142,7 +143,7 @@ class ConstantsTraitTest extends TestCase
     /**
      * Test hasPrivateConstant.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPrivateConstant(): void
     {
@@ -154,29 +155,16 @@ class ConstantsTraitTest extends TestCase
     /**
      * Test hasPrivateConstantByValue.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testHasPrivateConstantByValue(): void
     {
         $this->assertFalse($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'unknown']));
         $this->assertFalse($this->callMethod(
             'hasPrivateClassConstantByValue',
-            ['constantName' => Constants::ACTOR_FIRSTNAME]
+            ['constantName' => Constants::PUBLIC_FIRSTNAME]
         ));
         $this->assertTrue($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'Connery']));
-    }
-
-    /**
-     * Call method..
-     *
-     * @param string $method
-     * @param string[] $arguments
-     * @return mixed
-     * @throws \ReflectionException
-     */
-    private function callMethod(string $method, array $arguments = [])
-    {
-        return Obj::callMethod($method, $this->constants, $arguments);
     }
 
     /**
@@ -185,6 +173,20 @@ class ConstantsTraitTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->constants = new Constants();
+    }
+
+    /**
+     * Call method..
+     *
+     * @param string $method
+     * @param string[] $arguments
+     * @return mixed
+     * @throws ReflectionException
+     */
+    private function callMethod(string $method, array $arguments = [])
+    {
+        return Obj::callMethod($method, $this->constants, $arguments);
     }
 }
