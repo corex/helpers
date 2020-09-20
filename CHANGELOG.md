@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.0.0
+
+### Fixed
+- Fixed missing exception on setProperty() on missing property.
+- Fixed missing exception on setProperties() on missing property.
+- Fixed missing exception on setProperty() on missing property.
+- Fixed missing exception on hasMethod() on method not found.
+
+### Changed
+- Set php requirement to 7.4
+- Renamed DataTrait::class to DataPublicTrait::class.
+
+### Removed
+- Removed old Bag::class in favor of DataPublicTrait::class.
+
 ## 2.4.2
 
 ### Fixed
