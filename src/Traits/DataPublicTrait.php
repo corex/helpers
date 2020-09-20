@@ -6,7 +6,7 @@ namespace CoRex\Helpers\Traits;
 
 use CoRex\Helpers\Arr;
 
-trait DataTrait
+trait DataPublicTrait
 {
     /** @var mixed[] */
     private $data = [];

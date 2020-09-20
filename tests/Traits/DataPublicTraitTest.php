@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\CoRex\Helpers\Traits;
 
-use CoRex\Helpers\Traits\DataTrait;
+use CoRex\Helpers\Traits\DataPublicTrait;
 use PHPUnit\Framework\TestCase;
 use Tests\CoRex\Helpers\Helpers\Data;
 
-class DataTraitTest extends TestCase
+class DataPublicTraitTest extends TestCase
 {
     /**
      * Test clear.
@@ -66,10 +66,13 @@ class DataTraitTest extends TestCase
         $this->assertNull($data->get('check3'));
         $this->assertNull($data->get('check4'));
 
-        $data->setArray([
-            'check3' => $check3,
-            'check4' => $check4
-        ], true);
+        $data->setArray(
+            [
+                'check3' => $check3,
+                'check4' => $check4
+            ],
+            true
+        );
 
         $this->assertSame($check1, $data->get('check1'));
         $this->assertSame($check2, $data->get('check2'));
@@ -302,7 +305,7 @@ class DataTraitTest extends TestCase
     /**
      * Data.
      *
-     * @return Data|DataTrait
+     * @return Data|DataPublicTrait
      */
     public function data(): Data
     {
