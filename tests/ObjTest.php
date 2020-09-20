@@ -7,7 +7,7 @@ namespace Tests\CoRex\Helpers;
 use CoRex\Helpers\Obj;
 use CoRex\Helpers\Traits\ConstantsStaticTrait;
 use CoRex\Helpers\Traits\ConstantsTrait;
-use CoRex\Helpers\Traits\DataTrait;
+use CoRex\Helpers\Traits\DataPublicTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -374,7 +374,9 @@ class ObjTest extends TestCase
      */
     public function testHasMethodNoClass(): void
     {
-        $this->assertFalse(Obj::hasMethod('unknown', 'unknown'));
+        $this->expectException(ReflectionException::class);
+        $this->expectExceptionMessage('Class unknown does not exist');
+        Obj::hasMethod('unknown', 'unknown');
     }
 
     /**
@@ -390,10 +392,10 @@ class ObjTest extends TestCase
         $check4 = md5((string)microtime(true)) . '4';
 
         $objHelperObject = new ObjHelperObject();
-        $this->assertTrue(Obj::setProperty('property1', $objHelperObject, $check1));
-        $this->assertTrue(Obj::setProperty('property2', $objHelperObject, $check2));
-        $this->assertTrue(Obj::setProperty('property3', $objHelperObject, $check3));
-        $this->assertTrue(Obj::setProperty('property4', $objHelperObject, $check4));
+        Obj::setProperty('property1', $objHelperObject, $check1);
+        Obj::setProperty('property2', $objHelperObject, $check2);
+        Obj::setProperty('property3', $objHelperObject, $check3);
+        Obj::setProperty('property4', $objHelperObject, $check4);
 
         $properties = Obj::getProperties($objHelperObject, null, Obj::PROPERTY_PRIVATE);
         $this->assertSame($check1, $properties['property1']);
@@ -409,10 +411,11 @@ class ObjTest extends TestCase
      */
     public function testSetPropertyNotFound(): void
     {
+        $this->expectException(ReflectionException::class);
+        $this->expectExceptionMessage('Property unknown does not exist');
         $check = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
-        $property = Obj::setProperty('unknown', $objHelperObject, $check);
-        $this->assertFalse($property);
+        Obj::setProperty('unknown', $objHelperObject, $check);
     }
 
     /**
@@ -422,10 +425,11 @@ class ObjTest extends TestCase
      */
     public function testGetPropertyNotFound(): void
     {
+        $this->expectException(ReflectionException::class);
+        $this->expectExceptionMessage('Property unknown does not exist');
         $check = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
-        $property = Obj::getProperty('unknown', $objHelperObject, $check);
-        $this->assertSame($check, $property);
+        Obj::getProperty('unknown', $objHelperObject, $check);
     }
 
     /**
@@ -508,6 +512,8 @@ class ObjTest extends TestCase
      */
     public function testSetPropertiesOneNotFound(): void
     {
+        $this->expectException(ReflectionException::class);
+        $this->expectExceptionMessage('Property unknown does not exist');
         $propertiesValues = [
             'property1' => md5((string)microtime(true)) . '1',
             'unknown' => md5((string)microtime(true)),
@@ -515,7 +521,7 @@ class ObjTest extends TestCase
             'property4' => md5((string)microtime(true)) . '4'
         ];
         $objHelperObject = new ObjHelperObject();
-        $this->assertFalse(Obj::setProperties($objHelperObject, $propertiesValues));
+        Obj::setProperties($objHelperObject, $propertiesValues);
     }
 
     /**
@@ -523,11 +529,11 @@ class ObjTest extends TestCase
      *
      * @throws ReflectionException
      */
-    public function testSetPropertiesEmpty(): void
-    {
-        $objHelperObject = new ObjHelperObject();
-        $this->assertFalse(Obj::setProperties($objHelperObject, []));
-    }
+//    public function testSetPropertiesEmpty(): void
+//    {
+//        $objHelperObject = new ObjHelperObject();
+//        $this->assertFalse(Obj::setProperties($objHelperObject, []));
+//    }
 
     /**
      * Test callMethod private static.
@@ -567,7 +573,7 @@ class ObjTest extends TestCase
     {
         $traits = Obj::getTraits(ClassWithTraits::class);
         $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits, true));
-        $this->assertTrue(in_array(DataTrait::class, $traits, true));
+        $this->assertTrue(in_array(DataPublicTrait::class, $traits, true));
         $this->assertFalse(in_array(ConstantsTrait::class, $traits, true));
     }
 
@@ -579,7 +585,7 @@ class ObjTest extends TestCase
         $classWithTraits = new ClassWithTraits();
         $traits = Obj::getTraits($classWithTraits);
         $this->assertTrue(in_array(ConstantsStaticTrait::class, $traits, true));
-        $this->assertTrue(in_array(DataTrait::class, $traits, true));
+        $this->assertTrue(in_array(DataPublicTrait::class, $traits, true));
         $this->assertFalse(in_array(ConstantsTrait::class, $traits, true));
     }
 
@@ -598,7 +604,7 @@ class ObjTest extends TestCase
     public function testHasTrait(): void
     {
         $this->assertTrue(Obj::hasTrait(ClassWithTraits::class, ConstantsStaticTrait::class));
-        $this->assertTrue(Obj::hasTrait(ClassWithTraits::class, DataTrait::class));
+        $this->assertTrue(Obj::hasTrait(ClassWithTraits::class, DataPublicTrait::class));
         $this->assertFalse(Obj::hasTrait(ClassWithTraits::class, ConstantsTrait::class));
     }
 

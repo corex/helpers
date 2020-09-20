@@ -103,18 +103,14 @@ class Obj
         ?string $classOverride = null
     ) {
         $reflectionClass = self::getReflectionClass($object, $classOverride);
-        try {
-            $property = $reflectionClass->getProperty($property);
-            if ($object === null && !$property->isStatic()) {
-                return $defaultValue;
-            }
-
-            $property->setAccessible(true);
-
-            return $property->getValue($object);
-        } catch (Exception $e) {
+        $property = $reflectionClass->getProperty($property);
+        if ($object === null && !$property->isStatic()) {
             return $defaultValue;
         }
+
+        $property->setAccessible(true);
+
+        return $property->getValue($object);
     }
 
     /**
@@ -123,27 +119,18 @@ class Obj
      * @param object $object
      * @param string[] $propertiesValues Key/value.
      * @param string|null $classOverride Default null which means class from $object.
-     * @return bool
      * @throws ReflectionException
      */
-    public static function setProperties(object $object, array $propertiesValues, ?string $classOverride = null): bool
+    public static function setProperties(object $object, array $propertiesValues, ?string $classOverride = null): void
     {
         $reflectionClass = self::getReflectionClass($object, $classOverride);
-        if (count($propertiesValues) === 0) {
-            return false;
-        }
-
-        try {
+        if (count($propertiesValues) > 0) {
             foreach ($propertiesValues as $property => $value) {
                 $property = $reflectionClass->getProperty($property);
                 $property->setAccessible(true);
                 $property->setValue($object, $value);
             }
-        } catch (Exception $e) {
-            return false;
         }
-
-        return true;
     }
 
     /**
@@ -153,21 +140,14 @@ class Obj
      * @param object|null $object $object
      * @param mixed $value
      * @param string|null $classOverride Default null which means class from $object.
-     * @return bool
      * @throws ReflectionException
      */
-    public static function setProperty(string $property, ?object $object, $value, ?string $classOverride = null): bool
+    public static function setProperty(string $property, ?object $object, $value, ?string $classOverride = null): void
     {
         $reflectionClass = self::getReflectionClass($object, $classOverride);
-        try {
-            $property = $reflectionClass->getProperty($property);
-            $property->setAccessible(true);
-            $property->setValue($object, $value);
-        } catch (Exception $e) {
-            return false;
-        }
-
-        return true;
+        $property = $reflectionClass->getProperty($property);
+        $property->setAccessible(true);
+        $property->setValue($object, $value);
     }
 
     /**
@@ -176,16 +156,13 @@ class Obj
      * @param string $method
      * @param object|string $objectOrClass
      * @return bool
+     * @throws ReflectionException
      */
     public static function hasMethod(string $method, $objectOrClass): bool
     {
-        try {
-            $reflectionClass = self::getReflectionClass($objectOrClass);
+        $reflectionClass = self::getReflectionClass($objectOrClass);
 
-            return $reflectionClass->hasMethod($method);
-        } catch (Exception $e) {
-            return false;
-        }
+        return $reflectionClass->hasMethod($method);
     }
 
     /**
