@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.1
+
+### Changed
+- Lowered php requirement to 7.2
+
 ## 3.0.0
 
 ### Fixed
