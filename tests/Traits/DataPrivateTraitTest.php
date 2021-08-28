@@ -11,11 +11,8 @@ class DataPrivateTraitTest extends TestCase
 {
     use DataPrivateTrait;
 
-    /** @var int */
-    private $randomInt;
-
-    /** @var string */
-    private $randomString;
+    private int $randomInt;
+    private string $randomString;
 
     /**
      * Test dataPrivateClear().

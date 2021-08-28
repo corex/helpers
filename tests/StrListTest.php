@@ -9,20 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 class StrListTest extends TestCase
 {
-    /** @var string */
-    private $item1 = 'Item 1';
-
-    /** @var string */
-    private $item2 = 'Item 2';
-
-    /** @var string */
-    private $item3 = 'Item 3';
-
-    /** @var string */
-    private $item4 = 'Item 4';
-
-    /** @var string */
-    private $items;
+    private string $item1 = 'Item 1';
+    private string $item2 = 'Item 2';
+    private string $item3 = 'Item 3';
+    private string $item4 = 'Item 4';
+    private string $items;
 
     /**
      * Test count.

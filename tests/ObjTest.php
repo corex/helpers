@@ -24,7 +24,7 @@ use Tests\CoRex\Helpers\Helpers\ObjHelperWithoutInterface;
 class ObjTest extends TestCase
 {
     /** @var string[] */
-    private $checkProperties = [
+    private array $checkProperties = [
         'property1' => 'property 1',
         'property2' => 'property 2',
         'property3' => 'property 3',

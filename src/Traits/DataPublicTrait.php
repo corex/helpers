@@ -9,7 +9,7 @@ use CoRex\Helpers\Arr;
 trait DataPublicTrait
 {
     /** @var mixed[] */
-    private $data = [];
+    private array $data = [];
 
     /**
      * Clear data.

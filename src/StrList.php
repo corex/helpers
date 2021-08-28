@@ -144,12 +144,8 @@ class StrList
      * @param string $separator
      * @return string
      */
-    public static function merge(
-        string $list1,
-        string $list2,
-        bool $sort,
-        string $separator
-    ): string {
+    public static function merge(string $list1, string $list2, bool $sort, string $separator): string
+    {
         $items1 = self::explode($separator, $list1);
         $items2 = self::explode($separator, $list2);
         if (count($items2) > 0) {

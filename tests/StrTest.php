@@ -9,44 +9,19 @@ use PHPUnit\Framework\TestCase;
 
 class StrTest extends TestCase
 {
-    /** @var string */
-    private $stringLeft = 'æøå';
-
-    /** @var string */
-    private $stringRight = 'ÆØÅ';
-
-    /** @var string */
-    private $template = '{left}{right}';
-
-    /** @var string */
-    private $part1 = 'part1';
-
-    /** @var string */
-    private $part2 = 'part2';
-
-    /** @var string */
-    private $slugTest = 'ThIs%is\a#certanly.test|with"funny-ChaRaCtErS/and^more$fun more+to_come';
-
-    /** @var string */
-    private $slugTestValid = 'thisisacertanly.testwithfunny.charactersandmorefun.moreto.come';
-
-    /** @var string */
-    private $pascalCase = 'TestClass';
-
-    /** @var string */
-    private $camelCase = 'testClass';
-
-    /** @var string */
-    private $snakeCase = 'test_class';
-
-    /** @var string */
-    private $kebabCase = 'test-class';
-
-    /** @var string */
-    private $idCamelCase = 'id';
-
-    /** @var string */
-    private $idPascalCase = 'Id';
+    private string $stringLeft = 'æøå';
+    private string $stringRight = 'ÆØÅ';
+    private string $template = '{left}{right}';
+    private string $part1 = 'part1';
+    private string $part2 = 'part2';
+    private string $slugTest = 'ThIs%is\a#certanly.test|with"funny-ChaRaCtErS/and^more$fun more+to_come';
+    private string $slugTestValid = 'thisisacertanly.testwithfunny.charactersandmorefun.moreto.come';
+    private string $pascalCase = 'TestClass';
+    private string $camelCase = 'testClass';
+    private string $snakeCase = 'test_class';
+    private string $kebabCase = 'test-class';
+    private string $idCamelCase = 'id';
+    private string $idPascalCase = 'Id';
 
     /**
      * Test length.
@@ -430,7 +405,7 @@ class StrTest extends TestCase
     {
         $string = 'item1|item2|item3|item4';
         $stringResult = ['{item1}', '{item2}', '{item3}', '{item4}'];
-        $this->assertSame($stringResult, Str::explode('|', $string, function ($line) {
+        $this->assertSame($stringResult, Str::explode('|', $string, static function ($line) {
             return '{' . $line . '}';
         }));
     }
@@ -452,7 +427,7 @@ class StrTest extends TestCase
     {
         $items = ['item1', 'item2', 'item3', 'item4'];
         $itemsResult = '{item1}|{item2}|{item3}|{item4}';
-        $this->assertSame($itemsResult, Str::implode('|', $items, function ($line) {
+        $this->assertSame($itemsResult, Str::implode('|', $items, static function ($line) {
             return '{' . $line . '}';
         }));
     }

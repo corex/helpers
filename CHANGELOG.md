@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.0
+
+### Changed
+- Set php requirement to 7.4 || 8.0
+- Made code more strict.
+
 ## 3.0.1
 
 ### Changed

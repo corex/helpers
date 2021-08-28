@@ -12,10 +12,15 @@ class Constants
 
     public const PUBLIC_FIRSTNAME = 'Roger';
     public const PUBLIC_LASTNAME = 'Moore';
-    private const PRIVATE_FIRSTNAME = 'Sean';
-    private const PRIVATE_LASTNAME = 'Connery';
+
     protected const PROTECTED_FIRSTNAME = 'Pierce';
     protected const PROTECTED_LASTNAME = 'Brosnan';
+
+    private const PRIVATE_FIRSTNAME = 'Sean';
+    private const PRIVATE_LASTNAME = 'Connery';
+
+    // @codingStandardsIgnoreStart
     const ANY_FIRSTNAME = 'Daniel';
     const ANY_LASTNAME = 'Craig';
+    // @codingStandardsIgnoreEnd
 }

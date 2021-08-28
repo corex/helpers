@@ -9,17 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class IsTest extends TestCase
 {
-    /** @var string */
-    private $pascalCase = 'TestClass';
-
-    /** @var string */
-    private $camelCase = 'testClass';
-
-    /** @var string */
-    private $snakeCase = 'test_class';
-
-    /** @var string */
-    private $kebabCase = 'test-class';
+    private string $pascalCase = 'TestClass';
+    private string $camelCase = 'testClass';
+    private string $snakeCase = 'test_class';
+    private string $kebabCase = 'test-class';
 
     /**
      * Test is camel case.

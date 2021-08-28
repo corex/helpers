@@ -12,19 +12,19 @@ use stdClass;
 class ArrTest extends TestCase
 {
     /** @var string[] */
-    private $actor1 = ['firstname' => 'Sean', 'lastname' => 'Connery'];
+    private array $actor1 = ['firstname' => 'Sean', 'lastname' => 'Connery'];
 
     /** @var string[] */
-    private $actor2 = ['firstname' => 'Roger', 'lastname' => 'Moore'];
+    private array $actor2 = ['firstname' => 'Roger', 'lastname' => 'Moore'];
 
     /** @var string[] */
-    private $actor3 = ['firstname' => 'Timothy', 'lastname' => 'Dalton'];
+    private array $actor3 = ['firstname' => 'Timothy', 'lastname' => 'Dalton'];
 
     /** @var string[] */
-    private $actor4 = ['firstname' => 'Pierce', 'lastname' => 'Brosnan'];
+    private array $actor4 = ['firstname' => 'Pierce', 'lastname' => 'Brosnan'];
 
     /** @var string[] */
-    private $actor5 = ['firstname' => 'Daniel', 'lastname' => 'Craig'];
+    private array $actor5 = ['firstname' => 'Daniel', 'lastname' => 'Craig'];
 
     /**
      * Test get.

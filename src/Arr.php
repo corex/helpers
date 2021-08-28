@@ -222,9 +222,9 @@ class Arr
         foreach ($array as $index => $item) {
             if ($key !== null) {
                 if (is_object($item)) {
-                    $checkValue = isset($item->{$key}) ? $item->{$key} : null;
+                    $checkValue = $item->{$key} ?? null;
                 } else {
-                    $checkValue = isset($item[$key]) ? $item[$key] : null;
+                    $checkValue = $item[$key] ?? null;
                 }
             } else {
                 $checkValue = $item;
