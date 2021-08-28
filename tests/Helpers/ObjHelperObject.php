@@ -7,7 +7,7 @@ namespace Tests\CoRex\Helpers\Helpers;
 // CodeSniffer will fail on this file on purpose.
 class ObjHelperObject
 {
-    private string $property1 = 'property 1';
+    private ?string $property1 = 'property 1';
     private string $property2 = 'property 2';
     private string $property3 = 'property 3';
     private string $property4 = 'property 4';

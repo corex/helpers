@@ -40,10 +40,10 @@ class ObjTest extends TestCase
             [
                 'PUBLIC_FIRSTNAME' => Constants::PUBLIC_FIRSTNAME,
                 'PUBLIC_LASTNAME' => Constants::PUBLIC_LASTNAME,
-                'PRIVATE_FIRSTNAME' => 'Sean',
-                'PRIVATE_LASTNAME' => 'Connery',
                 'PROTECTED_FIRSTNAME' => 'Pierce',
                 'PROTECTED_LASTNAME' => 'Brosnan',
+                'PRIVATE_FIRSTNAME' => 'Sean',
+                'PRIVATE_LASTNAME' => 'Connery',
                 'ANY_FIRSTNAME' => Constants::ANY_FIRSTNAME,
                 'ANY_LASTNAME' => Constants::ANY_LASTNAME
             ],
