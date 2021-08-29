@@ -1,9 +1,8 @@
 # Helpers (string, array, ...)
 
 ![License](https://img.shields.io/packagist/l/corex/helpers.svg)
-![Build Status](https://travis-ci.org/corex/helpers.svg?branch=master)
+![Build Status](https://app.travis-ci.com/corex/helpers.svg?branch=master)
 ![codecov](https://codecov.io/gh/corex/helpers/branch/master/graph/badge.svg)
-
 
 ## Helpers
 - Arr - Array helpers.
