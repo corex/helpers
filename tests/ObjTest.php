@@ -375,7 +375,9 @@ class ObjTest extends TestCase
     public function testHasMethodNoClass(): void
     {
         $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage('Class unknown does not exist');
+        $this->expectExceptionMessage('Class');
+        $this->expectExceptionMessage('unknown');
+        $this->expectExceptionMessage('does not exist');
         Obj::hasMethod('unknown', 'unknown');
     }
 
@@ -412,7 +414,8 @@ class ObjTest extends TestCase
     public function testSetPropertyNotFound(): void
     {
         $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage('Property unknown does not exist');
+        $this->expectExceptionMessage('Property');
+        $this->expectExceptionMessage('unknown does not exist');
         $check = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
         Obj::setProperty('unknown', $objHelperObject, $check);
@@ -426,7 +429,8 @@ class ObjTest extends TestCase
     public function testGetPropertyNotFound(): void
     {
         $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage('Property unknown does not exist');
+        $this->expectExceptionMessage('Property');
+        $this->expectExceptionMessage('unknown does not exist');
         $check = md5((string)microtime(true));
         $objHelperObject = new ObjHelperObject();
         Obj::getProperty('unknown', $objHelperObject, $check);
@@ -513,7 +517,8 @@ class ObjTest extends TestCase
     public function testSetPropertiesOneNotFound(): void
     {
         $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage('Property unknown does not exist');
+        $this->expectExceptionMessage('Property');
+        $this->expectExceptionMessage('unknown does not exist');
         $propertiesValues = [
             'property1' => md5((string)microtime(true)) . '1',
             'unknown' => md5((string)microtime(true)),

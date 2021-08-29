@@ -107,11 +107,11 @@ class ConstantsTraitTest extends TestCase
      */
     public function testHasConstantByValue(): void
     {
-        $this->assertFalse($this->callMethod('hasClassConstantByValue', ['constantName' => 'unknown']));
+        $this->assertFalse($this->callMethod('hasClassConstantByValue', ['value' => 'unknown']));
         $this->assertTrue(
-            $this->callMethod('hasClassConstantByValue', ['constantName' => Constants::PUBLIC_FIRSTNAME])
+            $this->callMethod('hasClassConstantByValue', ['value' => Constants::PUBLIC_FIRSTNAME])
         );
-        $this->assertTrue($this->callMethod('hasClassConstantByValue', ['constantName' => 'Connery']));
+        $this->assertTrue($this->callMethod('hasClassConstantByValue', ['value' => 'Connery']));
     }
 
     /**
@@ -133,14 +133,14 @@ class ConstantsTraitTest extends TestCase
      */
     public function testHasPublicConstantByValue(): void
     {
-        $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['constantName' => 'unknown']));
+        $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['value' => 'unknown']));
         $this->assertTrue(
             $this->callMethod(
                 'hasPublicClassConstantByValue',
-                ['constantName' => Constants::PUBLIC_FIRSTNAME]
+                ['value' => Constants::PUBLIC_FIRSTNAME]
             )
         );
-        $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['constantName' => 'Connery']));
+        $this->assertFalse($this->callMethod('hasPublicClassConstantByValue', ['value' => 'Connery']));
     }
 
     /**
@@ -162,14 +162,14 @@ class ConstantsTraitTest extends TestCase
      */
     public function testHasPrivateConstantByValue(): void
     {
-        $this->assertFalse($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'unknown']));
+        $this->assertFalse($this->callMethod('hasPrivateClassConstantByValue', ['value' => 'unknown']));
         $this->assertFalse(
             $this->callMethod(
                 'hasPrivateClassConstantByValue',
-                ['constantName' => Constants::PUBLIC_FIRSTNAME]
+                ['value' => Constants::PUBLIC_FIRSTNAME]
             )
         );
-        $this->assertTrue($this->callMethod('hasPrivateClassConstantByValue', ['constantName' => 'Connery']));
+        $this->assertTrue($this->callMethod('hasPrivateClassConstantByValue', ['value' => 'Connery']));
     }
 
     /**
@@ -183,7 +183,7 @@ class ConstantsTraitTest extends TestCase
     }
 
     /**
-     * Call method..
+     * Call method.
      *
      * @param string $method
      * @param string[] $arguments

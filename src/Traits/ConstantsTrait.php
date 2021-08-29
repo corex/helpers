@@ -133,7 +133,7 @@ trait ConstantsTrait
      */
     private function hasPrivateClassConstant(string $constantName): bool
     {
-        return in_array($constantName, array_keys($this->getPrivateClassConstants()), true);
+        return array_key_exists($constantName, $this->getPrivateClassConstants());
     }
 
     /**
