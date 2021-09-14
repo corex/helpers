@@ -166,6 +166,79 @@ class Obj
     }
 
     /**
+     * Get methods.
+     *
+     * @param object|string $objectOrClass
+     * @return array
+     */
+    public static function getMethods($objectOrClass): array
+    {
+        return self::getClassMethods($objectOrClass);
+    }
+
+    /**
+     * Get public methods.
+     *
+     * @param object|string $objectOrClass
+     * @return array
+     */
+    public static function getPublicMethods($objectOrClass): array
+    {
+        return self::getClassMethods($objectOrClass, ReflectionMethod::IS_PUBLIC);
+    }
+
+    /**
+     * Get private methods.
+     *
+     * @param object|string $objectOrClass
+     * @return array
+     */
+    public static function getPrivateMethods($objectOrClass): array
+    {
+        return self::getClassMethods($objectOrClass, ReflectionMethod::IS_PRIVATE);
+    }
+
+    /**
+     * Get protected methods.
+     *
+     * @param object|string $objectOrClass
+     * @return array
+     */
+    public static function getProtectedMethods($objectOrClass): array
+    {
+        return self::getClassMethods($objectOrClass, ReflectionMethod::IS_PROTECTED);
+    }
+
+    /**
+     * Get methods not in interface.
+     *
+     * @param object|string $objectOrClass
+     * @return array
+     */
+    public static function getMethodsNotInInterface($objectOrClass): array
+    {
+        $interfaces = self::getInterfaces($objectOrClass);
+
+        $interfaceMethods = [];
+        foreach ($interfaces as $interface) {
+            $interfaceMethods = array_merge(
+                $interfaceMethods,
+                self::getPublicMethods($interface)
+            );
+        }
+
+        $classPublicMethods = self::getPublicMethods($objectOrClass);
+        $methods = [];
+        foreach ($classPublicMethods as $classPublicMethod) {
+            if (!in_array($classPublicMethod, $interfaceMethods, true)) {
+                $methods[] = $classPublicMethod;
+            }
+        }
+
+        return $methods;
+    }
+
+    /**
      * Call method.
      *
      * @param string $name
@@ -202,7 +275,9 @@ class Obj
             $objectOrClass = get_class($objectOrClass);
         }
 
-        return class_implements($objectOrClass);
+        return class_exists($objectOrClass) || interface_exists($objectOrClass)
+            ? class_implements($objectOrClass)
+            : [];
     }
 
     /**
@@ -304,6 +379,35 @@ class Obj
                 if ($doAdd) {
                     $result[$name] = $value;
                 }
+            }
+
+            return $result;
+        } catch (Exception $exception) {
+            return [];
+        }
+    }
+
+    /**
+     * Get class methods.
+     *
+     * @param object|string $objectOrClass
+     * @param int|null $type See ReflectionMethod::IS_*
+     * @return array
+     */
+    private static function getClassMethods($objectOrClass, ?int $type = null): array
+    {
+        try {
+            $reflectionClass = self::getReflectionClass($objectOrClass);
+            $reflectionMethods = $reflectionClass->getMethods();
+
+            $result = [];
+            foreach ($reflectionMethods as $reflectionMethod) {
+                $modifiers = $reflectionMethod->getModifiers();
+                if ($type !== null && ($modifiers | $type) !== $modifiers) {
+                    continue;
+                }
+
+                $result[] = $reflectionMethod->getName();
             }
 
             return $result;

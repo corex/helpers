@@ -14,6 +14,7 @@ use ReflectionException;
 use ReflectionMethod;
 use Tests\CoRex\Helpers\Helpers\ClassWithTraits;
 use Tests\CoRex\Helpers\Helpers\Constants;
+use Tests\CoRex\Helpers\Helpers\MethodABCClass;
 use Tests\CoRex\Helpers\Helpers\ObjHelperInterface;
 use Tests\CoRex\Helpers\Helpers\ObjHelperObject;
 use Tests\CoRex\Helpers\Helpers\ObjHelperObjectExtended;
@@ -296,6 +297,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod private from object.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodPrivateFromObject(): void
     {
@@ -305,6 +308,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod protected from object.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodProtectedFromObject(): void
     {
@@ -314,6 +319,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod public from object.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodPublicFromObject(): void
     {
@@ -323,6 +330,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod private from class.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodPrivateFromClass(): void
     {
@@ -331,6 +340,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod protected from class.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodProtectedFromClass(): void
     {
@@ -339,6 +350,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod public from class.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodPublicFromClass(): void
     {
@@ -347,6 +360,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod private from extended class.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodPrivateFromExtendedClass(): void
     {
@@ -355,6 +370,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod protected from extended class.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodProtectedFromExtendedClass(): void
     {
@@ -363,6 +380,8 @@ class ObjTest extends TestCase
 
     /**
      * Test hasMethod public from extended class.
+     *
+     * @throws ReflectionException
      */
     public function testHasMethodPublicFromExtendedClass(): void
     {
@@ -379,6 +398,79 @@ class ObjTest extends TestCase
         $this->expectExceptionMessage('unknown');
         $this->expectExceptionMessage('does not exist');
         Obj::hasMethod('unknown', 'unknown');
+    }
+
+    /**
+     * Test getMethods().
+     */
+    public function testGetMethods(): void
+    {
+        $this->assertSame(
+            [
+                'methodAInInterface',
+                'methodBInInterface',
+                'methodCNotInInterface',
+                'methodProtected',
+                'methodPrivate',
+            ],
+            Obj::getMethods(MethodABCClass::class)
+        );
+    }
+
+    /**
+     * Test getPublicMethods().
+     */
+    public function testGetPublicMethods(): void
+    {
+        $this->assertSame(
+            [
+                'methodAInInterface',
+                'methodBInInterface',
+                'methodCNotInInterface',
+            ],
+            Obj::getPublicMethods(MethodABCClass::class)
+        );
+    }
+
+    /**
+     * Test getPrivateMethods().
+     */
+    public function testGetPrivateMethods(): void
+    {
+        $this->assertSame(
+            ['methodPrivate'],
+            Obj::getPrivateMethods(MethodABCClass::class)
+        );
+    }
+
+    /**
+     * Test getProtectedMethods().
+     */
+    public function testGetProtectedMethods(): void
+    {
+        $this->assertSame(
+            ['methodProtected'],
+            Obj::getProtectedMethods(MethodABCClass::class)
+        );
+    }
+
+    /**
+     * Test getMethodsNotInInterface().
+     */
+    public function testGetMethodsNotInInterface(): void
+    {
+        $this->assertSame(
+            ['methodCNotInInterface'],
+            Obj::getMethodsNotInInterface(MethodABCClass::class)
+        );
+    }
+
+    /**
+     * Test getMethodsNotInInterface() with 'unknown' class.
+     */
+    public function testGetMethodsNotInInterfaceWithUnknownClass(): void
+    {
+        $this->assertSame([], Obj::getMethodsNotInInterface('unknown'));
     }
 
     /**

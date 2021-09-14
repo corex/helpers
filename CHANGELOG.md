@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.1.0
+
+### Added
+- Added Obj::getMethods().
+- Added Obj::getPublicMethods().
+- Added Obj::getPrivateMethods().
+- Added Obj::getProtectedMethods().
+- Added Obj::getMethodsNotInInterface().
+
 ## 4.0.0
 
 ### Changed
