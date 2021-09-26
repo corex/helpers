@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.0
+
+### Added
+- Added option to ignore methods when getting methods not in interface.
+
 ## 4.1.0
 
 ### Added

@@ -213,9 +213,10 @@ class Obj
      * Get methods not in interface.
      *
      * @param object|string $objectOrClass
+     * @param array $ignoredMethods
      * @return array
      */
-    public static function getMethodsNotInInterface($objectOrClass): array
+    public static function getMethodsNotInInterface($objectOrClass, array $ignoredMethods = []): array
     {
         $interfaces = self::getInterfaces($objectOrClass);
 
@@ -230,7 +231,10 @@ class Obj
         $classPublicMethods = self::getPublicMethods($objectOrClass);
         $methods = [];
         foreach ($classPublicMethods as $classPublicMethod) {
-            if (!in_array($classPublicMethod, $interfaceMethods, true)) {
+            if (
+                !in_array($classPublicMethod, $interfaceMethods, true)
+                && !in_array($classPublicMethod, $ignoredMethods, true)
+            ) {
                 $methods[] = $classPublicMethod;
             }
         }

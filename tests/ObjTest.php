@@ -466,6 +466,17 @@ class ObjTest extends TestCase
     }
 
     /**
+     * Test getMethodsNotInInterface() with ignored methods.
+     */
+    public function testGetMethodsNotInInterfaceWithIgnoredMethods(): void
+    {
+        $this->assertSame(
+            [],
+            Obj::getMethodsNotInInterface(MethodABCClass::class, ['methodCNotInInterface'])
+        );
+    }
+
+    /**
      * Test getMethodsNotInInterface() with 'unknown' class.
      */
     public function testGetMethodsNotInInterfaceWithUnknownClass(): void
